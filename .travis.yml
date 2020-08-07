@@ -3,6 +3,6 @@ python:
   - "3.7"
   - "3.8"
 install:
-  - pip install numpy matplotlib
+  - pip install numpy matplotlib pytest-cov
 script:
   - pytest --cov=treem tests/
