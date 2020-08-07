@@ -10,7 +10,7 @@ Stockley-Wheal-Cannon format (SWC).
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
 [![Build Status](https://travis-ci.org/a1eko/treem.svg?branch=master)](https://travis-ci.org/a1eko/treem)
-[![Coverage Status](https://coveralls.io/repos/github/a1eko/treem/badge.svg?branch=master)](https://coveralls.io/github/a1eko/treem?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/a1eko/treem/badge.svg?branch=master&kill_cache=1)](https://coveralls.io/github/a1eko/treem?branch=master)
 
 
 Main classes
