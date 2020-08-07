@@ -2,13 +2,15 @@
 treem - neuron morphology processing tool
 =========================================
 
+
+.. rubric:: Module ``treem``
+
 Module provides data structure and command-line tools for accessing and
 manipulating the digital reconstructions of the neuron morphology in
 Stockley-Wheal-Cannon format (SWC).
 
 
-Main classes
-------------
+.. rubric:: Main classes
 
 Access to morphological data from the source code is supported by the
 classes ``Tree``, ``Node``, ``Morph`` and ``SWC``.
@@ -20,9 +22,11 @@ classes ``Tree``, ``Node``, ``Morph`` and ``SWC``.
 ``SWC``    Definitions of the data format
 =========  =========================================================
 
+For the complete list of available functions, see :ref:`api:API
+reference`.
 
-Commands
---------
+
+.. rubric:: Commands
 
 Common operations with SWC files are possible via the ``swc`` command-line
 tool::
@@ -41,43 +45,15 @@ List of ``swc`` commands:
 `view`     Show morphology structure
 =========  =========================================================
 
+For the detailed description of the commands and options, see 
+:ref:`cli:Command-line interface`.
 
-Installation
-------------
+.. toctree::
+   :hidden:
 
-Basic installation
-~~~~~~~~~~~~~~~~~~
-
-Install the latest stable release::
-
-    pip3 install treem
-
-Install a development version::
-
-    pip3 install git+git://github.com/a1eko/treem
-
-See ``pip3`` documentation for installation alternatives.
-
-
-Dependencies
-~~~~~~~~~~~~
-
-Module ``treem`` has minimal runtime dependencies:
-
-* ``python`` >= 3.7
-* ``matplotlib``
-* ``numpy``
-
-For testing and documentation, ``treem`` needs development packages with
-third-party extensions:
-
-* ``sphinx`` with ``napoleon`` and ``programoutput``
-* ``pytest`` with ``pytest-cov``
-* ``coverage``
-
-
-Documentation
--------------
-
-Documentation is available online at `Read the Docs <https://readthedocs.org/>`_.
+   introduction
+   installation
+   examples
+   cli
+   api
 
