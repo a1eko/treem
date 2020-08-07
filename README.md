@@ -7,7 +7,7 @@ manipulating the digital reconstructions of the neuron morphology in
 Stockley-Wheal-Cannon format (SWC).
 
 [![PyPI version](https://badge.fury.io/py/treem.svg)](https://badge.fury.io/py/treem)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
 
 
