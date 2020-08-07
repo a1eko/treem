@@ -138,7 +138,7 @@ Command `measure` prints out basic morphometric features of the reconstruction::
 
     swc measure pass_nmo_1.swc
 
-.. program-output:: bash -c "swc measure ../../tests/data/pass_nmo_1.swc -o /dev/null | head; echo [...]; swc measure ../../tests/data/pass_nmo_1.swc -o /dev/null | tail"
+.. program-output:: bash -c "swc measure ../../tests/data/pass_nmo_1.swc | head; echo [...]; swc measure ../../tests/data/pass_nmo_1.swc | tail"
 
 
 .. rubric:: Locating single nodes
