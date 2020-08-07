@@ -6,6 +6,8 @@ Module provides data structure and command-line tools for accessing and
 manipulating the digital reconstructions of the neuron morphology in
 Stockley-Wheal-Cannon format (SWC).
 
+[![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
+
 
 Main classes
 ------------
