@@ -74,5 +74,5 @@ third-party extensions:
 Documentation
 -------------
 
-Documentation is available online at [Read the Docs](https://readthedocs.org/).
+Documentation is available online at [Read the Docs](https://treem.readthedocs.io/en/latest/).
 
