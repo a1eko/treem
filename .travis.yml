@@ -3,7 +3,7 @@ python:
   - "3.7"
 install:
   - pip install numpy matplotlib pytest-cov coveralls
-  - pip install --user -e .
+  - pip install -e .
 script:
   - pytest --cov-report= --cov=treem tests/
 after_success:
