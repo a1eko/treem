@@ -1,6 +1,6 @@
 import setuptools
 
-with open("README.rst", "r") as f:
+with open("README.md", "r") as f:
     long_description = f.read()
 
 dependencies = [
@@ -10,7 +10,7 @@ dependencies = [
 
 setuptools.setup(
     name="treem",
-    version="1.0.0a1",
+    version="1.0.0a3",
     author="Alexander Kozlov",
     author_email="akozlov@kth.se",
     description="Tree-like morphology data processing",

@@ -72,5 +72,5 @@ third-party extensions:
 Documentation
 -------------
 
-Documentation is available online at `Read the Docs <https://readthedocs.org/>`_.
+Documentation is available online at [Read the Docs](https://readthedocs.org/).
 
