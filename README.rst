@@ -13,12 +13,10 @@ Main classes
 Access to morphological data from the source code is supported by the
 classes ``Tree``, ``Node``, ``Morph`` and ``SWC``.
 
-=========  =========================================================
-``Tree``   Recursive tree data structure
-``Node``   Morphology data storage
-``Morph``  Neuron morphology representation
-``SWC``    Definitions of the data format
-=========  =========================================================
+* ``Tree``   - Recursive tree data structure
+* ``Node``   - Morphology data storage
+* ``Morph``  - Neuron morphology representation
+* ``SWC``    - Definitions of the data format
 
 
 Commands
@@ -31,22 +29,17 @@ tool::
 
 List of ``swc`` commands:
 
-=========  =========================================================
-`check`    Test morphology reconstruction for structural consistency
-`convert`  Convert morphology to compliant SWC format
-`find`     Locate single nodes in the reconstruction
-`measure`  Calculate morphometric features
-`modify`   Manipulate morphology reconstruction
-`repair`   Correct reconstruction errors
-`view`     Show morphology structure
-=========  =========================================================
+* `check`    - Test morphology reconstruction for structural consistency
+* `convert`  - Convert morphology to compliant SWC format
+* `find`     - Locate single nodes in the reconstruction
+* `measure`  - Calculate morphometric features
+* `modify`   - Manipulate morphology reconstruction
+* `repair`   - Correct reconstruction errors
+* `view`     - Show morphology structure
 
 
 Installation
 ------------
-
-Basic installation
-~~~~~~~~~~~~~~~~~~
 
 Install the latest stable release::
 
@@ -60,7 +53,7 @@ See ``pip3`` documentation for installation alternatives.
 
 
 Dependencies
-~~~~~~~~~~~~
+------------
 
 Module ``treem`` has minimal runtime dependencies:
 
