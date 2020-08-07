@@ -29,7 +29,7 @@ Commands
 --------
 
 Common operations with SWC files are possible via the ``swc`` command-line
-tool::
+tool:
 
     swc <command> [options] file
 
@@ -47,11 +47,11 @@ List of ``swc`` commands:
 Installation
 ------------
 
-Install the latest stable release::
+Install the latest stable release:
 
     pip3 install treem
 
-Install a development version::
+Install a development version:
 
     pip3 install git+git://github.com/a1eko/treem
 
