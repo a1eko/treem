@@ -4,6 +4,6 @@ python:
 install:
   - pip install numpy matplotlib pytest-cov coveralls treem
 script:
-  - pytest --cov-report= --cov=treem tests/
+  - pytest --cov=treem tests/
 after_success:
   - coveralls
