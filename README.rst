@@ -29,13 +29,13 @@ tool::
 
 List of ``swc`` commands:
 
-* `check`    - Test morphology reconstruction for structural consistency
-* `convert`  - Convert morphology to compliant SWC format
-* `find`     - Locate single nodes in the reconstruction
-* `measure`  - Calculate morphometric features
-* `modify`   - Manipulate morphology reconstruction
-* `repair`   - Correct reconstruction errors
-* `view`     - Show morphology structure
+* ``check``    - Test morphology reconstruction for structural consistency
+* ``convert``  - Convert morphology to compliant SWC format
+* ``find``     - Locate single nodes in the reconstruction
+* ``measure``  - Calculate morphometric features
+* ``modify``   - Manipulate morphology reconstruction
+* ``repair``   - Correct reconstruction errors
+* ``view``     - Show morphology structure
 
 
 Installation
