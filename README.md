@@ -6,6 +6,8 @@ Module provides data structure and command-line tools for accessing and
 manipulating the digital reconstructions of the neuron morphology in
 Stockley-Wheal-Cannon format (SWC).
 
+[![PyPI version](https://badge.fury.io/py/treem.svg)](https://badge.fury.io/py/treem)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
 
 
