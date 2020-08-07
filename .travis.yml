@@ -4,4 +4,4 @@ python:
 install:
   - pip install numpy matplotlib pytest-cov treem
 script:
-  - pytest --cov=treem tests/
+  - pytest --cov-report= --cov=treem tests/
