@@ -296,6 +296,7 @@ morphology ``clone2.swc``::
     swc modify mod.swc -s 1.2 1.2 1.2 -o clone2.swc
 
 .. figure:: ../images/mod_clone.png
+   :width: 600px
    :align: center
 
    Cloning morphologies with random modifications. Original morphology
