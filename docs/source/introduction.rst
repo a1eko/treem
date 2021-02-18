@@ -27,10 +27,10 @@ Field Column Description    Values
 ===== ====== ============== =========================
  I    0      Node ID        ``int``: 1, 2, ...
  T    1      Point type     ``int``: 1, 2, 3, 4 [...]
- X    2      `x` coordinate ``float``: in micrometers
- Y    3      `y` coordinate ``float``: in micrometers
- Z    4      `z` coordinate ``float``: in micrometers
- R    5      Radius         ``float``: in micrometers
+ X    2      `x` coordinate ``float`` (in micrometers)
+ Y    3      `y` coordinate ``float`` (in micrometers)
+ Z    4      `z` coordinate ``float`` (in micrometers)
+ R    5      Radius         ``float`` (in micrometers)
  P    6      Parent node ID ``int``: -1, 1, 2, ...
 ===== ====== ============== =========================
 

@@ -10,13 +10,13 @@ dependencies = [
 
 setuptools.setup(
     name="treem",
-    version="1.0.0a4",
+    version="1.0.0a5dev",
     author="Alexander Kozlov",
     author_email="akozlov@kth.se",
     description="Tree-like morphology data processing",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://gitr.sys.kth.se/akozlov/treem",
+    url="https://github.com/a1eko/treem",
     packages=setuptools.find_packages(),
     install_requires=dependencies,
     entry_points={

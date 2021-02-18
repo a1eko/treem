@@ -250,6 +250,13 @@ using the command `view` with ``-c shadow`` option::
    Repairing cut neurites. The cut points are orange, the repaired
    branches are red.
 
+With option ``-c shadow`` the second and all subsequent morphologies
+are plotted as underlying structures with the first morphology on top
+of them. The default shadow color is `lightgray` and the line width
+`3.0`. To make a plot as in the figure above, issue the following command
+
+    swc view pass_nmo_2_cut.swc rep.swc -p 3 -c shadow --shadow-color red --shadow-width 0.5
+
 
 .. rubric:: Modifying morphologies
 
@@ -267,10 +274,40 @@ as shown in the figure. See the corresponding options of the commands
 
    Length-preserving modifications of the morphology reconstructions.
 
+Morphology modifications are used for cloning the available
+reconstructions to achieve higher morphological variability in the
+simulations. Let's take as an example the random morphology created by
+the command `repair` as in the section above.
+
+    swc repair pass_nmo_2_cut.swc -c `swc find pass_nmo_2_cut.swc -c 10 -p 3` --seed 123
+
+We modify repaired morphology ``rep.swc`` by twisting dendrites at the
+branching points to a random angle up to 360 degrees and then scale the
+resulting morphology ``mod.swc`` in (X, Y, Z) by factor of 0.8. The
+result is saved into ``clone1.swc``.
+
+    swc modify rep.swc -p 3 -w 360
+    swc modify mod.swc -s 0.8 0.8 0.8 -o clone1.swc
+
+Likewise, we twist dendrites of ``rep.swc`` and scale it by 1.2, creating
+morphology ``clone2.swc``.
+
+    swc modify rep.swc -p 3 -w 360
+    swc modify mod.swc -s 1.2 1.2 1.2 -o clone2.swc
+
+.. figure:: ../images/mod_clone.png
+   :width: 600px
+   :align: center
+
+   Cloning morphologies with random modifications. Original morphology
+   in the middle. Cloned morphologies have the dendrites twisted randomly
+   at the branching points and scaled by the factor of 0.8 (on the left)
+   and 1.2 (on the right).
+
 Finally, ready reconstructions can be resampled with fixed spatial
 resolution. This operation preserves position of the structure-defining
-points, branching points and terminals, but slightly reduces the total
-length.
+points (`i.e.` neurite stem points, branching points and terminals)
+but slightly reduces the total length.
 
 .. figure:: ../images/rep_sample.png
    :width: 300px
