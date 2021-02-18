@@ -55,7 +55,7 @@ Install a development version:
 
     pip3 install git+git://github.com/a1eko/treem
 
-See ``pip3`` documentation for installation alternatives.
+See also ``pip3`` documentation for installation alternatives.
 
 
 Dependencies

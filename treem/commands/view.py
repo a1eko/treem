@@ -47,7 +47,7 @@ def view(args):
 
     types = args.type if args.type else SWC.TYPES
     if args.title:
-        ax.set_title(args.title)
+        fig.suptitle(args.title, fontsize=14)
     if args.no_axes:
         ax.set_axis_off()
 
@@ -134,4 +134,4 @@ def view(args):
         ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin+args.scale],
                 color='k', linewidth=3)
 
-    plt.show() if not args.out else plt.savefig(args.out, dpi=300)
+    plt.show() if not args.out else plt.savefig(args.out, dpi=100)
