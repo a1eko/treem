@@ -289,8 +289,8 @@ result is saved into ``clone1.swc``::
     swc modify rep.swc -p 3 -w 360
     swc modify mod.swc -s 0.8 0.8 0.8 -o clone1.swc
 
-Likewise, we twist dendrites of ``rep.swc`` and scale it by 1.2, creating
-morphology ``clone2.swc``::
+Likewise, we twist dendrites of the reconstruction ``rep.swc`` and scale
+it by 1.2, creating morphology ``clone2.swc``::
 
     swc modify rep.swc -p 3 -w 360
     swc modify mod.swc -s 1.2 1.2 1.2 -o clone2.swc
