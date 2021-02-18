@@ -283,7 +283,7 @@ the command `repair` as in the section above::
 
 We modify repaired morphology ``rep.swc`` by twisting dendrites at the
 branching points to a random angle up to 360 degrees and then scale the
-resulting morphology ``mod.swc`` in (X, Y, Z) by factor of 0.8. The
+resulting morphology ``mod.swc`` in (x, y, z) by the factor of 0.8. The
 result is saved into ``clone1.swc``::
 
     swc modify rep.swc -p 3 -w 360
@@ -296,7 +296,6 @@ morphology ``clone2.swc``::
     swc modify mod.swc -s 1.2 1.2 1.2 -o clone2.swc
 
 .. figure:: ../images/mod_clone.png
-   :width: 600px
    :align: center
 
    Cloning morphologies with random modifications. Original morphology
