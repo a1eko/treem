@@ -10,7 +10,7 @@ dependencies = [
 
 setuptools.setup(
     name="treem",
-    version="1.0.0a5",
+    version="1.0.0a6",
     author="Alexander Kozlov",
     author_email="akozlov@kth.se",
     description="Tree-like morphology data processing",
@@ -24,6 +24,7 @@ setuptools.setup(
             "swc = treem.cli:cli",
         ],
     },
+    license="MIT",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
