@@ -41,6 +41,7 @@ List of ``swc`` commands:
 `find`     Locate single nodes in the reconstruction
 `measure`  Calculate morphometric features
 `modify`   Manipulate morphology reconstruction
+`render`   Display 3D model of the reconstruction
 `repair`   Correct reconstruction errors
 `view`     Show morphology structure
 =========  =========================================================

@@ -15,6 +15,12 @@ from treem.commands.repair import repair
 from treem.commands.measure import measure
 from treem.commands.convert import convert
 
+try:
+    import OpenGL
+    from treem.commands.render import render, _HELP
+except ImportError:
+    pass
+
 
 def cli():
     """Command-line interface definition."""
@@ -228,6 +234,14 @@ def cli():
     cmd_convert.add_argument('-q', dest='quiet', action='store_true',
                              help='disable output')
     cmd_convert.set_defaults(func=convert)
+
+    if 'OpenGL' in sys.modules:
+        cmd_render = subparsers.add_parser(
+            'render', help='show 3D model', epilog=_HELP,
+            formatter_class=argparse.RawDescriptionHelpFormatter)
+        cmd_render.add_argument('file', type=str,
+                                help='input morphology file (swc)')
+        cmd_render.set_defaults(func=render)
 
     args = parser.parse_args()
     sys.exit(args.func(args))

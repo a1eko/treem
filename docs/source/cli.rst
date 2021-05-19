@@ -41,6 +41,14 @@ modify
 
 .. program-output:: swc modify -h
 
+render
+------
+
+.. automodule:: treem.commands.render
+   :members:
+
+.. program-output:: swc render -h
+
 repair
 ------
 
