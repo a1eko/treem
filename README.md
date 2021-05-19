@@ -67,6 +67,7 @@ Module ``treem`` has minimal runtime dependencies:
 * ``python`` >= 3.7
 * ``matplotlib``
 * ``numpy``
+* ``PyOpenGL`` (optional) enables ``swc render`` command
 
 For testing and documentation, ``treem`` needs development packages with
 third-party extensions:
