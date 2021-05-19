@@ -1,7 +1,5 @@
 """Implementation of CLI view command."""
 
-from mpl_toolkits.mplot3d import Axes3D
-
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
@@ -32,7 +30,7 @@ def view(args):
     # pylint: disable=too-many-statements
     # pylint: disable=expression-not-assigned
     fig = plt.figure(figsize=(8, 8))
-    ax = Axes3D(fig)  # pylint: disable=invalid-name
+    ax = fig.add_subplot(projection='3d')  # pylint: disable=invalid-name
     ax.xaxis.pane.set_edgecolor('w')
     ax.yaxis.pane.set_edgecolor('w')
     ax.zaxis.pane.set_edgecolor('w')
