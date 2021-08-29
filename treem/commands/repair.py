@@ -36,10 +36,9 @@ def repair(args):
     if args.shrink_xy:
         scale = np.array([args.shrink_xy, args.shrink_xy, 1])
         origin = morph.root.coord().copy()
-        for stem in morph.stems():
-            for node in stem.walk():
-                coord = node.coord()
-                coord *= scale
+        for node in morph.root.walk():
+            coord = node.coord()
+            coord *= scale
         shift = origin - morph.root.coord()
         morph.translate(shift)
 
