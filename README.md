@@ -82,3 +82,9 @@ Documentation
 
 Documentation is available online at [Read the Docs](https://treem.readthedocs.io/en/latest/).
 
+
+Funding
+-------
+
+Horizon 2020 Framework Programme (785907, HBP SGA2); Horizon 2020 Framework Programme (945539, HBP SGA3); Vetenskapsrådet (VR-M-2017-02806, VR-M-2020-01652); Swedish e-science Research Center (SeRC); KTH Digital Futures.
+

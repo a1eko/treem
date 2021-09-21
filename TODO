@@ -1,0 +1,4 @@
+- swc-check: detect soma nodes (type 1) separated by other nodes (see  Ilaria's 210525_s6_v4.swc)
+- swc-repair: assumes centered input morphology; should do this internally if needed and return original root coordinates unless -n explicitly applied
+- swc-repair: add --seed for reproducible results
+- swc-render: add antialiacing
