@@ -44,6 +44,12 @@ def check(args):
             err['node1_has_parent'] = [first[SWC.P].astype(int)]
         if first[SWC.T] != SWC.SOMA:
             err['node1_not_soma'] = [first[SWC.T].astype(int)]
+        soma_nodes = data[data[:, SWC.T] == SWC.SOMA]
+        soma_ids = soma_nodes[:, SWC.I].astype(int)
+        if len(soma_ids > 1):
+            inc = soma_ids[1:] - soma_ids[:-1]
+            if not (inc == 1).all():
+                err['non_sequential_soma_ids'] = soma_ids[np.where(inc != 1)[0] + 1]
         types = set(data[:, SWC.T].astype(int))
         if not types.issubset(SWC.TYPES):
             err['not_valid_types'] =\
