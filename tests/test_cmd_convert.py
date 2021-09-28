@@ -28,5 +28,5 @@ def test_not_array():
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
     assert proc.returncode == 1
-    assert stdout == 'can not convert fail_not_array_1.swc.\n'
+    assert stdout == 'cannot convert fail_not_array_1.swc.\n'
     assert stderr == ''
