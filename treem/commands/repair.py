@@ -22,9 +22,6 @@ def repair(args):
     morph = Morph(args.file)
     err = 0
 
-    if args.center:
-        morph.data[:, SWC.XYZ] -= morph.root.coord()
-
     if args.translate:
         morph.data[:, SWC.XYZ] += np.array(args.translate)
 
@@ -288,6 +285,9 @@ def repair(args):
             idmap[sec[-1].v[SWC.I]] = ident
             ident += 1
         morph = Morph(data=data)
+
+    if args.center:
+        morph.data[:, SWC.XYZ] -= morph.root.coord()
 
     morph.save(args.out)
     return err
