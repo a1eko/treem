@@ -35,5 +35,5 @@ def convert(args):
         Morph(data=data).save(args.out)
         return 0
     except (KeyError, IndexError, ValueError):
-        vprint(f'can not convert {args.file}.')
+        vprint(f'cannot convert {args.file}.')
         return 1
