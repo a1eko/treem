@@ -284,7 +284,7 @@ def repair(args):
                 data.append(v)
             idmap[sec[-1].v[SWC.I]] = ident
             ident += 1
-        morph = Morph(data=data)
+        morph = Morph(data=np.array(data))
 
     if args.center:
         morph.data[:, SWC.XYZ] -= morph.root.coord()
