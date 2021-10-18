@@ -273,7 +273,7 @@ def repair(args):
             points = morph.points(sec)
             # pylint: disable=unsubscriptable-object
             points = np.insert(points, 0, sec[0].parent.v[SWC.XYZR], axis=0)
-            points = sample(points, np.rint(length/args.res).astype(int))
+            points = sample(points, np.ceil(length/args.res).astype(int))
             points = points[1:]
             start = True
             for ident, point in enumerate(points, ident):
