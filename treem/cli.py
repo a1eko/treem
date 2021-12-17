@@ -71,6 +71,9 @@ def cli():
     cmd_view.add_argument('--shadow-width', dest='shadow_width',
                           metavar='<float>', type=float, default=3.0,
                           help='shadow width [3.0]')
+    cmd_view.add_argument('--set-color', dest='cycler_color', nargs='+',
+                          metavar='<str>', type=str, 
+                          help='set color (number:colorname)')
     cmd_view.add_argument('-a', dest='angle', metavar='<float>', type=float,
                           nargs=2, help='initial rotation angles, deg. '
                                         '(elevation, azimuth)')
