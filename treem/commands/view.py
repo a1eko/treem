@@ -18,7 +18,7 @@ _colors = ('coral', 'teal', 'darkgrey', 'royalblue', 'limegreen',
            'orchid', 'red', 'purple', 'orange', 'darkturquoise')
 _NCOLORS = len(_colors)
 
-mpl.rcParams['lines.linewidth'] = 1.0
+#mpl.rcParams['lines.linewidth'] = 1.0
 mpl.rcParams['axes.prop_cycle'] = cycler(color=_colors)
 mpl.rcParams.update({'font.size': 8})
 
@@ -48,6 +48,15 @@ def view(args):
         fig.suptitle(args.title, fontsize=14)
     if args.no_axes:
         ax.set_axis_off()
+
+    if args.cycler_color:
+        colors = list(_colors)
+        for x in args.cycler_color:
+            i, colorname = x.split(':')
+            i = int(i)
+            if 0 <= i and i < _NCOLORS:
+                colors[i] = colorname
+        mpl.rcParams['axes.prop_cycle'] = cycler(color=colors)
 
     if args.mode == 'neurites':
         for file_name in reversed(args.file):
