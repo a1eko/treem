@@ -221,6 +221,12 @@ def cli():
     cmd_measure.add_argument('-p', dest='type', metavar='<int>', type=int,
                              nargs='+', choices=SWC.TYPES,
                              help='point type {1,2,3,4} [all]')
+    cmd_measure.add_argument('-a', dest='opt', metavar='<str>', type=str,
+                             nargs='+', choices=['dist', 'path', 'sholl'],
+                             help='optional feature {dist,path,sholl}')
+    cmd_measure.add_argument('--sholl-res', dest='sholl_res', metavar='<float>', type=float,
+                            default=10.0,
+                            help='sholl sampling resolution, um [10.0]')
     cmd_measure.add_argument('-o', dest='out', metavar='<str>', type=str,
                              help='output morphometric file (json)')
     cmd_measure.set_defaults(func=measure)

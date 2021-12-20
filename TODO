@@ -4,4 +4,6 @@
 + swc-repair: assumes centered input morphology; should do this internally if needed and return original root coordinates unless -n explicitly applied
 + swc-repair: centering -n not applied after shrinkage correction
 + swc-repair: add --seed for reproducible results
++ swc-view: color options
 - swc-render: add antialiacing
+- swc-measure: add optional features (-a {sholl,dist,path})
