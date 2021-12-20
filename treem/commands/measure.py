@@ -86,13 +86,68 @@ def measure(args):
                 d['diam'] = np.mean(ndata[:, 2], axis=0)
                 d['xroot'], d['yroot'], d['zroot'] = morph.root.coord()
 
+        if args.opt and 'dist' in args.opt:
+            dist = dict()
+            c0 = morph.root.coord()
+            for node in morph.root.walk():
+                point_type = node.type()
+                if point_type in set(types).difference((SWC.SOMA,)):
+                    if point_type not in dist:
+                        dist[point_type] = list()
+                    dist[point_type].append(np.linalg.norm(node.coord() - c0))
+            for point_type in dist:
+                d = metric[name][ptmap[point_type]]
+                d['dist'] = max(dist[point_type])
+
+        if args.opt and 'path' in args.opt:
+            path = dict()
+            for node in morph.root.leaves():
+                point_type = node.type()
+                if point_type in set(types).difference((SWC.SOMA,)):
+                    if point_type not in path:
+                        path[point_type] = list()
+                    path_length = sum([x.length() for x in node.walk(reverse=True)])
+                    path[point_type].append(path_length)
+            for point_type in path:
+                d = metric[name][ptmap[point_type]]
+                d['path'] = max(path[point_type])
+
+        if args.opt and 'sholl' in args.opt:
+            c0 = morph.root.coord()
+            sholl_data = dict()
+            for node in morph.root.walk():
+                point_type = node.type()
+                if point_type in set(types).difference((SWC.SOMA,)):
+                    if point_type not in sholl_data:
+                        sholl_data[point_type] = dict()
+                    c1 = node.parent.coord()
+                    c2 = node.coord()
+                    n1 = math.ceil(np.linalg.norm(c1 - c0) / args.sholl_res)
+                    n2 = math.ceil(np.linalg.norm(c2 - c0) / args.sholl_res)
+                    for circle in range(n1, n2):
+                        if circle not in sholl_data[point_type]:
+                            sholl_data[point_type][circle] = 0
+                        sholl_data[point_type][circle] += 1
+            for point_type in sholl_data:
+                radii = [x * args.sholl_res for x in sholl_data[point_type]]
+                cross = [sholl_data[point_type][x] for x in sholl_data[point_type]]
+                d = metric[name][ptmap[point_type]]
+                d['sholl'] = {'radii': radii, 'crossings': cross}
+
     if not args.out:
         for name in metric:
             print(name)
             for point_type in sorted(metric[name]):
                 for feature in sorted(metric[name][point_type]):
-                    print(f'{point_type} {feature:10s} '
-                          f'{metric[name][point_type][feature]:>8g}')
+                    if feature != 'sholl':
+                        print(f'{point_type} {feature:10s} '
+                              f'{metric[name][point_type][feature]:>8g}')
+                    else:
+                        print(f'{point_type} {feature:10s} ')
+                        radii = metric[name][point_type][feature]['radii']
+                        cross = metric[name][point_type][feature]['crossings']
+                        for x, y in zip(radii,cross):
+                            print(11*' ', f'{x:>8g}, {y}')
             print()
     else:
         with open(args.out, 'w') as f:
