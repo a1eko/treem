@@ -9,6 +9,9 @@ class SWC():  # pylint: disable=too-few-public-methods
     """Definitions of the data format."""
     TYPES = (SOMA, AXON, DEND, APIC) = range(1, 5)
     COLS = (I, T, X, Y, Z, R, P) = range(7)
+    XY = slice(2, 4)
+    XZ = slice(2, 5, 2)
+    YZ = slice(3, 5)
     XYZ = slice(2, 5)
     XYZR = slice(2, 6)
     RADII = slice(5, 6)

@@ -224,9 +224,12 @@ def cli():
     cmd_measure.add_argument('-a', dest='opt', metavar='<str>', type=str,
                              nargs='+', choices=['dist', 'path', 'sholl'],
                              help='optional feature {dist,path,sholl}')
-    cmd_measure.add_argument('--sholl-res', dest='sholl_res', metavar='<float>', type=float,
-                            default=10.0,
-                            help='sholl sampling resolution, um [10.0]')
+    cmd_measure.add_argument('--sholl-res', dest='sholl_res', metavar='<float>',
+                             type=float, default=10.0,
+                             help='sholl sampling resolution, um [10.0]')
+    cmd_measure.add_argument('--sholl-proj', dest='sholl_proj', metavar='<str>',
+                             type=str, choices=['xy', 'xz', 'yz'],
+                             help='sholl projection {xy,xz,yz} [3d]')
     cmd_measure.add_argument('-o', dest='out', metavar='<str>', type=str,
                              help='output morphometric file (json)')
     cmd_measure.set_defaults(func=measure)
