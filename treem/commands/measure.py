@@ -113,15 +113,32 @@ def measure(args):
                 d['path'] = max(path[point_type])
 
         if args.opt and 'sholl' in args.opt:
-            c0 = morph.root.coord()
+            if args.sholl_proj and args.sholl_proj == 'xy':
+                c0 = morph.root.v[SWC.XY]
+            elif args.sholl_proj and args.sholl_proj == 'xz':
+                c0 = morph.root.v[SWC.XZ]
+            elif args.sholl_proj and args.sholl_proj == 'yz':
+                c0 = morph.root.v[SWC.YZ]
+            else:
+                c0 = morph.root.coord()
             sholl_data = dict()
             for node in morph.root.walk():
                 point_type = node.type()
                 if point_type in set(types).difference((SWC.SOMA,)):
                     if point_type not in sholl_data:
                         sholl_data[point_type] = dict()
-                    c1 = node.parent.coord()
-                    c2 = node.coord()
+                    if args.sholl_proj and args.sholl_proj == 'xy':
+                        c1 = node.parent.v[SWC.XY]
+                        c2 = node.v[SWC.XY]
+                    elif args.sholl_proj and args.sholl_proj == 'xz':
+                        c1 = node.parent.v[SWC.XZ]
+                        c2 = node.v[SWC.XZ]
+                    elif args.sholl_proj and args.sholl_proj == 'yz':
+                        c1 = node.parent.v[SWC.YZ]
+                        c2 = node.v[SWC.YZ]
+                    else:
+                        c1 = node.parent.coord()
+                        c2 = node.coord()
                     n1 = math.ceil(np.linalg.norm(c1 - c0) / args.sholl_res)
                     n2 = math.ceil(np.linalg.norm(c2 - c0) / args.sholl_res)
                     for circle in range(n1, n2):
