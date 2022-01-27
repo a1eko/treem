@@ -222,7 +222,7 @@ def cli():
                              nargs='+', choices=SWC.TYPES,
                              help='point type {1,2,3,4} [all]')
     cmd_measure.add_argument('-a', dest='opt', metavar='<str>', type=str,
-                             nargs='+', choices=['dist', 'path', 'sholl'],
+                             nargs='+', choices=['dist', 'path', 'sec', 'sholl'],
                              help='optional feature {dist,path,sholl}')
     cmd_measure.add_argument('--sholl-res', dest='sholl_res', metavar='<float>',
                              type=float, default=10.0,

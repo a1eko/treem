@@ -66,6 +66,8 @@ def measure(args):
                              - np.min(ndata[:, 10], axis=0))
                 d['zdim'] = (np.max(ndata[:, 13], axis=0)
                              - np.min(ndata[:, 12], axis=0))
+                if args.opt and 'sec' in args.opt:
+                    d['_sec'] = ndata.transpose()
 
         for point_type in set(types).intersection((SWC.SOMA,)):
             mdata = list()
@@ -156,15 +158,16 @@ def measure(args):
             print(name)
             for point_type in sorted(metric[name]):
                 for feature in sorted(metric[name][point_type]):
-                    if feature != 'sholl':
+                    if feature != 'sholl' and feature != '_sec':
                         print(f'{point_type} {feature:10s} '
                               f'{metric[name][point_type][feature]:>8g}')
-                    else:
-                        print(f'{point_type} {feature:10s} ')
-                        radii = metric[name][point_type][feature]['radii']
-                        cross = metric[name][point_type][feature]['crossings']
-                        for x, y in zip(radii,cross):
-                            print(11*' ', f'{x:>8g}, {y}')
+                    elif feature == 'sholl':
+                        print(f'{point_type} {feature:10s} '
+                              f'{sum(metric[name][point_type][feature]["crossings"]):>8g}')
+                        #radii = metric[name][point_type][feature]['radii']
+                        #cross = metric[name][point_type][feature]['crossings']
+                        #for x, y in zip(radii,cross):
+                        #    print(11*' ', f'{x:>8g}, {y}')
             print()
     else:
         with open(args.out, 'w') as f:
