@@ -106,6 +106,8 @@ def cli():
                           help='diameter threshold, um')
     cmd_find.add_argument('-l', dest='length', metavar='<float>', type=float,
                           help='segment length threshold, um')
+    cmd_find.add_argument('-i', dest='dist', metavar='<float>', type=float,
+                          help='distance to origin threshold, um')
     cmd_find.add_argument('-z', dest='jump', metavar='<float>', type=float,
                           help='z-jump threshold, um')
     cmd_find.add_argument('--comp', dest='compare', metavar='<str>',
@@ -182,23 +184,29 @@ def cli():
     cmd_repair.add_argument('--seed', dest='seed', metavar='<int>', type=int,
                             help='random seed')
     cmd_repair.add_argument('-c', dest='cut', metavar='<int>', type=int,
-                            nargs='+', help='cut points ids')
+                            nargs='+', help='cut points ids (not compatible with -l)')
     cmd_repair.add_argument('--force-repair', dest='force_repair',
                             action='store_true',
                             help='repair cuts using branches of any order')
+    cmd_repair.add_argument('--graft-point-type', dest='graft_point_type', type=int,
+                            choices=set(SWC.TYPES).difference((SWC.SOMA,)), default=SWC.DEND,
+                            help='point type of a branch to graft on to a soma node {2,3,4} [3]')
     cmd_repair.add_argument('-d', dest='diam', metavar='<int>', type=int,
                             nargs='+',
                             help='set diameter in points ids')
     cmd_repair.add_argument('--diam', dest='diam_mode', metavar='<str>',
                             type=str, default='joint',
-                            choices=['joint', 'sec', 'order', 'breadth'],
+                            choices=['joint', 'sec', 'order', 'breadth', 'value'],
                             help='correction mode '
-                                 '{joint,sec,order,breadth} [joint]')
+                                 '{joint,sec,order,breadth,value} [joint]')
+    cmd_repair.add_argument('--diam-value', dest='diam_value', metavar='<float>',
+                            type=float, default=1.0,
+                            help='diameter value, um [1.0]')
     cmd_repair.add_argument('--pool', dest='pool', metavar='<str>', type=str,
                             nargs='+', help='reference reconstructions for repair')
     cmd_repair.add_argument('-l', dest='delete', metavar='<int>', type=int,
                             nargs='+',
-                            help='delete nodes in points ids')
+                            help='delete nodes in points ids (not compatible with -c)')
     cmd_repair.add_argument('-z', dest='zjump', metavar='<int>', type=int,
                             nargs='+', help='z-jump points ids')
     cmd_repair.add_argument('--zjump', dest='zjump_mode', metavar='<str>',

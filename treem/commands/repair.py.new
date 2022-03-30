@@ -172,20 +172,12 @@ def repair(args):
                                   if sec[0].type() == point_type
                                   and sec[0].breadth() == breadth]).mean()
                     node.v[SWC.R] = r
-        if args.diam_mode == 'value':
-            for node in nodes:
-                node.v[SWC.R] = args.diam_value / 2
 
     if args.seed:
         np.random.seed(args.seed)
 
-    def is_intact(tree, cuts):
-        leaves = [x.ident() for x in tree.leaves()]
-        return set(leaves).isdisjoint(cuts)
-
     if args.cut:  # pylint: disable=too-many-nested-blocks
-        cuts = set(x for x in args.cut if morph.node(x).type() != SWC.SOMA)
-        graft_points = set(args.cut).difference(cuts)
+        cuts = set(args.cut).difference((SWC.SOMA,))
         types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
         for point_type in types:
             intact_branches = dict()
@@ -203,6 +195,10 @@ def repair(args):
                 sections = filter(lambda x: x[0].type() == point_type,
                                   morig.root.sections())
                 nodes = chain(x[0] for x in sections)
+
+                def is_intact(tree, cuts):
+                    leaves = [x.ident() for x in tree.leaves()]
+                    return set(leaves).isdisjoint(cuts)
 
                 nodes = filter(lambda x: is_intact(x, args.cut), nodes)
                 for node in nodes:
@@ -250,38 +246,6 @@ def repair(args):
                 else:
                     err += 1
                     vprint('... not repaired')
-
-    if args.cut and graft_points:
-        point_type = args.graft_point_type
-        intact_branches = list()
-        if args.pool:
-            for rec in pool:
-                sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1,
-                                  rec.root.sections())
-                nodes = chain(x[0] for x in sections)
-                for node in nodes:
-                    intact_branches.append((rec, node))
-        else:
-            sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1,
-                              morig.root.sections())
-            nodes = chain(x[0] for x in sections)
-
-            nodes = filter(lambda x: is_intact(x, args.cut), nodes)
-            for node in nodes:
-                intact_branches.append((morig, node))
-
-        vprint(f'grafting a branch on to a soma node', end=' ')
-        nodes = [x for x in morph.root.walk() if x.ident() in graft_points]
-        for node in nodes:
-            vprint(f'{node.ident()}', end=' ')
-            if intact_branches:
-                idx = np.random.choice(len(intact_branches))
-                rec, rep = intact_branches[idx]
-                morph.graft(rec.copy(rep), node)
-                vprint('done')
-            else:
-                err += 1
-                vprint('... no intact branches, not grafted')
 
     if args.delete and not args.cut:
         nodes = [x for x in morph.root.walk() if x.ident() in args.delete]

@@ -31,6 +31,13 @@ def find(args):  # pylint: disable=too-many-branches
             nodes = filter(lambda x: x.length() < args.length, nodes)
         elif args.compare == 'eq':
             nodes = filter(lambda x: x.length() == args.length, nodes)
+    if args.dist is not None:
+        if args.compare == 'gt':
+            nodes = filter(lambda x: x.dist() > args.dist, nodes)
+        elif args.compare == 'lt':
+            nodes = filter(lambda x: x.dist() < args.dist, nodes)
+        elif args.compare == 'eq':
+            nodes = filter(lambda x: x.dist() == args.dist, nodes)
     if args.jump is not None:
         if args.compare == 'gt':
             nodes = filter(lambda x: not x.is_root()
