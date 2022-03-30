@@ -5,5 +5,7 @@ Key: - todo, + done, o pending/attention, x ignore
 + swc-repair: centering -n not applied after shrinkage correction
 + swc-repair: add --seed for reproducible results
 + swc-view: color options
-o swc-render: add antialiacing
 + swc-measure: add optional features (-a {sholl,dist,path})
++ swc-find: distance to origin
++ swc-repair: add neurite to root if id=1 is in the list of the cut points
+- swc-repair (repair_branch): consider selecting median section length

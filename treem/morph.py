@@ -69,6 +69,10 @@ class Node(Tree):
         """Returns coordinates of the node (x,y,z) (NumPy ndarray[3])."""
         return self.v[SWC.XYZ]
 
+    def dist(self):
+        """Returns Euclidean distance of the node to origin (float)."""
+        return np.linalg.norm(self.v[SWC.XYZ])
+
     def radius(self):
         """Returns radius of the node (float)."""
         return self.v[SWC.R]
