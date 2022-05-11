@@ -157,9 +157,9 @@ class App:
         red, green, blue = self.color['dark']
         glClearColor(red, green, blue, 0)
 
-        light_ambient = np.array([0.5, 0.5, 0.5, 1.0])
-        light_diffuse = np.array([0.8, 0.8, 0.8, 1.0])
-        light_position = np.array([self.cmin[0], self.cmax[1], self.cmax[2], 0.0])
+        light_ambient = [0.5, 0.5, 0.5, 1.0]
+        light_diffuse = [0.8, 0.8, 0.8, 1.0]
+        light_position = [self.cmin[0], self.cmax[1], self.cmax[2], 0.0]
 
         glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient)
         glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
