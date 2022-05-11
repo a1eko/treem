@@ -132,6 +132,7 @@ def view(args):
     ax.set_xlim((xmin+xmax-smax)/2, (xmin+xmax+smax)/2)
     ax.set_ylim((ymin+ymax-smax)/2, (ymin+ymax+smax)/2)
     ax.set_zlim((zmin+zmax-smax)/2, (zmin+zmax+smax)/2)
+    ax.set_box_aspect([1, 1, 1])
 
     if args.scale and args.scale > 0:
         ax.plot([xmax-args.scale, xmax], [ymin, ymin], [zmin, zmin],

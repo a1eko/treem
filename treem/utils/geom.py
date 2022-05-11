@@ -60,7 +60,7 @@ def rotation(u, v):
     return axis, angle
 
 
-def repair_branch(cmorph, cut, rmorph, rep, force=False):
+def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
     """Attempts to extend cut neurite using intact branch.
 
     Args:
@@ -69,6 +69,7 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False):
         rmorph (treem.Morph): repair morphology.
         rep (treem.Node): undamaged branch start node, from rmorph.
         force (bool): force repair if branch is too short.
+        keep_radii (bool): do not scale radii of repaired branch.
 
     Returns:
         True if repaired.
@@ -91,7 +92,10 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False):
     if source:
         tree = rmorph.copy(source)
         scale_z = -1
-        scale_r = cmorph.radii(cutsec).mean() / rmorph.radii(repsec).mean()
+        if keep_radii:
+            scale_r = 1
+        else:
+            scale_r = cmorph.radii(cutsec).mean() / rmorph.radii(repsec).mean()
         tree.data[:, SWC.XYZR] *= np.array([1, 1, scale_z, scale_r])
         u = np.mean(tree.data[:, SWC.XYZ], axis=0) - tree.root.coord()
         v = target.coord() - cmorph.root.coord()

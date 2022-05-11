@@ -110,15 +110,13 @@ def repair(args):
             types = {x.type() for x in nodes}
         if args.diam_mode == 'joint':
             for node in nodes:
-                r = 0
+                r = []
                 if node.parent.type() != SWC.SOMA:
-                    r += node.parent.radius()
-                    r /= 2
-                if not node.is_fork():
-                    r += node.siblings[0].radius()
-                    r /= 2
+                    r.append(node.parent.radius())
+                if not node.is_fork() and not node.is_leaf():
+                    r.append(node.siblings[0].radius())
                 if r:
-                    node.v[SWC.R] = r
+                    node.v[SWC.R] = np.mean(r)
                 else:
                     vprint(f'diam in node {node.ident()} not repaired')
                     err += 1
@@ -185,7 +183,24 @@ def repair(args):
 
     if args.cut:  # pylint: disable=too-many-nested-blocks
         cuts = set(x for x in args.cut if morph.node(x).type() != SWC.SOMA)
-        graft_points = set(args.cut).difference(cuts)
+        keep_radii = args.keep_radii
+        if args.del_branch:
+            stems = list()
+            for cut in cuts:
+                stems.extend(x for x in filter(lambda x: x.is_stem() and
+                     x.type() != SWC.SOMA, morph.node(cut).walk(reverse=True))
+                     if x not in stems)
+            for node in stems:
+                for child in node.siblings:
+                    morph.prune(child)
+            vprint(f'renumbering nodes, old node ids are lost')
+            morph = Morph(data=morph.data)
+            cuts = [x.ident() for x in morph.root.siblings if x.is_leaf()]
+            vprint(f'reassigning cut points to {cuts}')
+            graft_points = set()
+            keep_radii = True
+        else:
+            graft_points = set(args.cut).difference(cuts)
         types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
         for point_type in types:
             intact_branches = dict()
@@ -212,7 +227,7 @@ def repair(args):
                     intact_branches[order].append((morig, node))
 
             nodes = [x for x in morph.root.walk() if x.type() == point_type
-                     and x.ident() in args.cut]
+                     and x.ident() in cuts]
             for node in nodes:
                 order = node.order()
                 vprint(f'repairing node {node.ident()} (order {order})',
@@ -222,7 +237,8 @@ def repair(args):
                     rec, rep = intact_branches[order][idx]
                     vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
                     done = repair_branch(morph, node, rec, rep,
-                                         force=args.force_repair)
+                                         force=args.force_repair,
+                                         keep_radii=keep_radii)
                     err += 1 if not done else 0
                     vprint('done') if done else vprint('not repaired')
                 elif order - 1 in intact_branches:
@@ -231,7 +247,8 @@ def repair(args):
                     vprint(f'using {rep.ident()} (order {order-1}) ...',
                            end=' ')
                     done = repair_branch(morph, node, rec, rep,
-                                         force=args.force_repair)
+                                         force=args.force_repair,
+                                         keep_radii=keep_radii)
                     err += 1 if not done else 0
                     vprint('done') if done else vprint('not repaired')
                 elif args.force_repair:
@@ -270,7 +287,7 @@ def repair(args):
             for node in nodes:
                 intact_branches.append((morig, node))
 
-        vprint(f'grafting a branch on to a soma node', end=' ')
+        vprint(f'grafting branch on to a soma node', end=' ')
         nodes = [x for x in morph.root.walk() if x.ident() in graft_points]
         for node in nodes:
             vprint(f'{node.ident()}', end=' ')

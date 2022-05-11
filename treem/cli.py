@@ -100,8 +100,6 @@ def cli():
                           nargs='+', help='branch breadth')
     cmd_find.add_argument('-g', dest='degree', metavar='<int>', type=int,
                           nargs='+', help='node degree')
-    cmd_find.add_argument('-s', dest='stem', action='store_true',
-                          help='stem branches (same as: -e 1 --sec -p 2 3 4)')
     cmd_find.add_argument('-d', dest='diam', metavar='<float>', type=float,
                           help='diameter threshold, um')
     cmd_find.add_argument('-l', dest='length', metavar='<float>', type=float,
@@ -120,8 +118,12 @@ def cli():
     cmd_find.add_argument('--bottom-up', dest='bottom_up',
                           action='store_true',
                           help='slice surface down (z axis)')
+    cmd_find.add_argument('-n', dest='nodes', metavar='<int>', type=int,
+                          nargs='+', help='branch nodes')
     cmd_find.add_argument('--sec', dest='sec', action='store_true',
                           help='section start ids only')
+    cmd_find.add_argument('--stem', dest='stem', action='store_true',
+                          help='stem ids only')
     cmd_find.set_defaults(func=find)
 
     cmd_modify = subparsers.add_parser('modify', help='modify morphology')
@@ -191,6 +193,12 @@ def cli():
     cmd_repair.add_argument('--graft-point-type', dest='graft_point_type', type=int,
                             choices=set(SWC.TYPES).difference((SWC.SOMA,)), default=SWC.DEND,
                             help='point type of a branch to graft on to a soma node {2,3,4} [3]')
+    cmd_repair.add_argument('--del-branch', dest='del_branch',
+                            action='store_true',
+                            help='delete cut branches before repair')
+    cmd_repair.add_argument('--keep-radii', dest='keep_radii',
+                            action='store_true',
+                            help='do not scale radii of repaired branches')
     cmd_repair.add_argument('-d', dest='diam', metavar='<int>', type=int,
                             nargs='+',
                             help='set diameter in points ids')
