@@ -9,14 +9,14 @@ def find(args):  # pylint: disable=too-many-branches
     morph = Morph(args.file)
     types = args.type if args.type else SWC.TYPES
     nodes = filter(lambda x: x.type() in types, morph.root.walk())
+    if args.nodes:
+        nodes = filter(lambda x: x.ident() in args.nodes, nodes)
     if args.order:
         nodes = filter(lambda x: x.order() in args.order, nodes)
     if args.breadth:
         nodes = filter(lambda x: x.breadth() in args.breadth, nodes)
     if args.degree:
         nodes = filter(lambda x: x.degree() in args.degree, nodes)
-    if args.stem:
-        nodes = filter(lambda x: x.is_stem() and x.type() != SWC.SOMA, nodes)
     if args.diam is not None:
         if args.compare == 'gt':
             nodes = filter(lambda x: x.diam() > args.diam, nodes)
@@ -63,6 +63,14 @@ def find(args):  # pylint: disable=too-many-branches
     if args.sec:
         nodes = filter(lambda x: x.parent.is_fork()
                        or x.parent.is_root(), nodes)
+
+    if args.stem:
+        stems = list()
+        for node in nodes:
+            stems.extend(x for x in filter(lambda x: x.is_stem() and
+                x.type() != SWC.SOMA, node.walk(reverse=True))
+                    if x not in stems)
+        nodes = stems
 
     for node in nodes:
         print(node.ident(), end=' ')
