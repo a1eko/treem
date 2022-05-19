@@ -71,6 +71,9 @@ def cli():
     cmd_view.add_argument('--shadow-width', dest='shadow_width',
                           metavar='<float>', type=float, default=3.0,
                           help='shadow width [3.0]')
+    cmd_view.add_argument('--line-width', dest='linewidth',
+                          metavar='<float>', type=float, default=1.0,
+                          help='line width [1.0]')
     cmd_view.add_argument('--set-color', dest='cycler_color', nargs='+',
                           metavar='<str>', type=str, 
                           help='set color (number:colorname)')
@@ -80,6 +83,10 @@ def cli():
     cmd_view.add_argument('-d', dest='dist', metavar='<float>', type=float,
                           default=10.0,
                           help='initial distance to object, rel. [10.0]')
+    cmd_view.add_argument('--font', dest='font', metavar='<int>', type=int,
+                          default=8, help='font size [8]')
+    cmd_view.add_argument('--title-font', dest='title_font', metavar='<int>', type=int,
+                          default=14, help='title font size [14]')
     cmd_view.add_argument('-j', dest='proj', metavar='<str>', type=str,
                           choices=['xy', 'xz', 'yz'],
                           help='projection {xy,xz,yz}')
@@ -118,6 +125,10 @@ def cli():
     cmd_find.add_argument('--bottom-up', dest='bottom_up',
                           action='store_true',
                           help='slice surface down (z axis)')
+    cmd_find.add_argument('--cut-find', dest='cut_find',
+                          action='store_true', help='find cut plane')
+    cmd_find.add_argument('--cut-find-iter', dest='cut_iter', metavar='<int>', type=int,
+                          default=300, help='number of iterations [300]')
     cmd_find.add_argument('-n', dest='nodes', metavar='<int>', type=int,
                           nargs='+', help='branch nodes')
     cmd_find.add_argument('--sec', dest='sec', action='store_true',

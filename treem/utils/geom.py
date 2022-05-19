@@ -128,3 +128,20 @@ def sample(points, num):
                      np.interp(t, tp, yp),
                      np.interp(t, tp, zp),
                      np.interp(t, tp, rp)]).T
+
+
+def fibonacci_sphere(npoints=100):
+    """Samples equally spaced points on a unit sphere.
+
+    Args:
+        npoints (int): sample size [100].
+
+    Returns:
+        array of 3D points (NumPy ndarray[3]).
+    """
+    indices = np.arange(0, npoints, dtype=float) + 0.5
+    phi = np.arccos(1 - 2 * indices / npoints)
+    theta = np.pi * (1 + 5**0.5) * indices
+    x, y, z = np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)
+    points = np.array([x, y, z]).T
+    return points
