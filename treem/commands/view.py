@@ -14,13 +14,13 @@ from treem.utils.plot import plot_tree
 from treem.utils.plot import plot_points
 
 
-_colors = ('coral', 'teal', 'darkgrey', 'royalblue', 'limegreen',
+_colors = ('crimson', 'dodgerblue', 'darkgrey', 'royalblue', 'limegreen',
            'orchid', 'red', 'purple', 'orange', 'darkturquoise')
 _NCOLORS = len(_colors)
 
 #mpl.rcParams['lines.linewidth'] = 1.0
 mpl.rcParams['axes.prop_cycle'] = cycler(color=_colors)
-mpl.rcParams.update({'font.size': 8})
+#mpl.rcParams.update({'font.size': 8})
 
 
 def view(args):
@@ -29,6 +29,7 @@ def view(args):
     # pylint: disable=too-many-branches
     # pylint: disable=too-many-statements
     # pylint: disable=expression-not-assigned
+    plt.rc('font', size=args.font)
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(projection='3d')  # pylint: disable=invalid-name
     ax.xaxis.pane.set_edgecolor('w')
@@ -38,14 +39,14 @@ def view(args):
     ax.yaxis.pane.fill = False
     ax.zaxis.pane.fill = False
     ax.set_proj_type('ortho')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.set_zlabel('z')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
     ax.grid(False)
 
     types = args.type if args.type else SWC.TYPES
     if args.title:
-        fig.suptitle(args.title, fontsize=14)
+        fig.suptitle(args.title, fontsize=args.title_font)
     if args.no_axes:
         ax.set_axis_off()
 
@@ -61,19 +62,19 @@ def view(args):
     if args.mode == 'neurites':
         for file_name in reversed(args.file):
             morph = Morph(file_name)
-            plot_neuron(ax, morph, types)
+            plot_neuron(ax, morph, types, linewidth=args.linewidth)
     elif args.mode == 'cells':
         for count, file_name in enumerate(reversed(args.file)):
             morph = Morph(file_name)
             colors = {k: f'C{count % _NCOLORS}' for k in types}
-            plot_neuron(ax, morph, types, colors=colors)
+            plot_neuron(ax, morph, types, colors=colors, linewidth=args.linewidth)
     elif args.mode == 'shadow':
         for file_name in reversed(args.file[1:]):
             colors = {k: args.shadow_color for k in types}
             plot_neuron(ax, Morph(file_name), types, colors=colors,
                         linewidth=args.shadow_width)
         morph = Morph(args.file[0])
-        plot_neuron(ax, morph, types)
+        plot_neuron(ax, morph, types, linewidth=args.linewidth)
 
     if args.branch:
         for group in args.branch:
@@ -82,10 +83,10 @@ def view(args):
             nodes = filter(lambda x: x.ident() in group, morph.root.walk())
             nodes = filter(lambda x: x.type() in types, nodes)
             for branch in nodes:
-                plot_tree(ax, branch, morph.data, linewidth=1.5, color='C5')
+                plot_tree(ax, branch, morph.data, linewidth=1.5*args.linewidth, color='C5')
                 if args.show_id:
                     plot_points(ax, morph, group, types,
-                                show_id=args.show_id)
+                                show_id=args.show_id, markersize=6*args.linewidth)
 
     if args.sec:
         for group in args.sec:
@@ -93,14 +94,14 @@ def view(args):
             nodes = filter(lambda x: x.ident() in group, morph.root.walk())
             nodes = filter(lambda x: x.type() in types, nodes)
             for sec in nodes:
-                plot_section(ax, sec, morph.data, linewidth=1.5, color='C5')
+                plot_section(ax, sec, morph.data, linewidth=1.5*args.linewidth, color='C5')
                 if args.show_id:
                     plot_points(ax, morph, group, types,
-                                show_id=args.show_id)
+                                show_id=args.show_id, markersize=6*args.linewidth)
 
     if args.mark:
         for group in args.mark:
-            plot_points(ax, morph, group, types, show_id=args.show_id)
+            plot_points(ax, morph, group, types, show_id=args.show_id, markersize=6*args.linewidth)
 
     if args.angle:
         ax.view_init(args.angle[0], args.angle[1])

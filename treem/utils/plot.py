@@ -79,7 +79,7 @@ def plot_neuron(ax, morph, types=SWC.TYPES, colors=None, linewidth=1):
             color='black')
 
 
-def plot_points(ax, morph, ids, types=SWC.TYPES, show_id=False):
+def plot_points(ax, morph, ids, types=SWC.TYPES, show_id=False, markersize=6):
     """Plots marker points.
 
     Args:
@@ -91,7 +91,7 @@ def plot_points(ax, morph, ids, types=SWC.TYPES, show_id=False):
     points = np.array([morph.data[x-1] for x in ids
                        if morph.data[x-1][SWC.T] in types])
     x, y, z = points[:, SWC.XYZ].T
-    ax.plot(x, y, z, linestyle='', marker='.')
+    ax.plot(x, y, z, linestyle='', marker='.', markersize=markersize)
     if show_id:
         for point in points:
             x, y, z = point[SWC.XYZ]

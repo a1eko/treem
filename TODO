@@ -9,3 +9,4 @@ Key: - todo, + done, o pending/attention, x ignore
 + swc-find: distance to origin
 + swc-repair: add neurite to root if id=1 is in the list of the cut points
 - swc-repair (repair_branch): consider selecting median section length
+- setup.py: try versioneer
