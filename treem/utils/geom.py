@@ -142,6 +142,8 @@ def fibonacci_sphere(npoints=100):
     indices = np.arange(0, npoints, dtype=float) + 0.5
     phi = np.arccos(1 - 2 * indices / npoints)
     theta = np.pi * (1 + 5**0.5) * indices
-    x, y, z = np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)
+    x = np.cos(theta) * np.sin(phi)
+    y = np.sin(theta) * np.sin(phi)
+    z = np.cos(phi)
     points = np.array([x, y, z]).T
     return points

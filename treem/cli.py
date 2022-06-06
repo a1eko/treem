@@ -113,6 +113,8 @@ def cli():
                           help='segment length threshold, um')
     cmd_find.add_argument('-i', dest='dist', metavar='<float>', type=float,
                           help='distance to origin threshold, um')
+    cmd_find.add_argument('-s', dest='slice', metavar='<float>', type=float,
+                          help='virtual slice threshold (z axis), um')
     cmd_find.add_argument('-z', dest='jump', metavar='<float>', type=float,
                           help='z-jump threshold, um')
     cmd_find.add_argument('--comp', dest='compare', metavar='<str>',
@@ -128,7 +130,7 @@ def cli():
     cmd_find.add_argument('--cut-find', dest='cut_find',
                           action='store_true', help='find cut plane')
     cmd_find.add_argument('--cut-find-iter', dest='cut_iter', metavar='<int>', type=int,
-                          default=300, help='number of iterations [300]')
+                          default=800, help='number of iterations [800]')
     cmd_find.add_argument('-n', dest='nodes', metavar='<int>', type=int,
                           nargs='+', help='branch nodes')
     cmd_find.add_argument('--sec', dest='sec', action='store_true',

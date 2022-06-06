@@ -5,6 +5,7 @@ import numpy as np
 from treem.morph import Morph
 from treem.io import SWC
 from treem.utils.geom import fibonacci_sphere
+from treem.utils.geom import rotation_matrix
 from treem.utils.geom import rotation
 
 
@@ -50,6 +51,14 @@ def find(args):  # pylint: disable=too-many-branches
         elif args.compare == 'eq':
             nodes = filter(lambda x: x.dist() == args.dist, nodes)
 
+    if args.slice is not None:
+        if args.compare == 'gt':
+            nodes = filter(lambda x: x.coord()[2] > args.slice, nodes)
+        elif args.compare == 'lt':
+            nodes = filter(lambda x: x.coord()[2] < args.slice, nodes)
+        elif args.compare == 'eq':
+            nodes = filter(lambda x: x.coord()[2] == args.slice, nodes)
+
     if args.jump is not None:
         if args.compare == 'gt':
             nodes = filter(lambda x: not x.is_root()
@@ -78,16 +87,15 @@ def find(args):  # pylint: disable=too-many-branches
             node_list = list(nodes)
             node_ids = [x.ident() for x in node_list]
             points = fibonacci_sphere(args.cut_iter)
+            ztip = np.array([x.v for x in morph.root.leaves()])
             zdir = (0, 0, 1)
             for vdir in points:
-                new_morph = morph.copy()
-                new_morph.data[:, SWC.XYZ] -= new_morph.root.coord()
-                new_node_list = [x for x in new_morph.root.leaves() if x.ident() in node_ids]
+                vtip = ztip.copy()
                 axis, angle = rotation(zdir, vdir)
-                new_morph.rotate(axis, angle)
-                zmax = np.max([x.v[SWC.Z] for x in new_node_list if x.ident() in node_ids])
-                cuts = [int(x.v[SWC.I]) for x in new_node_list
-                        if zmax - x.coord()[2] < args.cut]
+                rotm = rotation_matrix(axis, angle)
+                vtip[:, SWC.XYZ] = np.dot(rotm, vtip[:, SWC.XYZ].T).T
+                zmax = vtip[:, SWC.Z].max()
+                cuts = [int(v[SWC.I]) for v in vtip if zmax - v[SWC.Z] < args.cut]
                 found_cuts.append(cuts)
             max_cuts = max(len(x) for x in found_cuts)
             for cuts in found_cuts:
