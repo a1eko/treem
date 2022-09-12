@@ -269,8 +269,12 @@ class App:
             for node in stem.walk():
                 nr = node.radius()
                 px, py, pz = node.parent.coord()
-                pr = node.parent.radius()
-                pr /= 2.0 if node.parent == morph.root else 1.0
+                #pr = node.parent.radius()
+                #pr /= 2.0 if node.parent == morph.root else 1.0
+                if node.parent != morph.root:
+                    pr = node.parent.radius()
+                else:
+                    pr = nr
                 glPushMatrix()
                 glTranslatef(px, py, pz)
                 axis, angle = rotation(
