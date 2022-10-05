@@ -205,13 +205,15 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZ]
+        #return np.array([node.coord() for node in sec])
 
     def radii(self, sec):
         """Returns reference to section radii."""
-        first = sec[0].ident() - 1
-        last = sec[-1].ident()
-        block = slice(first, last)
-        return self.data[block, SWC.RADII]
+        #first = sec[0].ident() - 1
+        #last = sec[-1].ident()
+        #block = slice(first, last)
+        #return self.data[block, SWC.RADII]
+        return np.array([node.radius() for node in sec])
 
     def points(self, sec):
         """Returns reference to section data."""
@@ -219,6 +221,7 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZR]
+        #return np.array([node.v[XYZR] for node in sec])
 
     def length(self, sec):  # pylint: disable=no-self-use
         """Returns section length (float)."""
