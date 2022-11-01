@@ -11,3 +11,4 @@ Key: - todo, + done, o pending/attention, x ignore
 - swc-repair (repair_branch): consider selecting median section length
 - swc-render: make rendering smoother
 - setup.py: try versioneer
+o swc-view: run gdk-pixbuf-register to enable matplotlib backends
