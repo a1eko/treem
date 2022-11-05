@@ -42,7 +42,7 @@ class Node(Tree):
     def is_stem(self):
         """Returns True if node is a stem node."""
         return (not self.is_root() and self.parent.is_root()
-                and self.type is not SWC.SOMA)
+                and self.type() is not SWC.SOMA)
 
     def order(self):
         """Returns branch order (int). A primary neurite has order 1."""
