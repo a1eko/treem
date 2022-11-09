@@ -33,6 +33,10 @@ tool:
 
     swc <command> [options] file
 
+or sometimes more convenient as
+
+    swc <command> file [file ...] [options] 
+
 List of ``swc`` commands:
 
 * ``check``    - Test morphology reconstruction for structural consistency

@@ -69,9 +69,9 @@ class Node(Tree):
         """Returns coordinates of the node (x,y,z) (NumPy ndarray[3])."""
         return self.v[SWC.XYZ]
 
-    def dist(self):
+    def dist(self, origin=[0.0, 0.0, 0.0]):
         """Returns Euclidean distance of the node to origin (float)."""
-        return np.linalg.norm(self.v[SWC.XYZ])
+        return np.linalg.norm(self.v[SWC.XYZ] - origin)
 
     def radius(self):
         """Returns radius of the node (float)."""
@@ -281,7 +281,7 @@ class Morph():
         data = np.array([x.v for x in node.walk()])
         return Morph(data=data)
 
-    # Programming notes: 
+    # Programming notes:
     # 1) __renumber() changes internal container data;
     # 2) delete(), insert(), prune() and graft() desynchronize
     #    the data and the linked list;
@@ -336,3 +336,113 @@ class Morph():
         self.data = np.append(self.data, tree.data, axis=0)
         node.add(tree.root)
         self.__renumber()
+
+
+def get_segdata(morph):
+    m = morph
+    d = dict()
+    for i, t, x, y, z, r, p in m.data:
+        i, t, x, y, z, r, p = int(i), int(t), x, y, z, r, int(p)
+        d[i] = {'t': t, 'x': x, 'y': y, 'z': z, 'r': r, 'p': p}
+
+    center = m.root.coord()
+    for node in m.root.walk():
+        if node.type() == SWC.SOMA:
+            ident = node.ident()
+            d[ident]['length'] = 0.0
+            d[ident]['path'] = 0.0
+            d[ident]['xsec'] = 0.0
+            d[ident]['xsec_rel'] = 0.0
+            d[ident]['dist'] = 0.0
+            d[ident]['order'] = 0
+            d[ident]['breadth'] = 0
+            d[ident]['totlen'] = 0.0
+
+    for stem in m.stems():
+        for sec in stem.sections():
+            order = 1
+            xsec = 0.0
+            seclen = m.length(sec)
+            for node in sec:
+                ident = node.ident()
+                length = node.length()
+                xsec += length
+                if node.parent.is_fork() and node.parent != m.root:
+                    order += 1
+                dist = np.linalg.norm(center - node.coord())
+                path = d[node.parent.ident()]['path']
+                path += length
+                d[ident]['length'] = length
+                d[ident]['path'] = path
+                d[ident]['xsec'] = xsec
+                d[ident]['xsec_rel'] = xsec / seclen
+                d[ident]['dist'] = dist
+                d[ident]['order'] = order
+                d[ident]['breadth'] = 1
+                d[ident]['totlen'] = 0.0
+
+    for term in m.root.leaves():
+        for node in term.walk(reverse=True):
+            if not node.is_leaf():
+                ident = node.ident()
+                descent_ident = [x.ident() for x in node.siblings]
+                descent_length = [x.length() for x in node.siblings]
+                descent_breadth = [d[i]['breadth'] for i in descent_ident]
+                descent_totlen = [d[i]['totlen'] for i in descent_ident]
+                breadth = sum(descent_breadth)
+                totlen = sum(descent_totlen) + sum(descent_length)
+                d[ident]['breadth'] = breadth
+                d[ident]['totlen'] = totlen
+
+    return np.array([[i, d[i]['t'], d[i]['x'], d[i]['y'], d[i]['z'], d[i]['r'], d[i]['p'],
+                      d[i]['length'], d[i]['path'], d[i]['xsec'], d[i]['xsec_rel'],
+                      d[i]['dist'], d[i]['order'], d[i]['breadth'], d[i]['totlen']]
+                     for i in sorted(d)])
+
+
+class SEG():  # pylint: disable=too-few-public-methods
+    """Definitions of the extended segment data format."""
+    I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL, DIST, ORDER, BREADTH, TOTLEN = range(15)
+
+
+class DGram(Morph):
+    """Neuron dendrogram representation."""
+    def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES, zorder=0.0, ystep=1.0, zstep=1.0):
+        if not morph:
+            morph = Morph(source=source, data=data)
+        else:
+            morph = Morph(data=morph.data)
+        if morph is None:
+            super(DGram, self).__init__()
+        else:
+            for stem in morph.stems():
+                if stem.type() not in types:
+                    morph.prune(stem)
+            graph = Morph(data=morph.data)
+            segdata = get_segdata(graph)
+            for sec in graph.root.sections():
+                start_node = sec[0]
+                seclink = start_node.length()
+                #secrad = graph.radii(sec).mean()
+                for node in sec:
+                    ident = node.ident()
+                    data = graph.data[ident-1]
+                    segd = segdata[ident-1]
+                    data[SWC.X] = segd[SEG.PATH]
+                    #data[SWC.R] = secrad
+            graph.data[:, SWC.YZ] = [0.0, zorder*zstep]
+            for stem in graph.stems():
+                for sec in stem.sections():
+                    start_node = sec[0]
+                    parent = start_node.parent
+                    shift = start_node.coord() - parent.coord()
+                    graph.translate(-shift, start_node)
+            for index,term in enumerate(graph.root.leaves(), start=1):
+                pos = index*ystep
+                for node in term.walk(reverse=True):
+                    ident = node.ident()
+                    value = graph.data[ident-1]
+                    if node.is_fork() or node.is_root():
+                        pos = np.mean([x.coord()[1] for x in node.siblings])
+                    value[SWC.Y] = pos
+            super(DGram, self).__init__(data=graph.data)
