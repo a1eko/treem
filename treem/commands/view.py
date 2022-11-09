@@ -148,11 +148,15 @@ def view(args):
     ax.set_box_aspect([1, 1, 1])
 
     if args.scale and args.scale > 0:
-        ax.plot([xmax-args.scale, xmax], [ymin, ymin], [zmin, zmin],
-                color='k', linewidth=3)
-        ax.plot([xmax, xmax], [ymin, ymin+args.scale], [zmin, zmin],
-                color='k', linewidth=3)
-        ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin+args.scale],
-                color='k', linewidth=3)
+        if args.dgram:
+            ax.plot([xmax-args.scale, xmax], [ymin-smax/10, ymin-smax/10], [zmin, zmin],
+                    color='k', linewidth=3)
+        else:
+            ax.plot([xmax-args.scale, xmax], [ymin, ymin], [zmin, zmin],
+                    color='k', linewidth=3)
+            ax.plot([xmax, xmax], [ymin, ymin+args.scale], [zmin, zmin],
+                    color='k', linewidth=3)
+            ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin+args.scale],
+                    color='k', linewidth=3)
 
     plt.show() if not args.out else plt.savefig(args.out, dpi=100)
