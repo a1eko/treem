@@ -6,6 +6,8 @@ import matplotlib as mpl
 from cycler import cycler
 
 from treem.morph import Morph
+from treem.morph import DGram
+from treem.morph import SEG
 from treem.io import SWC
 
 from treem.utils.plot import plot_neuron
@@ -60,20 +62,21 @@ def view(args):
         mpl.rcParams['axes.prop_cycle'] = cycler(color=colors)
 
     if args.mode == 'neurites':
-        for file_name in reversed(args.file):
-            morph = Morph(file_name)
+        for count, file_name in enumerate(reversed(args.file)):
+            morph = Morph(file_name) if not args.dgram else DGram(source=file_name, zorder=count, ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
             plot_neuron(ax, morph, types, linewidth=args.linewidth)
     elif args.mode == 'cells':
         for count, file_name in enumerate(reversed(args.file)):
-            morph = Morph(file_name)
+            morph = Morph(file_name) if not args.dgram else DGram(source=file_name, zorder=count, ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
             colors = {k: f'C{count % _NCOLORS}' for k in types}
             plot_neuron(ax, morph, types, colors=colors, linewidth=args.linewidth)
     elif args.mode == 'shadow':
         for file_name in reversed(args.file[1:]):
             colors = {k: args.shadow_color for k in types}
-            plot_neuron(ax, Morph(file_name), types, colors=colors,
+            morph = Morph(file_name) if not args.dgram else DGram(source=file_name, ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
+            plot_neuron(ax, morph, types, colors=colors,
                         linewidth=args.shadow_width)
-        morph = Morph(args.file[0])
+        morph = Morph(args.file[0]) if not args.dgram else DGram(source=args.file[0], zstep=args.dgram_zstep, types=types)
         plot_neuron(ax, morph, types, linewidth=args.linewidth)
 
     if args.branch:
@@ -130,9 +133,18 @@ def view(args):
     ymax = ax.xy_dataLim.ymax
     zmax = ax.zz_dataLim.xmax
     smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
-    ax.set_xlim((xmin+xmax-smax)/2, (xmin+xmax+smax)/2)
-    ax.set_ylim((ymin+ymax-smax)/2, (ymin+ymax+smax)/2)
-    ax.set_zlim((zmin+zmax-smax)/2, (zmin+zmax+smax)/2)
+    if args.xlim:
+        ax.set_xlim(args.xlim[0], args.xlim[1])
+    else:
+        ax.set_xlim((xmin+xmax-smax)/2, (xmin+xmax+smax)/2)
+    if args.ylim:
+        ax.set_ylim(args.ylim[0], args.ylim[1])
+    else:
+        ax.set_ylim((ymin+ymax-smax)/2, (ymin+ymax+smax)/2)
+    if args.zlim:
+        ax.set_zlim(args.zlim[0], args.zlim[1])
+    else:
+        ax.set_zlim((zmin+zmax-smax)/2, (zmin+zmax+smax)/2)
     ax.set_box_aspect([1, 1, 1])
 
     if args.scale and args.scale > 0:
