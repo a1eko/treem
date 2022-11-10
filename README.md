@@ -58,7 +58,7 @@ Install the latest stable release:
 
 Install a development version:
 
-    pip3 install git+git://github.com/a1eko/treem
+    pip3 install git+https://github.com/a1eko/treem
 
 See also ``pip3`` documentation for installation alternatives.
 

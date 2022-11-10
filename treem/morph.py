@@ -209,11 +209,11 @@ class Morph():
 
     def radii(self, sec):
         """Returns reference to section radii."""
-        #first = sec[0].ident() - 1
-        #last = sec[-1].ident()
-        #block = slice(first, last)
-        #return self.data[block, SWC.RADII]
-        return np.array([node.radius() for node in sec])
+        first = sec[0].ident() - 1
+        last = sec[-1].ident()
+        block = slice(first, last)
+        return self.data[block, SWC.RADII]  # FIXME possibly interferes with swc-repair
+        #return np.array([node.radius() for node in sec])
 
     def points(self, sec):
         """Returns reference to section data."""
