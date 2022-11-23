@@ -37,6 +37,7 @@ def modify(args):
             radii *= args.scale_radius
 
     if args.scale:
+        scale = np.abs(args.scale)
         for node in nodes:
             sec = list(node.section())
             head = sec[0].coord().copy()

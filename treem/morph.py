@@ -354,6 +354,7 @@ def get_segdata(morph):
             d[ident]['xsec'] = 0.0
             d[ident]['xsec_rel'] = 0.0
             d[ident]['dist'] = 0.0
+            d[ident]['degree'] = 0
             d[ident]['order'] = 0
             d[ident]['breadth'] = 0
             d[ident]['totlen'] = 0.0
@@ -377,6 +378,7 @@ def get_segdata(morph):
                 d[ident]['xsec'] = xsec
                 d[ident]['xsec_rel'] = xsec / seclen
                 d[ident]['dist'] = dist
+                d[ident]['degree'] = node.degree()
                 d[ident]['order'] = order
                 d[ident]['breadth'] = 1
                 d[ident]['totlen'] = 0.0
@@ -396,13 +398,13 @@ def get_segdata(morph):
 
     return np.array([[i, d[i]['t'], d[i]['x'], d[i]['y'], d[i]['z'], d[i]['r'], d[i]['p'],
                       d[i]['length'], d[i]['path'], d[i]['xsec'], d[i]['xsec_rel'],
-                      d[i]['dist'], d[i]['order'], d[i]['breadth'], d[i]['totlen']]
+                      d[i]['dist'], d[i]['degree'], d[i]['order'], d[i]['breadth'], d[i]['totlen']]
                      for i in sorted(d)])
 
 
 class SEG():  # pylint: disable=too-few-public-methods
     """Definitions of the extended segment data format."""
-    I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL, DIST, ORDER, BREADTH, TOTLEN = range(15)
+    I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL, DIST, DEGREE, ORDER, BREADTH, TOTLEN = range(16)
 
 
 class DGram(Morph):

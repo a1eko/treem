@@ -165,7 +165,7 @@ def cli():
     cmd_modify.add_argument('-i', dest='ids', metavar='<int>', type=int,
                             nargs='+', help='input ids')
     cmd_modify.add_argument('-s', dest='scale', metavar='<float>', type=float,
-                            nargs=3, help='scaling factors (x,y,z axes)')
+                            nargs=3, help='scaling factors, positive (x,y,z axes)')
     cmd_modify.add_argument('-r', dest='scale_radius', metavar='<float>',
                             type=float, help='radius scaling factor')
     cmd_modify.add_argument('-t', dest='stretch', metavar='<float>',
