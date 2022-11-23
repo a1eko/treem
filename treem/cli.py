@@ -167,7 +167,7 @@ def cli():
     cmd_modify.add_argument('-s', dest='scale', metavar='<float>', type=float,
                             nargs=3, help='scaling factors, positive (x,y,z axes)')
     cmd_modify.add_argument('-r', dest='scale_radius', metavar='<float>',
-                            type=float, help='radius scaling factor')
+                            type=float, help='radius scaling factor, positive')
     cmd_modify.add_argument('-t', dest='stretch', metavar='<float>',
                             type=float, help='stretching strength, rel.')
     cmd_modify.add_argument('-m', dest='smooth', metavar='<int>', type=int,

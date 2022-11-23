@@ -31,10 +31,11 @@ def modify(args):
     nodes = list(nodes)
 
     if args.scale_radius:
+        scale = np.abs(args.scale_radius)
         for node in nodes:
             sec = list(node.section())
             radii = morph.radii(sec)
-            radii *= args.scale_radius
+            radii *= scale
 
     if args.scale:
         scale = np.abs(args.scale)
