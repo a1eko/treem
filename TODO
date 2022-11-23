@@ -13,6 +13,7 @@ Key: - todo, + done, o pending/attention, x ignore
 - setup.py: try versioneer
 o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 - swc-measure (Node.dist): evaluate distance to root, not origin
-+ utils (get_segdata): extract extended segment data (two-pass parsing)
++ morph (get_segdata): extract extended segment data (two-pass parsing)
 + swc-view: add dendrogram view
 + swc-view: add external fixed axes limits
+- swc-modify: broken scaling with negative factor (eg, -s -1 1 1)
