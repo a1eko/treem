@@ -17,5 +17,5 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-view: add axes limits
 + swc-modify: scaling with positive factors only
 + swc-repair: add flip option (-f {x,y,z}); flip around root, not origin
-- swc-find: change distance-to-origin to distance-to-root
-- swc-measure (Node.dist): evaluate distance to root, not origin
++ swc-find: change distance-to-origin to distance-to-root
++ swc-measure (Node.dist): evaluate distance to root, not origin
