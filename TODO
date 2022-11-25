@@ -12,8 +12,10 @@ Key: - todo, + done, o pending/attention, x ignore
 - swc-render: make rendering smoother
 - setup.py: try versioneer
 o swc-view: run gdk-pixbuf-register to enable matplotlib backends
-- swc-measure (Node.dist): evaluate distance to root, not origin
 + morph (get_segdata): extract extended segment data (two-pass parsing)
 + swc-view: add dendrogram view
-+ swc-view: add external fixed axes limits
-- swc-modify: broken scaling with negative factor (eg, -s -1 1 1)
++ swc-view: add axes limits
++ swc-modify: scaling with positive factors only
++ swc-repair: add flip option (-f {x,y,z}); flip around root, not origin
+- swc-find: change distance-to-origin to distance-to-root
+- swc-measure (Node.dist): evaluate distance to root, not origin

@@ -341,6 +341,17 @@ def repair(args):
             ident += 1
         morph = Morph(data=np.array(data))
 
+    if args.flip:
+        center = morph.root.coord().copy()
+        if 'x' in args.flip:
+            morph.data[:, SWC.X] *= -1
+        if 'y' in args.flip:
+            morph.data[:, SWC.Y] *= -1
+        if 'z' in args.flip:
+            morph.data[:, SWC.Z] *= -1
+        shift = morph.root.coord() - center
+        morph.data[:, SWC.XYZ] -= shift
+
     if args.center:
         morph.data[:, SWC.XYZ] -= morph.root.coord()
 
