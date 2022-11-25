@@ -247,6 +247,8 @@ def cli():
                             choices=['align', 'split', 'tilt', 'join'],
                             help='correction mode '
                                  '{align,split,tilt,join} [align]')
+    cmd_repair.add_argument('-f', dest='flip', metavar='<str>', type=str, nargs='+',
+                            choices=['x', 'y', 'z'], help='flip along axis {x,y,z}')
     cmd_repair.add_argument('-r', dest='res', metavar='<float>', type=float,
                             help='sampling resolution, um')
     cmd_repair.add_argument('-o', dest='out', metavar='<str>', type=str,
