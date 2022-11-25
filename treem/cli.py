@@ -124,7 +124,7 @@ def cli():
     cmd_find.add_argument('-l', dest='length', metavar='<float>', type=float,
                           help='segment length threshold, um')
     cmd_find.add_argument('-i', dest='dist', metavar='<float>', type=float,
-                          help='distance to origin threshold, um')
+                          help='distance to root threshold, um')
     cmd_find.add_argument('-s', dest='slice', metavar='<float>', type=float,
                           help='virtual slice threshold (z axis), um')
     cmd_find.add_argument('-z', dest='jump', metavar='<float>', type=float,

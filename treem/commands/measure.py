@@ -96,7 +96,7 @@ def measure(args):
                 if point_type in set(types).difference((SWC.SOMA,)):
                     if point_type not in dist:
                         dist[point_type] = list()
-                    dist[point_type].append(np.linalg.norm(node.coord() - c0))
+                    dist[point_type].append(node.dist(c0))
             for point_type in dist:
                 d = metric[name][ptmap[point_type]]
                 d['dist'] = max(dist[point_type])

@@ -45,11 +45,11 @@ def find(args):  # pylint: disable=too-many-branches
 
     if args.dist is not None:
         if args.compare == 'gt':
-            nodes = filter(lambda x: x.dist() > args.dist, nodes)
+            nodes = filter(lambda x: x.dist(morph.root.coord()) > args.dist, nodes)
         elif args.compare == 'lt':
-            nodes = filter(lambda x: x.dist() < args.dist, nodes)
+            nodes = filter(lambda x: x.dist(morph.root.coord()) < args.dist, nodes)
         elif args.compare == 'eq':
-            nodes = filter(lambda x: x.dist() == args.dist, nodes)
+            nodes = filter(lambda x: x.dist(morph.root.coord()) == args.dist, nodes)
 
     if args.slice is not None:
         if args.compare == 'gt':
