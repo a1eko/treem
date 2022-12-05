@@ -76,7 +76,7 @@ def view(args):
             morph = Morph(file_name) if not args.dgram else DGram(source=file_name, ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
             plot_neuron(ax, morph, types, colors=colors,
                         linewidth=args.shadow_width)
-        morph = Morph(args.file[0]) if not args.dgram else DGram(source=args.file[0], zstep=args.dgram_zstep, types=types)
+        morph = Morph(args.file[0]) if not args.dgram else DGram(source=args.file[0], ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
         plot_neuron(ax, morph, types, linewidth=args.linewidth)
 
     if args.branch:
