@@ -212,7 +212,7 @@ class Morph():
         first = sec[0].ident() - 1
         last = sec[-1].ident()
         block = slice(first, last)
-        return self.data[block, SWC.RADII]  # FIXME possibly interferes with swc-repair
+        return self.data[block, SWC.RADII]  # FIXME possibly unsafe addressing, see repair_branch()
         #return np.array([node.radius() for node in sec])
 
     def points(self, sec):
