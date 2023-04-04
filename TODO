@@ -18,3 +18,4 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-find: change distance-to-origin to distance-to-root
 + swc-measure (Node.dist): evaluate distance to root, not origin
 - swc-{modify,repair}: keep root coordinates with scaling/shrinkage correction
+- swc-measure: rewrite for parallel execution (see experimental swc-meter)
