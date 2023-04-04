@@ -13,6 +13,7 @@ from treem.commands.find import find
 from treem.commands.modify import modify
 from treem.commands.repair import repair
 from treem.commands.measure import measure
+from treem.commands.meter import meter
 from treem.commands.convert import convert
 
 try:
@@ -276,6 +277,25 @@ def cli():
     cmd_measure.add_argument('-o', dest='out', metavar='<str>', type=str,
                              help='output morphometric file (json)')
     cmd_measure.set_defaults(func=measure)
+
+    cmd_meter = subparsers.add_parser('meter', help='meter morphology (DEV)')
+    cmd_meter.add_argument('file', type=str, nargs='+',
+                             help='input morphology file (swc)')
+    cmd_meter.add_argument('-p', dest='type', metavar='<int>', type=int,
+                             nargs='+', choices=SWC.TYPES,
+                             help='point type {1,2,3,4} [all]')
+    cmd_meter.add_argument('-a', dest='opt', metavar='<str>', type=str,
+                             nargs='+', choices=['sec', 'seg', 'sholl'],
+                             help='optional feature {sec,seg,sholl}')
+    cmd_meter.add_argument('--sholl-res', dest='sholl_res', metavar='<float>',
+                             type=float, default=10.0,
+                             help='sholl sampling resolution, um [10.0]')
+    cmd_meter.add_argument('--sholl-proj', dest='sholl_proj', metavar='<str>',
+                             type=str, choices=['xy', 'xz', 'yz'],
+                             help='sholl projection {xy,xz,yz} [3d]')
+    cmd_meter.add_argument('-o', dest='out', metavar='<str>', type=str,
+                             help='output morphometric file (json)')
+    cmd_meter.set_defaults(func=meter)
 
     cmd_convert = subparsers.add_parser('convert', help='convert input file')
     cmd_convert.add_argument('file', type=str,
