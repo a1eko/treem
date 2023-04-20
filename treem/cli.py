@@ -96,10 +96,10 @@ def cli():
                           default=14, help='title font size [14]')
     cmd_view.add_argument('-g', dest='dgram', action='store_true',
                           help='show as dendrogram graph')
-    cmd_view.add_argument('--dgram-ystep', dest='dgram_ystep', metavar='<float>', type=float, default=1.0,
-                          help='change breadth step size in y-axis [1.0]')
-    cmd_view.add_argument('--dgram-zstep', dest='dgram_zstep', metavar='<float>', type=float, default=1.0,
-                          help='change breadth step size in z-axis [1.0]')
+    cmd_view.add_argument('--dgram-ystep', dest='dgram_ystep', metavar='<float>', type=float, default=0.0,
+                          help='change breadth step size in y-axis [auto]')
+    cmd_view.add_argument('--dgram-zstep', dest='dgram_zstep', metavar='<float>', type=float, default=0.0,
+                          help='change breadth step size in z-axis [auto]')
     cmd_view.add_argument('-j', dest='proj', metavar='<str>', type=str,
                           choices=['xy', 'xz', 'yz'],
                           help='projection {xy,xz,yz}')

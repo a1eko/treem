@@ -409,7 +409,7 @@ class SEG():  # pylint: disable=too-few-public-methods
 
 class DGram(Morph):
     """Neuron dendrogram representation."""
-    def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES, zorder=0.0, ystep=1.0, zstep=1.0):
+    def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES, zorder=0.0, ystep=0.0, zstep=0.0):
         if not morph:
             morph = Morph(source=source, data=data)
         else:
@@ -432,6 +432,12 @@ class DGram(Morph):
                     segd = segdata[ident-1]
                     data[SWC.X] = segd[SEG.PATH]
                     #data[SWC.R] = secrad
+            if ystep == 0.0 or zstep == 0.0:
+                maxdist = max([node.dist() for node in morph.root.leaves()])
+                ntips = sum([1 for node in morph.root.leaves()])
+                dgram_step = maxdist / ntips
+            ystep = ystep if ystep != 0.0 else dgram_step
+            zstep = zstep if zstep != 0.0 else dgram_step
             graph.data[:, SWC.YZ] = [0.0, zorder*zstep]
             for stem in graph.stems():
                 for sec in stem.sections():
@@ -439,6 +445,9 @@ class DGram(Morph):
                     parent = start_node.parent
                     shift = start_node.coord() - parent.coord()
                     graph.translate(-shift, start_node)
+            if ystep==0.0:
+                ntips = sum([1 for node in morph.root.leaves()])
+                ystep = maxdist / ntips
             for index,term in enumerate(graph.root.leaves(), start=1):
                 pos = index*ystep
                 for node in term.walk(reverse=True):
