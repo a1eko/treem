@@ -445,9 +445,6 @@ class DGram(Morph):
                     parent = start_node.parent
                     shift = start_node.coord() - parent.coord()
                     graph.translate(-shift, start_node)
-            if ystep==0.0:
-                ntips = sum([1 for node in morph.root.leaves()])
-                ystep = maxdist / ntips
             for index,term in enumerate(graph.root.leaves(), start=1):
                 pos = index*ystep
                 for node in term.walk(reverse=True):
