@@ -18,6 +18,5 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-find: change distance-to-origin to distance-to-root
 + swc-measure (Node.dist): evaluate distance to root, not origin
 + swc-measure: rewrite for parallel execution (see experimental swc-meter)
-+ swc-measure: make dist standard feature (-a dist)
-- swc-measure: add segment data option (-a seg) (see morph.py:get_segdata()), remove exp swc-meter
-- swc-view: add json output format for section lines per point type
++ swc-measure: make dist a standard feature (-a dist)
++ swc-measure: add segment data option (-a seg) (see morph.py:get_segdata()), remove exp swc-meter
