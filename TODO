@@ -20,6 +20,8 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-measure: rewrite for parallel execution (see experimental swc-meter)
 + swc-measure: make dist a standard feature (-a dist)
 + swc-measure: add segment data option (-a seg) (see morph.py:get_segdata()), remove exp swc-meter
++ treem: add scripts/swc2pts.py
+- treem (setup.py): make scripts/* installable
 - treem: code cleanup
 - treem: doc update
 - treem: release v1.0.5
