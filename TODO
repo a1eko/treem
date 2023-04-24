@@ -8,7 +8,7 @@ Key: - todo, + done, o pending/attention, x ignore
 + swc-measure: add optional features (-a {sholl,dist,path,sec})
 + swc-find: distance to origin
 + swc-repair: add neurite to root if id=1 is in the list of the cut points
-- swc-render: make rendering smoother
+x swc-render: make rendering smoother
 o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + morph (get_segdata): extract extended segment data (two-pass parsing)
 + swc-view: add dendrogram view
@@ -20,3 +20,6 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-measure: rewrite for parallel execution (see experimental swc-meter)
 + swc-measure: make dist a standard feature (-a dist)
 + swc-measure: add segment data option (-a seg) (see morph.py:get_segdata()), remove exp swc-meter
+- treem: code cleanup
+- treem: doc update
+- treem: release v1.0.5
