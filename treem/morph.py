@@ -212,7 +212,8 @@ class Morph():
         first = sec[0].ident() - 1
         last = sec[-1].ident()
         block = slice(first, last)
-        return self.data[block, SWC.RADII]  # FIXME possibly unsafe addressing, see repair_branch()
+        # FIXME possibly unsafe addressing, see repair_branch()
+        return self.data[block, SWC.RADII]
         #return np.array([node.radius() for node in sec])
 
     def points(self, sec):
@@ -396,20 +397,24 @@ def get_segdata(morph):
                 d[ident]['breadth'] = breadth
                 d[ident]['totlen'] = totlen
 
-    return np.array([[i, d[i]['t'], d[i]['x'], d[i]['y'], d[i]['z'], d[i]['r'], d[i]['p'],
+    return np.array([[i, d[i]['t'], d[i]['x'], d[i]['y'], d[i]['z'],
+                      d[i]['r'], d[i]['p'],
                       d[i]['length'], d[i]['path'], d[i]['xsec'], d[i]['xsec_rel'],
-                      d[i]['dist'], d[i]['degree'], d[i]['order'], d[i]['breadth'], d[i]['totlen']]
+                      d[i]['dist'], d[i]['degree'], d[i]['order'], d[i]['breadth'],
+                      d[i]['totlen']]
                      for i in sorted(d)])
 
 
 class SEG():  # pylint: disable=too-few-public-methods
     """Definitions of the extended segment data format."""
-    I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL, DIST, DEGREE, ORDER, BREADTH, TOTLEN = range(16)
+    (I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL,  # noqa: E741
+     DIST, DEGREE, ORDER, BREADTH, TOTLEN) = range(16)
 
 
 class DGram(Morph):
     """Neuron dendrogram representation."""
-    def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES, zorder=0.0, ystep=0.0, zstep=0.0):
+    def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES,
+                 zorder=0.0, ystep=0.0, zstep=0.0):
         if not morph:
             morph = Morph(source=source, data=data)
         else:
@@ -424,7 +429,7 @@ class DGram(Morph):
             segdata = get_segdata(graph)
             for sec in graph.root.sections():
                 start_node = sec[0]
-                seclink = start_node.length()
+                #seclink = start_node.length()
                 #secrad = graph.radii(sec).mean()
                 for node in sec:
                     ident = node.ident()

@@ -163,7 +163,6 @@ def measure(args):
     # pylint: disable=too-many-statements
     # pylint: disable=cell-var-from-loop
     # pylint: disable=undefined-loop-variable
-    ptmap = dict(zip(SWC.TYPES, ['soma', 'axon', 'dend', 'apic']))
     metric = dict()
     reconstructions = args.file
     items = zip(reconstructions, (args,) * len(reconstructions))

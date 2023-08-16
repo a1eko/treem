@@ -22,7 +22,7 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-measure: add segment data option (-a seg) (see morph.py:get_segdata()), remove exp swc-meter
 + treem: add scripts/swc2pts.py
 - treem (swc2pts.py): consider export in dendrogram form (-g)
-- treem (setup.py): make scripts/* installable
-- treem: code cleanup
+x treem (setup.py): make scripts/* installable
++ treem: code cleanup (using ruff as flake8 replacement)
 - treem: doc update
 - treem: release v1.1

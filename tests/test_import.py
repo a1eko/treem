@@ -2,6 +2,7 @@
 
 # pylint: disable=unused-import
 # pylint: disable=import-outside-toplevel
+# ruff: noqa: F401
 
 
 def test_import_treem():
