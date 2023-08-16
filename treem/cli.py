@@ -16,7 +16,7 @@ from treem.commands.measure import measure
 from treem.commands.convert import convert
 
 try:
-    import OpenGL
+    import OpenGL  # noqa: F401
     from treem.commands.render import render, _HELP
 except ImportError:
     pass
@@ -95,9 +95,11 @@ def cli():
                           default=14, help='title font size [14]')
     cmd_view.add_argument('-g', dest='dgram', action='store_true',
                           help='show as dendrogram graph')
-    cmd_view.add_argument('--dgram-ystep', dest='dgram_ystep', metavar='<float>', type=float, default=0.0,
+    cmd_view.add_argument('--dgram-ystep', dest='dgram_ystep', metavar='<float>',
+                          type=float, default=0.0,
                           help='change breadth step size in y-axis [auto]')
-    cmd_view.add_argument('--dgram-zstep', dest='dgram_zstep', metavar='<float>', type=float, default=0.0,
+    cmd_view.add_argument('--dgram-zstep', dest='dgram_zstep', metavar='<float>',
+                          type=float, default=0.0,
                           help='change breadth step size in z-axis [auto]')
     cmd_view.add_argument('-j', dest='proj', metavar='<str>', type=str,
                           choices=['xy', 'xz', 'yz'],
@@ -216,8 +218,10 @@ def cli():
                             action='store_true',
                             help='repair cuts using branches of any order')
     cmd_repair.add_argument('--graft-point-type', dest='graft_point_type', type=int,
-                            choices=set(SWC.TYPES).difference((SWC.SOMA,)), default=SWC.DEND,
-                            help='point type of a branch to graft on to a soma node {2,3,4} [3]')
+                            choices=set(SWC.TYPES).difference((SWC.SOMA,)),
+                            default=SWC.DEND,
+                            help='point type of a branch to graft '
+                            + 'onto a soma node {2,3,4} [3]')
     cmd_repair.add_argument('--del-branch', dest='del_branch',
                             action='store_true',
                             help='delete cut branches before repair')

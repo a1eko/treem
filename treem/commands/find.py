@@ -85,7 +85,7 @@ def find(args):  # pylint: disable=too-many-branches
         else:
             found_cuts = list()
             node_list = list(nodes)
-            node_ids = [x.ident() for x in node_list]
+            #node_ids = [x.ident() for x in node_list]
             points = fibonacci_sphere(args.cut_iter)
             ztip = np.array([x.v for x in morph.root.leaves()])
             zdir = (0, 0, 1)

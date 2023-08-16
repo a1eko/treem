@@ -31,7 +31,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter, epilog=examples)
     parser.add_argument('file', type=str, nargs='+', help='input file (swc)')
-    parser.add_argument('-o', dest='out', type=str, default='pts.json', help='output file [pts.json]')
+    parser.add_argument('-o', dest='out', type=str, default='pts.json',
+                        help='output file [pts.json]')
     return parser.parse_args()
 
 

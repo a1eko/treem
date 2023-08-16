@@ -7,7 +7,6 @@ from cycler import cycler
 
 from treem.morph import Morph
 from treem.morph import DGram
-from treem.morph import SEG
 from treem.io import SWC
 
 from treem.utils.plot import plot_neuron
@@ -63,20 +62,36 @@ def view(args):
 
     if args.mode == 'neurites':
         for count, file_name in enumerate(reversed(args.file)):
-            morph = Morph(file_name) if not args.dgram else DGram(source=file_name, zorder=count, ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
+            if not args.dgram:
+                morph = Morph(file_name)
+            else:
+                morph = DGram(source=file_name, zorder=count, ystep=args.dgram_ystep,
+                              zstep=args.dgram_zstep, types=types)
             plot_neuron(ax, morph, types, linewidth=args.linewidth)
     elif args.mode == 'cells':
         for count, file_name in enumerate(reversed(args.file)):
-            morph = Morph(file_name) if not args.dgram else DGram(source=file_name, zorder=count, ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
+            if not args.dgram:
+                morph = Morph(file_name)
+            else:
+                morph = DGram(source=file_name, zorder=count, ystep=args.dgram_ystep,
+                              zstep=args.dgram_zstep, types=types)
             colors = {k: f'C{count % _NCOLORS}' for k in types}
             plot_neuron(ax, morph, types, colors=colors, linewidth=args.linewidth)
     elif args.mode == 'shadow':
         for file_name in reversed(args.file[1:]):
             colors = {k: args.shadow_color for k in types}
-            morph = Morph(file_name) if not args.dgram else DGram(source=file_name, ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
+            if not args.dgram:
+                morph = Morph(file_name)
+            else:
+                morph = DGram(source=file_name, ystep=args.dgram_ystep,
+                              zstep=args.dgram_zstep, types=types)
             plot_neuron(ax, morph, types, colors=colors,
                         linewidth=args.shadow_width)
-        morph = Morph(args.file[0]) if not args.dgram else DGram(source=args.file[0], ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
+        if not args.dgram:
+            morph = Morph(args.file[0])
+        else:
+            morph = DGram(source=args.file[0], ystep=args.dgram_ystep,
+                          zstep=args.dgram_zstep, types=types)
         plot_neuron(ax, morph, types, linewidth=args.linewidth)
 
     if args.branch:
@@ -86,7 +101,8 @@ def view(args):
             nodes = filter(lambda x: x.ident() in group, morph.root.walk())
             nodes = filter(lambda x: x.type() in types, nodes)
             for branch in nodes:
-                plot_tree(ax, branch, morph.data, linewidth=1.5*args.linewidth, color='C5')
+                plot_tree(ax, branch, morph.data,
+                          linewidth=1.5*args.linewidth, color='C5')
                 if args.show_id:
                     plot_points(ax, morph, group, types,
                                 show_id=args.show_id, markersize=6*args.linewidth)
@@ -97,14 +113,16 @@ def view(args):
             nodes = filter(lambda x: x.ident() in group, morph.root.walk())
             nodes = filter(lambda x: x.type() in types, nodes)
             for sec in nodes:
-                plot_section(ax, sec, morph.data, linewidth=1.5*args.linewidth, color='C5')
+                plot_section(ax, sec, morph.data,
+                             linewidth=1.5*args.linewidth, color='C5')
                 if args.show_id:
                     plot_points(ax, morph, group, types,
                                 show_id=args.show_id, markersize=6*args.linewidth)
 
     if args.mark:
         for group in args.mark:
-            plot_points(ax, morph, group, types, show_id=args.show_id, markersize=6*args.linewidth)
+            plot_points(ax, morph, group, types,
+                        show_id=args.show_id, markersize=6*args.linewidth)
 
     if args.angle:
         ax.view_init(args.angle[0], args.angle[1])

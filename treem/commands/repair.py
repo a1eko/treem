@@ -193,7 +193,7 @@ def repair(args):
             for node in stems:
                 for child in node.siblings:
                     morph.prune(child)
-            vprint(f'renumbering nodes, old node ids are lost')
+            vprint('renumbering nodes, old node ids are lost')
             morph = Morph(data=morph.data)
             cuts = [x.ident() for x in morph.root.siblings if x.is_leaf()]
             vprint(f'reassigning cut points to {cuts}')
@@ -273,8 +273,8 @@ def repair(args):
         intact_branches = list()
         if args.pool:
             for rec in pool:
-                sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1,
-                                  rec.root.sections())
+                sections = filter(lambda x: x[0].type() == point_type
+                                  and x[0].order() == 1, rec.root.sections())
                 nodes = chain(x[0] for x in sections)
                 for node in nodes:
                     intact_branches.append((rec, node))
@@ -287,7 +287,7 @@ def repair(args):
             for node in nodes:
                 intact_branches.append((morig, node))
 
-        vprint(f'grafting branch on to a soma node', end=' ')
+        vprint('grafting branch on to a soma node', end=' ')
         nodes = [x for x in morph.root.walk() if x.ident() in graft_points]
         for node in nodes:
             vprint(f'{node.ident()}', end=' ')

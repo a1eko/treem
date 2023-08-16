@@ -4,6 +4,7 @@ build/
 __pycache__/
 .pytest_cache/
 .coverage
+.ruff*/
 htmlcov/
 *.pyc
 *.swp

@@ -10,7 +10,7 @@ dependencies = [
 
 setuptools.setup(
     name="treem",
-    version="1.1.0.dev1",
+    version="1.1.0.dev2",
     author="Alexander Kozlov",
     author_email="akozlov@kth.se",
     description="Tree-like morphology data processing",
@@ -26,7 +26,7 @@ setuptools.setup(
     },
     license="MIT",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 3 - Alpha",  # FIXME change status
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
