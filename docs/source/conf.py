@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 
 project = 'treem'
-copyright = '2020, Alexander Kozlov (KTH, Stockholm)'
+copyright = '2023, Alexander Kozlov (KTH, Stockholm)'
 author = 'Alexander Kozlov (KTH, Stockholm)'
 
 # The full version, including alpha/beta/rc tags
