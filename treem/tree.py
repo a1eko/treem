@@ -9,7 +9,7 @@ class Tree():
     def __init__(self):
         """Constructor of empty tree."""
         self.parent = None
-        self.siblings = list()
+        self.siblings = []
 
     def add(self, tree):
         """Appends tree as continuation."""
@@ -125,7 +125,7 @@ class Tree():
 
     def height(self):
         """Returns tree height."""
-        path = list()
+        path = []
         node_depth = self.depth()
         for leaf in self.leaves():
             path.append(leaf.depth() - node_depth)

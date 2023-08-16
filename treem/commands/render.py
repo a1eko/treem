@@ -8,8 +8,6 @@ from treem.utils.geom import rotation
 # pylint: disable=wildcard-import
 # pylint: disable=unused-wildcard-import
 # pylint: disable=redefined-builtin
-# ruff: noqa: F403
-# ruff: noqa: F405
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -364,7 +362,6 @@ class App:
 
     def run(self):
         """Enter event processing loop."""
-        # pylint: disable=no-self-use
         glutMainLoop()
 
 

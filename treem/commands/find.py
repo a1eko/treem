@@ -9,8 +9,11 @@ from treem.utils.geom import rotation_matrix
 from treem.utils.geom import rotation
 
 
-def find(args):  # pylint: disable=too-many-branches
+def find(args):
     """Locates single nodes in morphology reconstruction."""
+    # pylint: disable=too-many-statements
+    # pylint: disable=too-many-branches
+    # pylint: disable=too-many-locals
     morph = Morph(args.file)
     types = args.type if args.type else SWC.TYPES
     nodes = filter(lambda x: x.type() in types, morph.root.walk())
@@ -83,7 +86,7 @@ def find(args):  # pylint: disable=too-many-branches
                 zcut = min(x.coord()[2] for x in morph.root.walk())
                 nodes = filter(lambda x: x.coord()[2] < zcut + args.cut, nodes)
         else:
-            found_cuts = list()
+            found_cuts = []
             node_list = list(nodes)
             #node_ids = [x.ident() for x in node_list]
             points = fibonacci_sphere(args.cut_iter)
@@ -108,7 +111,7 @@ def find(args):  # pylint: disable=too-many-branches
                        or x.parent.is_root(), nodes)
 
     if args.stem:
-        stems = list()
+        stems = []
         for node in nodes:
             stems.extend(x for x in filter(lambda x: x.is_stem() and
                 x.type() != SWC.SOMA, node.walk(reverse=True))

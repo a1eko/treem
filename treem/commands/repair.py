@@ -185,7 +185,7 @@ def repair(args):
         cuts = set(x for x in args.cut if morph.node(x).type() != SWC.SOMA)
         keep_radii = args.keep_radii
         if args.del_branch:
-            stems = list()
+            stems = []
             for cut in cuts:
                 stems.extend(x for x in filter(lambda x: x.is_stem() and
                      x.type() != SWC.SOMA, morph.node(cut).walk(reverse=True))
@@ -203,7 +203,7 @@ def repair(args):
             graft_points = set(args.cut).difference(cuts)
         types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
         for point_type in types:
-            intact_branches = dict()
+            intact_branches = {}
             if args.pool:
                 for rec in pool:
                     sections = filter(lambda x: x[0].type() == point_type,
@@ -212,7 +212,7 @@ def repair(args):
                     for node in nodes:
                         order = node.order()
                         if order not in intact_branches:
-                            intact_branches[order] = list()
+                            intact_branches[order] = []
                         intact_branches[order].append((rec, node))
             else:
                 sections = filter(lambda x: x[0].type() == point_type,
@@ -223,7 +223,7 @@ def repair(args):
                 for node in nodes:
                     order = node.order()
                     if order not in intact_branches:
-                        intact_branches[order] = list()
+                        intact_branches[order] = []
                     intact_branches[order].append((morig, node))
 
             nodes = [x for x in morph.root.walk() if x.type() == point_type
@@ -270,7 +270,7 @@ def repair(args):
 
     if args.cut and graft_points:
         point_type = args.graft_point_type
-        intact_branches = list()
+        intact_branches = []
         if args.pool:
             for rec in pool:
                 sections = filter(lambda x: x[0].type() == point_type
@@ -310,7 +310,7 @@ def repair(args):
 
     if args.res:
         ident = 1
-        data = list()
+        data = []
         idmap = {-1: -1}
         for sec in filter(lambda x: x[0].type() == SWC.SOMA,
                           morph.root.sections()):

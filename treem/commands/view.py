@@ -53,10 +53,10 @@ def view(args):
 
     if args.cycler_color:
         colors = list(_colors)
-        for x in args.cycler_color:
+        for x in args.cycler_color:  # pylint: disable=invalid-name
             i, colorname = x.split(':')
             i = int(i)
-            if 0 <= i and i < _NCOLORS:
+            if 0 <= i < _NCOLORS:
                 colors[i] = colorname
         mpl.rcParams['axes.prop_cycle'] = cycler(color=colors)
 
@@ -110,6 +110,7 @@ def view(args):
     if args.sec:
         for group in args.sec:
             # pylint: disable=undefined-loop-variable
+            # pylint: disable=cell-var-from-loop
             nodes = filter(lambda x: x.ident() in group, morph.root.walk())
             nodes = filter(lambda x: x.type() in types, nodes)
             for sec in nodes:
@@ -150,7 +151,7 @@ def view(args):
     xmax = ax.xy_dataLim.xmax
     ymax = ax.xy_dataLim.ymax
     zmax = ax.zz_dataLim.xmax
-    smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
+    smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))  # pylint: disable=W3301
     if args.xlim:
         ax.set_xlim(args.xlim[0], args.xlim[1])
     else:
