@@ -4,8 +4,8 @@ import os
 import json
 import math
 
-import numpy as np
 import multiprocessing as mp
+import numpy as np
 
 from treem import Morph, SWC
 
@@ -24,18 +24,18 @@ def get_morphometry(reconstruction, args):
     # pylint: disable=undefined-loop-variable
     types = args.type if args.type else SWC.TYPES
     ptmap = dict(zip(SWC.TYPES, ['soma', 'axon', 'dend', 'apic']))
-    morphometry = dict()
+    morphometry = {}
 
     morph = Morph(reconstruction)
     name = os.path.splitext(os.path.basename(reconstruction))[0]
-    morphometry[name] = dict()
+    morphometry[name] = {}
     c0 = morph.root.coord()
 
     if args.opt and 'seg' in args.opt:
         segdata = get_segdata(morph)
 
     for point_type in set(types).difference((SWC.SOMA,)):
-        mdata = list()
+        mdata = []
         for sec in filter(lambda x: x[0].type() == point_type,
                           morph.root.sections()):
             head = sec[0]
@@ -55,7 +55,7 @@ def get_morphometry(reconstruction, args):
                  dist])
         if mdata:
             ndata = np.array(mdata)
-            d = morphometry[name][ptmap[point_type]] = dict()
+            d = morphometry[name][ptmap[point_type]] = {}
             d['degree'] = np.max(ndata[:, 0], axis=0).astype(int)
             d['order'] = np.max(ndata[:, 1], axis=0).astype(int)
             d['breadth'] = np.max(ndata[:, 2], axis=0).astype(int)
@@ -82,7 +82,7 @@ def get_morphometry(reconstruction, args):
                 d['_seg'] = segdata[sel]
 
     for point_type in set(types).intersection((SWC.SOMA,)):
-        mdata = list()
+        mdata = []
         for sec in filter(lambda x: x[0].type() == point_type,
                           morph.root.sections()):
             if len(sec) > 1:
@@ -94,22 +94,22 @@ def get_morphometry(reconstruction, args):
             mdata.append([area, volume, morph.radii(sec).mean()*2])
         if mdata:
             ndata = np.array(mdata)
-            d = morphometry[name][ptmap[point_type]] = dict()
+            d = morphometry[name][ptmap[point_type]] = {}
             d['area'] = np.sum(ndata[:, 0], axis=0)
             d['volume'] = np.sum(ndata[:, 1], axis=0)
             d['diam'] = np.mean(ndata[:, 2], axis=0)
             d['xroot'], d['yroot'], d['zroot'] = morph.root.coord()
 
     if args.opt and 'path' in args.opt:
-        path = dict()
+        path = {}
         for node in morph.root.leaves():
             point_type = node.type()
             if point_type in set(types).difference((SWC.SOMA,)):
                 if point_type not in path:
-                    path[point_type] = list()
-                path_length = sum([x.length() for x in node.walk(reverse=True)])
+                    path[point_type] = []
+                path_length = sum(x.length() for x in node.walk(reverse=True))
                 path[point_type].append(path_length)
-        for point_type in path:
+        for point_type in path:  # pylint: disable=C0206
             d = morphometry[name][ptmap[point_type]]
             d['path'] = max(path[point_type])
 
@@ -122,12 +122,12 @@ def get_morphometry(reconstruction, args):
             c0 = morph.root.v[SWC.YZ]
         else:
             c0 = morph.root.coord()
-        sholl_data = dict()
+        sholl_data = {}
         for node in morph.root.walk():
             point_type = node.type()
             if point_type in set(types).difference((SWC.SOMA,)):
                 if point_type not in sholl_data:
-                    sholl_data[point_type] = dict()
+                    sholl_data[point_type] = {}
                 if args.sholl_proj and args.sholl_proj == 'xy':
                     c1 = node.parent.v[SWC.XY]
                     c2 = node.v[SWC.XY]
@@ -146,7 +146,7 @@ def get_morphometry(reconstruction, args):
                     if circle not in sholl_data[point_type]:
                         sholl_data[point_type][circle] = 0
                     sholl_data[point_type][circle] += 1
-        for point_type in sholl_data:
+        for point_type in sholl_data:  # pylint: disable=C0206
             radii = [x * args.sholl_res for x in sholl_data[point_type]]
             cross = [sholl_data[point_type][x] for x in sholl_data[point_type]]
             d = morphometry[name][ptmap[point_type]]
@@ -163,7 +163,7 @@ def measure(args):
     # pylint: disable=too-many-statements
     # pylint: disable=cell-var-from-loop
     # pylint: disable=undefined-loop-variable
-    metric = dict()
+    metric = {}
     reconstructions = args.file
     items = zip(reconstructions, (args,) * len(reconstructions))
     with mp.Pool() as pool:
@@ -171,11 +171,11 @@ def measure(args):
             metric.update(morphometry)
 
     if not args.out:
-        for name in metric:
+        for name in metric:  # pylint: disable=C0206
             print(name)
             for point_type in sorted(metric[name]):
                 for feature in sorted(metric[name][point_type]):
-                    if feature != 'sholl' and feature != '_sec' and feature != '_seg':
+                    if feature not in ('sholl', '_sec', '_seg'):
                         print(f'{point_type} {feature:10s} '
                               f'{metric[name][point_type][feature]:>8g}')
                     elif feature == 'sholl':
@@ -183,5 +183,5 @@ def measure(args):
                               f'{sum(metric[name][point_type][feature]["crossings"]):>8g}')
             print()
     else:
-        with open(args.out, 'w') as f:
-            json.dump(metric, f, indent=4, sort_keys=True, cls=TreemEncoder)
+        with open(args.out, 'w', encoding='utf-8') as file:
+            json.dump(metric, file, indent=4, sort_keys=True, cls=TreemEncoder)

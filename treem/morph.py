@@ -16,7 +16,7 @@ class Node(Tree):
 
     def __init__(self, value=None):
         """Inits Node with value."""
-        super(Node, self).__init__()
+        super().__init__()
         self.v = value  # pylint: disable=invalid-name
 
     def __str__(self):
@@ -69,7 +69,7 @@ class Node(Tree):
         """Returns coordinates of the node (x,y,z) (NumPy ndarray[3])."""
         return self.v[SWC.XYZ]
 
-    def dist(self, origin=[0.0, 0.0, 0.0]):
+    def dist(self, origin=[0.0, 0.0, 0.0]):  # pylint: disable=dangerous-default-value
         """Returns Euclidean distance of the node to origin (float)."""
         return np.linalg.norm(self.v[SWC.XYZ] - origin)
 
@@ -154,7 +154,7 @@ class Morph():
         """
         self.data = None
         self.root = None
-        self.nodes = list()
+        self.nodes = []
         if source:
             self.load(source)
         elif data is not None:
@@ -212,7 +212,7 @@ class Morph():
         first = sec[0].ident() - 1
         last = sec[-1].ident()
         block = slice(first, last)
-        # FIXME possibly unsafe addressing, see repair_branch()
+        # possibly unsafe addressing, see repair_branch()
         return self.data[block, SWC.RADII]
         #return np.array([node.radius() for node in sec])
 
@@ -224,19 +224,19 @@ class Morph():
         return self.data[block, SWC.XYZR]
         #return np.array([node.v[XYZR] for node in sec])
 
-    def length(self, sec):  # pylint: disable=no-self-use
+    def length(self, sec):
         """Returns section length (float)."""
         return sum(node.length() for node in sec)
 
-    def area(self, sec):  # pylint: disable=no-self-use
+    def area(self, sec):
         """Returns section area (float)."""
         return sum(node.area() for node in sec)
 
-    def volume(self, sec):  # pylint: disable=no-self-use
+    def volume(self, sec):
         """Returns section volume (float)."""
         return sum(node.volume() for node in sec)
 
-    def move(self, shift, node):  # pylint: disable=no-self-use
+    def move(self, shift, node):
         """Shifts node coordinates by 3D vector (float[3])."""
         node.v[SWC.XYZ] += shift
 
@@ -340,10 +340,13 @@ class Morph():
 
 
 def get_segdata(morph):
+    """Collects extended segment data."""
+    # pylint: disable=invalid-name
+    # pylint: disable=too-many-locals
     m = morph
-    d = dict()
+    d = {}
     for i, t, x, y, z, r, p in m.data:
-        i, t, x, y, z, r, p = int(i), int(t), x, y, z, r, int(p)
+        i, t, x, y, z, r, p = int(i), int(t), float(x), float(y), float(z), float(r), int(p)
         d[i] = {'t': t, 'x': x, 'y': y, 'z': z, 'r': r, 'p': p}
 
     center = m.root.coord()
@@ -407,7 +410,7 @@ def get_segdata(morph):
 
 class SEG():  # pylint: disable=too-few-public-methods
     """Definitions of the extended segment data format."""
-    (I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL,  # noqa: E741
+    (I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL,
      DIST, DEGREE, ORDER, BREADTH, TOTLEN) = range(16)
 
 
@@ -415,12 +418,15 @@ class DGram(Morph):
     """Neuron dendrogram representation."""
     def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES,
                  zorder=0.0, ystep=0.0, zstep=0.0):
+        # pylint: disable=too-many-arguments
+        # pylint: disable=too-many-locals
+        # pylint: disable=too-many-branches
         if not morph:
             morph = Morph(source=source, data=data)
         else:
             morph = Morph(data=morph.data)
         if morph is None:
-            super(DGram, self).__init__()
+            super().__init__()
         else:
             for stem in morph.stems():
                 if stem.type() not in types:
@@ -438,8 +444,10 @@ class DGram(Morph):
                     data[SWC.X] = segd[SEG.PATH]
                     #data[SWC.R] = secrad
             if ystep == 0.0 or zstep == 0.0:
-                maxdist = max([node.dist() for node in morph.root.leaves()])
-                ntips = sum([1 for node in morph.root.leaves()])
+                #maxdist = max([node.dist() for node in morph.root.leaves()])
+                #ntips = sum([1 for node in morph.root.leaves()])
+                maxdist = max(node.dist() for node in morph.root.leaves())
+                ntips = sum(1 for node in morph.root.leaves())
                 dgram_step = maxdist / ntips
             ystep = ystep if ystep != 0.0 else dgram_step
             zstep = zstep if zstep != 0.0 else dgram_step
@@ -458,4 +466,4 @@ class DGram(Morph):
                     if node.is_fork() or node.is_root():
                         pos = np.mean([x.coord()[1] for x in node.siblings])
                     value[SWC.Y] = pos
-            super(DGram, self).__init__(data=graph.data)
+            super().__init__(data=graph.data)

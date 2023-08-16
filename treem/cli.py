@@ -1,6 +1,8 @@
 """Command-line interface to package treem."""
 
 # pylint: disable=too-many-statements
+# pylint: disable=ungrouped-imports
+# pylint: disable=unused-import
 
 import argparse
 import sys
@@ -16,7 +18,7 @@ from treem.commands.measure import measure
 from treem.commands.convert import convert
 
 try:
-    import OpenGL  # noqa: F401
+    import OpenGL
     from treem.commands.render import render, _HELP
 except ImportError:
     pass
@@ -75,7 +77,7 @@ def cli():
                           metavar='<float>', type=float, default=1.0,
                           help='line width [1.0]')
     cmd_view.add_argument('--set-color', dest='cycler_color', nargs='+',
-                          metavar='<str>', type=str, 
+                          metavar='<str>', type=str,
                           help='set color (number:colorname)')
     cmd_view.add_argument('-a', dest='angle', metavar='<float>', type=float,
                           nargs=2, help='initial rotation angles, deg. '

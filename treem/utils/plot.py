@@ -88,6 +88,7 @@ def plot_points(ax, morph, ids, types=SWC.TYPES, show_id=False, markersize=6):
         ids (int iterable): list of node IDs.
         types (int iterable): point types to display.
     """
+    # pylint: disable=too-many-arguments
     points = np.array([morph.data[x-1] for x in ids
                        if morph.data[x-1][SWC.T] in types])
     x, y, z = points[:, SWC.XYZ].T

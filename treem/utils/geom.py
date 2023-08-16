@@ -74,6 +74,7 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
     Returns:
         True if repaired.
     """
+    # pylint: disable=too-many-arguments
     done = 0
     cutsec = list(reversed(list(cut.section(reverse=True))))
     repsec = list(rep.section())
@@ -95,7 +96,7 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
         if keep_radii:
             scale_r = 1
         else:
-            #FIXME unsafe use of memory block in radii() may cause errors in swc-repair
+            # possibly unsafe use of memory block in radii() may cause errors in swc-repair
             #rcut = cmorph.radii(cutsec).mean()
             #rrep = rmorph.radii(repsec).mean()
             rcut = np.mean([node.radius() for node in cutsec])

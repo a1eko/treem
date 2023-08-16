@@ -14,7 +14,7 @@ def check(args):
     # pylint: disable=too-many-branches
     # pylint: disable=too-many-statements
     data = None
-    err = dict()
+    err = {}
     while True:
         if not os.path.exists(args.file) or not os.path.isfile(args.file):
             err['no_file'] = [args.file]
@@ -98,12 +98,12 @@ def check(args):
         break
 
     if not args.quiet:
-        for k in err:
+        for k in err:  # pylint: disable=C0206
             print(f'{k}:', end=' ')
             print(*err[k])
 
     if args.out:
-        with open(args.out, 'w') as f:  # pylint: disable=invalid-name
-            json.dump(err, f, cls=TreemEncoder)
+        with open(args.out, 'w', encoding='utf-8') as file:
+            json.dump(err, file, cls=TreemEncoder)
 
     return len(err)
