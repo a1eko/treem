@@ -26,7 +26,7 @@ setuptools.setup(
     },
     license="MIT",
     classifiers=[
-        "Development Status :: 3 - Alpha",  # FIXME change status
+        "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
