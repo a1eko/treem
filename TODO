@@ -24,5 +24,6 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 - treem (swc2pts.py): consider export in dendrogram form (-g)
 x treem (setup.py): make scripts/* installable
 + treem: code cleanup
-- treem: doc update
++ treem: doc update
+- treem: fix build status on github (replace travis-ci with github actions)
 - treem: release v1.1.0
