@@ -10,7 +10,7 @@ Stockley-Wheal-Cannon format (SWC).
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
 [![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
 [![Coverage Status](https://coveralls.io/repos/github/a1eko/treem/badge.svg?branch=master&kill_cache=1)](https://coveralls.io/github/a1eko/treem?branch=master)
-[![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890845.svg)](https://doi.org/10.5281/zenodo.4890845)
+[![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
 
 
 
