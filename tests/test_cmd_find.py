@@ -77,7 +77,7 @@ def test_stem():
     """Tests for stem starting nodes."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'find', 'pass_simple_branch.swc',
-                             '-s'],
+                             '-e', '1', '--stem'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
