@@ -19,6 +19,7 @@ dend breadth           3
 dend contrac           1
 dend degree            2
 dend diam          0.382
+dend dist        8.48528
 dend length      16.9706
 dend nbranch           2
 dend nstem             1
