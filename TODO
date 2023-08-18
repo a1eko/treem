@@ -25,5 +25,6 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 x treem (setup.py): make scripts/* installable
 + treem: code cleanup
 + treem: doc update
-- treem: add build status and coverage on github
++ treem: add build status on github
+- treem: add coverage status on github
 - treem: release v1.1.0
