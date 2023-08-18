@@ -8,9 +8,9 @@ Stockley-Wheal-Cannon format (SWC).
 
 [![PyPI version](https://badge.fury.io/py/treem.svg)](https://badge.fury.io/py/treem)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
-[![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
 ![Build Status](https://github.com/a1eko/treem/actions/workflows/python-app.yml/badge.svg)
-[![codecov.io](https://codecov.io/github/a1eko/treem/coverage.svg?branch=master)](https://codecov.io/github/a1eko/treem?branch=master)
+[![codecov.io](https://codecov.io/github/a1eko/treem/coverage.svg)](https://codecov.io/github/a1eko/treem)
+[![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
 [![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
 
 
