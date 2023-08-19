@@ -50,7 +50,7 @@ def get_morphometry(reconstruction, args):
                 [tail.degree(), head.order(), tail.breadth(),
                  seclen, chord / seclen,
                  morph.area(sec), morph.volume(sec),
-                 morph.radii(sec).mean()*2,
+                 morph.radii(sec).mean() * 2,
                  xmin, xmax, ymin, ymax, zmin, zmax,
                  dist])
         if mdata:
@@ -68,17 +68,14 @@ def get_morphometry(reconstruction, args):
             d['area'] = np.sum(ndata[:, 5], axis=0)
             d['volume'] = np.sum(ndata[:, 6], axis=0)
             d['diam'] = np.mean(ndata[:, 7], axis=0)
-            d['xdim'] = (np.max(ndata[:, 9], axis=0)
-                         - np.min(ndata[:, 8], axis=0))
-            d['ydim'] = (np.max(ndata[:, 11], axis=0)
-                         - np.min(ndata[:, 10], axis=0))
-            d['zdim'] = (np.max(ndata[:, 13], axis=0)
-                         - np.min(ndata[:, 12], axis=0))
+            d['xdim'] = (np.max(ndata[:, 9], axis=0) - np.min(ndata[:, 8], axis=0))
+            d['ydim'] = (np.max(ndata[:, 11], axis=0) - np.min(ndata[:, 10], axis=0))
+            d['zdim'] = (np.max(ndata[:, 13], axis=0) - np.min(ndata[:, 12], axis=0))
             d['dist'] = np.max(ndata[:, 14], axis=0)
             if args.opt and 'sec' in args.opt:
                 d['_sec'] = ndata.transpose()
             if args.opt and 'seg' in args.opt:
-                sel = np.where(segdata[:, SEG.T]==point_type)
+                sel = np.where(segdata[:, SEG.T] == point_type)
                 d['_seg'] = segdata[sel]
 
     for point_type in set(types).intersection((SWC.SOMA,)):
@@ -89,9 +86,9 @@ def get_morphometry(reconstruction, args):
                 area = morph.area(sec)
                 volume = morph.volume(sec)
             else:
-                area = 4*math.pi*sec[0].radius()**2
-                volume = 4/3*math.pi*sec[0].radius()**3
-            mdata.append([area, volume, morph.radii(sec).mean()*2])
+                area = 4 * math.pi * sec[0].radius()**2
+                volume = 4 / 3 * math.pi * sec[0].radius()**3
+            mdata.append([area, volume, morph.radii(sec).mean() * 2])
         if mdata:
             ndata = np.array(mdata)
             d = morphometry[name][ptmap[point_type]] = {}

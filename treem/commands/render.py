@@ -32,6 +32,7 @@ interactive commands:
     h/?     help message
 """
 
+
 class InteractionMatrix():
     """Class for object rotation and translation."""
     # pylint: disable=invalid-name
@@ -269,8 +270,8 @@ class App:
             for node in stem.walk():
                 nr = node.radius()
                 px, py, pz = node.parent.coord()
-                #pr = node.parent.radius()
-                #pr /= 2.0 if node.parent == morph.root else 1.0
+                # pr = node.parent.radius()
+                # pr /= 2.0 if node.parent == morph.root else 1.0
                 if node.parent != morph.root:
                     pr = node.parent.radius()
                 else:
@@ -363,7 +364,6 @@ class App:
     def run(self):
         """Enter event processing loop."""
         glutMainLoop()
-
 
 
 def render(args):

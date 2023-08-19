@@ -64,17 +64,11 @@ def find(args):
 
     if args.jump is not None:
         if args.compare == 'gt':
-            nodes = filter(lambda x: not x.is_root()
-                           and abs((x.parent.coord()-x.coord())[2])
-                           > args.jump, nodes)
+            nodes = filter(lambda x: not x.is_root() and abs((x.parent.coord() - x.coord())[2]) > args.jump, nodes)
         elif args.compare == 'lt':
-            nodes = filter(lambda x: not x.is_root()
-                           and abs((x.parent.coord()-x.coord())[2])
-                           < args.jump, nodes)
+            nodes = filter(lambda x: not x.is_root() and abs((x.parent.coord() - x.coord())[2]) < args.jump, nodes)
         elif args.compare == 'eq':
-            nodes = filter(lambda x: not x.is_root()
-                           and abs((x.parent.coord()-x.coord())[2])
-                           == args.jump, nodes)
+            nodes = filter(lambda x: not x.is_root() and abs((x.parent.coord() - x.coord())[2]) == args.jump, nodes)
 
     if args.cut:
         nodes = filter(lambda x: x.is_leaf(), nodes)
@@ -88,7 +82,7 @@ def find(args):
         else:
             found_cuts = []
             node_list = list(nodes)
-            #node_ids = [x.ident() for x in node_list]
+            # node_ids = [x.ident() for x in node_list]
             points = fibonacci_sphere(args.cut_iter)
             ztip = np.array([x.v for x in morph.root.leaves()])
             zdir = (0, 0, 1)
@@ -107,15 +101,13 @@ def find(args):
             nodes = filter(lambda x: x.ident() in cuts, node_list)
 
     if args.sec:
-        nodes = filter(lambda x: x.parent.is_fork()
-                       or x.parent.is_root(), nodes)
+        nodes = filter(lambda x: x.parent.is_fork() or x.parent.is_root(), nodes)
 
     if args.stem:
         stems = []
         for node in nodes:
-            stems.extend(x for x in filter(lambda x: x.is_stem() and
-                x.type() != SWC.SOMA, node.walk(reverse=True))
-                    if x not in stems)
+            stems.extend(x for x in filter(lambda x: x.is_stem() and x.type() != SWC.SOMA, node.walk(reverse=True))
+                         if x not in stems)
         nodes = stems
 
     for node in nodes:

@@ -83,7 +83,7 @@ def modify(args):
     if args.twist:
         for node in nodes:
             axis = node.coord() - node.parent.coord()
-            angle = args.twist*np.random.uniform(-1, 1)*math.pi/180
+            angle = args.twist * np.random.uniform(-1, 1) * math.pi / 180
             morph.rotate(axis, angle, node)
 
     if args.stretch:

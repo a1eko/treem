@@ -222,8 +222,7 @@ def cli():
     cmd_repair.add_argument('--graft-point-type', dest='graft_point_type', type=int,
                             choices=set(SWC.TYPES).difference((SWC.SOMA,)),
                             default=SWC.DEND,
-                            help='point type of a branch to graft '
-                            + 'onto a soma node {2,3,4} [3]')
+                            help='point type of a branch to graft onto a soma node {2,3,4} [3]')
     cmd_repair.add_argument('--del-branch', dest='del_branch',
                             action='store_true',
                             help='delete cut branches before repair')

@@ -23,23 +23,23 @@ def rotation_matrix(axis, angle):
     axis = axis / math.sqrt(np.dot(axis, axis))
     a = math.cos(angle / 2.0)
     b, c, d = -axis * math.sin(angle / 2.0)
-    aa, bb, cc, dd = a*a, b*b, c*c, d*d
-    bc, ad, ac, ab, bd, cd = b*c, a*d, a*c, a*b, b*d, c*d
-    return np.array([[aa + bb - cc - dd, 2*(bc + ad), 2*(bd - ac)],
-                     [2*(bc - ad), aa + cc - bb - dd, 2*(cd + ab)],
-                     [2*(bd + ac), 2*(cd - ab), aa + dd - bb - cc]])
+    aa, bb, cc, dd = a * a, b * b, c * c, d * d
+    bc, ad, ac, ab, bd, cd = b * c, a * d, a * c, a * b, b * d, c * d
+    return np.array([[aa + bb - cc - dd, 2 * (bc + ad), 2 * (bd - ac)],
+                     [2 * (bc - ad), aa + cc - bb - dd, 2 * (cd + ab)],
+                     [2 * (bd + ac), 2 * (cd - ab), aa + dd - bb - cc]])
 
 
 def norm(vec):
     """Returns magnitude of a 3D vector."""
     x, y, z = vec
-    return math.sqrt(x*x + y*y + z*z)
+    return math.sqrt(x * x + y * y + z * z)
 
 
 def angle_between(u, v):
     """Returns angle in radians between two 3D vectors (float[3])."""
     un, vn, = norm(u), norm(v)
-    angle = math.acos(np.dot(u, v) / (un*vn)) if un > 1e-6 and vn > 1e-6 else 0
+    angle = math.acos(np.dot(u, v) / (un * vn)) if un > 1e-6 and vn > 1e-6 else 0
     return angle
 
 
@@ -53,7 +53,7 @@ def rotation(u, v):
     """
     angle = angle_between(u, v)
     if math.isclose(math.sin(angle), 0, abs_tol=1e-6):
-        dv = np.ones(3)*1e-6
+        dv = np.ones(3) * 1e-6
         u, v = u + dv, v - dv
     axis = np.cross(u, v)
     axis = axis / norm(axis)
@@ -97,8 +97,8 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
             scale_r = 1
         else:
             # possibly unsafe use of memory block in radii() may cause errors in swc-repair
-            #rcut = cmorph.radii(cutsec).mean()
-            #rrep = rmorph.radii(repsec).mean()
+            # rcut = cmorph.radii(cutsec).mean()
+            # rrep = rmorph.radii(repsec).mean()
             rcut = np.mean([node.radius() for node in cutsec])
             rrep = np.mean([node.radius() for node in repsec])
             scale_r = rcut / rrep
@@ -107,8 +107,7 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
         v = target.coord() - cmorph.root.coord()
         axis, angle = rotation(u, v)
         tree.rotate(axis, angle)
-        shift = (target.coord() - tree.root.coord() +
-                 target.coord() - target.parent.coord())
+        shift = (target.coord() - tree.root.coord() + target.coord() - target.parent.coord())
         tree.translate(shift)
         cmorph.graft(tree, target)
         done = 1
@@ -127,7 +126,7 @@ def sample(points, num):
     """
     num = num if num > 1 else 2
     links = [norm(p[0:3] - q[0:3]) for p, q in zip(points[:-1], points[1:])]
-    tp = [sum(links[0:i]) for i in range(len(links)+1)]
+    tp = [sum(links[0:i]) for i in range(len(links) + 1)]
     xp, yp, zp, rp = points.T
     t = np.linspace(tp[0], tp[-1], num, endpoint=True)
     return np.array([np.interp(t, tp, xp),

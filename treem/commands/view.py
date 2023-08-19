@@ -19,9 +19,9 @@ _colors = ('crimson', 'dodgerblue', 'darkgrey', 'royalblue', 'limegreen',
            'orchid', 'red', 'purple', 'orange', 'darkturquoise')
 _NCOLORS = len(_colors)
 
-#mpl.rcParams['lines.linewidth'] = 1.0
+# mpl.rcParams['lines.linewidth'] = 1.0
+# mpl.rcParams.update({'font.size': 8})
 mpl.rcParams['axes.prop_cycle'] = cycler(color=_colors)
-#mpl.rcParams.update({'font.size': 8})
 
 
 def view(args):
@@ -102,10 +102,10 @@ def view(args):
             nodes = filter(lambda x: x.type() in types, nodes)
             for branch in nodes:
                 plot_tree(ax, branch, morph.data,
-                          linewidth=1.5*args.linewidth, color='C5')
+                          linewidth=1.5 * args.linewidth, color='C5')
                 if args.show_id:
                     plot_points(ax, morph, group, types,
-                                show_id=args.show_id, markersize=6*args.linewidth)
+                                show_id=args.show_id, markersize=6 * args.linewidth)
 
     if args.sec:
         for group in args.sec:
@@ -115,15 +115,15 @@ def view(args):
             nodes = filter(lambda x: x.type() in types, nodes)
             for sec in nodes:
                 plot_section(ax, sec, morph.data,
-                             linewidth=1.5*args.linewidth, color='C5')
+                             linewidth=1.5 * args.linewidth, color='C5')
                 if args.show_id:
                     plot_points(ax, morph, group, types,
-                                show_id=args.show_id, markersize=6*args.linewidth)
+                                show_id=args.show_id, markersize=6 * args.linewidth)
 
     if args.mark:
         for group in args.mark:
             plot_points(ax, morph, group, types,
-                        show_id=args.show_id, markersize=6*args.linewidth)
+                        show_id=args.show_id, markersize=6 * args.linewidth)
 
     if args.angle:
         ax.view_init(args.angle[0], args.angle[1])
@@ -155,27 +155,27 @@ def view(args):
     if args.xlim:
         ax.set_xlim(args.xlim[0], args.xlim[1])
     else:
-        ax.set_xlim((xmin+xmax-smax)/2, (xmin+xmax+smax)/2)
+        ax.set_xlim((xmin + xmax - smax) / 2, (xmin + xmax + smax) / 2)
     if args.ylim:
         ax.set_ylim(args.ylim[0], args.ylim[1])
     else:
-        ax.set_ylim((ymin+ymax-smax)/2, (ymin+ymax+smax)/2)
+        ax.set_ylim((ymin + ymax - smax) / 2, (ymin + ymax + smax) / 2)
     if args.zlim:
         ax.set_zlim(args.zlim[0], args.zlim[1])
     else:
-        ax.set_zlim((zmin+zmax-smax)/2, (zmin+zmax+smax)/2)
+        ax.set_zlim((zmin + zmax - smax) / 2, (zmin + zmax + smax) / 2)
     ax.set_box_aspect([1, 1, 1])
 
     if args.scale and args.scale > 0:
         if args.dgram:
-            ax.plot([xmax-args.scale, xmax], [ymin-smax/10, ymin-smax/10], [zmin, zmin],
+            ax.plot([xmax - args.scale, xmax], [ymin - smax / 10, ymin - smax / 10], [zmin, zmin],
                     color='k', linewidth=3)
         else:
-            ax.plot([xmax-args.scale, xmax], [ymin, ymin], [zmin, zmin],
+            ax.plot([xmax - args.scale, xmax], [ymin, ymin], [zmin, zmin],
                     color='k', linewidth=3)
-            ax.plot([xmax, xmax], [ymin, ymin+args.scale], [zmin, zmin],
+            ax.plot([xmax, xmax], [ymin, ymin + args.scale], [zmin, zmin],
                     color='k', linewidth=3)
-            ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin+args.scale],
+            ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin + args.scale],
                     color='k', linewidth=3)
 
     plt.show() if not args.out else plt.savefig(args.out, dpi=100)

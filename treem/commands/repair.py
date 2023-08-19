@@ -27,9 +27,9 @@ def repair(args):
         morph.data[:, SWC.XYZ] += np.array(args.translate)
 
     if args.rotate:
-        morph.rotate([1, 0, 0], args.rotate[0]/180*math.pi)
-        morph.rotate([0, 1, 0], args.rotate[1]/180*math.pi)
-        morph.rotate([0, 0, 1], args.rotate[2]/180*math.pi)
+        morph.rotate([1, 0, 0], args.rotate[0] / 180 * math.pi)
+        morph.rotate([0, 1, 0], args.rotate[1] / 180 * math.pi)
+        morph.rotate([0, 0, 1], args.rotate[2] / 180 * math.pi)
 
     if args.shrink_xy:
         scale = np.array([args.shrink_xy, args.shrink_xy, 1])
@@ -58,44 +58,44 @@ def repair(args):
                 shift = [0, 0, jump]
                 morph.translate(shift, node)
             elif args.zjump_mode == 'split':
-                shift = [0, 0, jump/2]
+                shift = [0, 0, jump / 2]
                 jump_sec = list(node.section())
-                for split_node in jump_sec[:int(len(jump_sec)/2)]:
+                for split_node in jump_sec[:int(len(jump_sec) / 2)]:
                     morph.move(shift, split_node)
             elif args.zjump_mode == 'tilt':
                 parent = node.parent
-                dist = max(norm(parent.coord()-jump_node.coord())
+                dist = max(norm(parent.coord() - jump_node.coord())
                            for jump_node in node.leaves())
-                leng = max(norm(node.coord()-jump_node.coord())
+                leng = max(norm(node.coord() - jump_node.coord())
                            for jump_node in node.leaves())
                 leaf = [jump_node for jump_node in node.leaves()
-                        if norm(node.coord()-jump_node.coord()) == leng][0]
+                        if norm(node.coord() - jump_node.coord()) == leng][0]
                 vdir = leaf.coord() - node.parent.coord()
-                shift = [0, 0, jump*leng/dist]
+                shift = [0, 0, jump * leng / dist]
                 morph.translate(shift, node)
                 udir = leaf.coord() - node.coord()
                 axis, angle = rotation(udir, vdir)
                 morph.rotate(axis, angle, node)
             elif args.zjump_mode == 'join':
                 parent = node.parent
-                dist = max(norm(parent.coord()-jump_node.coord())
+                dist = max(norm(parent.coord() - jump_node.coord())
                            for jump_node in node.leaves())
-                leng = max(norm(node.coord()-jump_node.coord())
+                leng = max(norm(node.coord() - jump_node.coord())
                            for jump_node in node.leaves())
                 leaf = [jump_node for jump_node in node.leaves()
-                        if norm(node.coord()-jump_node.coord()) == leng][0]
+                        if norm(node.coord() - jump_node.coord()) == leng][0]
                 vdir = leaf.coord() - node.parent.coord()
-                shift = [0, 0, jump*leng/dist]
+                shift = [0, 0, jump * leng / dist]
                 morph.translate(shift, node)
                 udir = leaf.coord() - node.coord()
                 axis, angle = rotation(udir, vdir)
                 morph.rotate(axis, angle, node)
                 start = list(node.section(reverse=True))[-1].parent
-                dist = max(norm(start.coord()-jump_node.coord())
+                dist = max(norm(start.coord() - jump_node.coord())
                            for jump_node in node.leaves())
                 leng = morph.length(node.parent.section(reverse=True))
                 vdir = leaf.coord() - start.coord()
-                shift = [0, 0, -jump*leng/dist]
+                shift = [0, 0, -jump * leng / dist]
                 morph.translate(shift, node.parent)
                 udir = leaf.coord() - node.coord()
                 axis, angle = rotation(udir, vdir)
@@ -133,8 +133,7 @@ def repair(args):
                 if args.pool:
                     radii = [m.radii(sec).mean() for m in pool
                              for sec in m.root.sections()
-                             if sec[0].type() in types
-                             and sec[0].order() == order]
+                             if sec[0].type() in types and sec[0].order() == order]
                     if radii:
                         r = np.mean(radii)
                         node.v[SWC.R] = r
@@ -145,8 +144,7 @@ def repair(args):
                 else:
                     r = np.array([morph.radii(sec).mean()
                                   for sec in morph.root.sections()
-                                  if sec[0].type() == point_type
-                                  and sec[0].order() == order]).mean()
+                                  if sec[0].type() == point_type and sec[0].order() == order]).mean()
                     node.v[SWC.R] = r
         elif args.diam_mode == 'breadth':
             for node in nodes:
@@ -155,8 +153,7 @@ def repair(args):
                 if args.pool:
                     radii = [m.radii(sec).mean() for m in pool
                              for sec in m.root.sections()
-                             if sec[0].type() in types
-                             and sec[0].breadth() == breadth]
+                             if sec[0].type() in types and sec[0].breadth() == breadth]
                     if radii:
                         r = np.mean(radii)
                         node.v[SWC.R] = r
@@ -167,8 +164,7 @@ def repair(args):
                 else:
                     r = np.array([morph.radii(sec).mean()
                                   for sec in morph.root.sections()
-                                  if sec[0].type() == point_type
-                                  and sec[0].breadth() == breadth]).mean()
+                                  if sec[0].type() == point_type and sec[0].breadth() == breadth]).mean()
                     node.v[SWC.R] = r
         if args.diam_mode == 'value':
             for node in nodes:
@@ -187,9 +183,9 @@ def repair(args):
         if args.del_branch:
             stems = []
             for cut in cuts:
-                stems.extend(x for x in filter(lambda x: x.is_stem() and
-                     x.type() != SWC.SOMA, morph.node(cut).walk(reverse=True))
-                     if x not in stems)
+                stems.extend(x for x in filter(lambda x: x.is_stem() and x.type() != SWC.SOMA,
+                                               morph.node(cut).walk(reverse=True))
+                             if x not in stems)
             for node in stems:
                 for child in node.siblings:
                     morph.prune(child)
@@ -226,8 +222,7 @@ def repair(args):
                         intact_branches[order] = []
                     intact_branches[order].append((morig, node))
 
-            nodes = [x for x in morph.root.walk() if x.type() == point_type
-                     and x.ident() in cuts]
+            nodes = [x for x in morph.root.walk() if x.type() == point_type and x.ident() in cuts]
             for node in nodes:
                 order = node.order()
                 vprint(f'repairing node {node.ident()} (order {order})',
@@ -242,8 +237,8 @@ def repair(args):
                     err += 1 if not done else 0
                     vprint('done') if done else vprint('not repaired')
                 elif order - 1 in intact_branches:
-                    idx = np.random.choice(len(intact_branches[order-1]))
-                    rec, rep = intact_branches[order-1][idx]
+                    idx = np.random.choice(len(intact_branches[order - 1]))
+                    rec, rep = intact_branches[order - 1][idx]
                     vprint(f'using {rep.ident()} (order {order-1}) ...',
                            end=' ')
                     done = repair_branch(morph, node, rec, rep,
@@ -273,8 +268,7 @@ def repair(args):
         intact_branches = []
         if args.pool:
             for rec in pool:
-                sections = filter(lambda x: x[0].type() == point_type
-                                  and x[0].order() == 1, rec.root.sections())
+                sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1, rec.root.sections())
                 nodes = chain(x[0] for x in sections)
                 for node in nodes:
                     intact_branches.append((rec, node))
@@ -328,7 +322,7 @@ def repair(args):
             points = morph.points(sec)
             # pylint: disable=unsubscriptable-object
             points = np.insert(points, 0, sec[0].parent.v[SWC.XYZR], axis=0)
-            points = sample(points, np.ceil(length/args.res).astype(int))
+            points = sample(points, np.ceil(length / args.res).astype(int))
             points = points[1:]
             start = True
             for ident, point in enumerate(points, ident):
