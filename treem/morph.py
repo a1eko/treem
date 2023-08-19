@@ -41,8 +41,7 @@ class Node(Tree):
 
     def is_stem(self):
         """Returns True if node is a stem node."""
-        return (not self.is_root() and self.parent.is_root()
-                and self.type() is not SWC.SOMA)
+        return (not self.is_root() and self.parent.is_root() and self.type() is not SWC.SOMA)
 
     def order(self):
         """Returns branch order (int). A primary neurite has order 1."""
@@ -79,7 +78,7 @@ class Node(Tree):
 
     def diam(self):
         """Returns diameter of the node (float)."""
-        return 2*self.radius()
+        return 2 * self.radius()
 
     def length(self):
         """Returns segment length at the node (float)."""
@@ -205,7 +204,7 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZ]
-        #return np.array([node.coord() for node in sec])
+        # return np.array([node.coord() for node in sec])
 
     def radii(self, sec):
         """Returns reference to section radii."""
@@ -214,7 +213,7 @@ class Morph():
         block = slice(first, last)
         # possibly unsafe addressing, see repair_branch()
         return self.data[block, SWC.RADII]
-        #return np.array([node.radius() for node in sec])
+        # return np.array([node.radius() for node in sec])
 
     def points(self, sec):
         """Returns reference to section data."""
@@ -222,7 +221,7 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZR]
-        #return np.array([node.v[XYZR] for node in sec])
+        # return np.array([node.v[XYZR] for node in sec])
 
     def length(self, sec):
         """Returns section length (float)."""
@@ -313,7 +312,7 @@ class Morph():
         siblings = node.parent.siblings
         index = siblings.index(node)
         siblings.pop(index)
-        maxid = np.max(self.data[:, slice(SWC.I, SWC.I+1)]).astype(int)
+        maxid = np.max(self.data[:, slice(SWC.I, SWC.I + 1)]).astype(int)
         new_node.v[SWC.I] = maxid + 1
         new_node.v[SWC.P] = node.parent.ident()
         node.v[SWC.P] = new_node.ident()
@@ -331,8 +330,8 @@ class Morph():
     def graft(self, tree, node=None):
         """Grafts tree at the given node (defaults to root)."""
         node = node if node else self.root
-        maxid = np.max(self.data[:, slice(SWC.I, SWC.I+1)]).astype(int)
-        tree.data[:, slice(SWC.I, SWC.P+1, SWC.P)] += maxid
+        maxid = np.max(self.data[:, slice(SWC.I, SWC.I + 1)]).astype(int)
+        tree.data[:, slice(SWC.I, SWC.P + 1, SWC.P)] += maxid
         tree.data[0][SWC.P] = node.ident()
         self.data = np.append(self.data, tree.data, axis=0)
         node.add(tree.root)
@@ -435,34 +434,34 @@ class DGram(Morph):
             segdata = get_segdata(graph)
             for sec in graph.root.sections():
                 start_node = sec[0]
-                #seclink = start_node.length()
-                #secrad = graph.radii(sec).mean()
+                # seclink = start_node.length()
+                # secrad = graph.radii(sec).mean()
                 for node in sec:
                     ident = node.ident()
-                    data = graph.data[ident-1]
-                    segd = segdata[ident-1]
+                    data = graph.data[ident - 1]
+                    segd = segdata[ident - 1]
                     data[SWC.X] = segd[SEG.PATH]
-                    #data[SWC.R] = secrad
+                    # data[SWC.R] = secrad
             if ystep == 0.0 or zstep == 0.0:
-                #maxdist = max([node.dist() for node in morph.root.leaves()])
-                #ntips = sum([1 for node in morph.root.leaves()])
+                # maxdist = max([node.dist() for node in morph.root.leaves()])
+                # ntips = sum([1 for node in morph.root.leaves()])
                 maxdist = max(node.dist() for node in morph.root.leaves())
                 ntips = sum(1 for node in morph.root.leaves())
                 dgram_step = maxdist / ntips
             ystep = ystep if ystep != 0.0 else dgram_step
             zstep = zstep if zstep != 0.0 else dgram_step
-            graph.data[:, SWC.YZ] = [0.0, zorder*zstep]
+            graph.data[:, SWC.YZ] = [0.0, zorder * zstep]
             for stem in graph.stems():
                 for sec in stem.sections():
                     start_node = sec[0]
                     parent = start_node.parent
                     shift = start_node.coord() - parent.coord()
                     graph.translate(-shift, start_node)
-            for index,term in enumerate(graph.root.leaves(), start=1):
-                pos = index*ystep
+            for index, term in enumerate(graph.root.leaves(), start=1):
+                pos = index * ystep
                 for node in term.walk(reverse=True):
                     ident = node.ident()
-                    value = graph.data[ident-1]
+                    value = graph.data[ident - 1]
                     if node.is_fork() or node.is_root():
                         pos = np.mean([x.coord()[1] for x in node.siblings])
                     value[SWC.Y] = pos

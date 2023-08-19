@@ -13,8 +13,7 @@ def convert(args):
     try:
         data = np.loadtxt(args.file, dtype={'names': nam, 'formats': fmt})
         types = args.type if args.type else SWC.TYPES
-        nodes = [Node(row) for row in data if row[SWC.T] in types
-                 or row[SWC.P] == -1]
+        nodes = [Node(row) for row in data if row[SWC.T] in types or row[SWC.P] == -1]
         root = [node for node in nodes if node.v[SWC.P] == -1][0]
         root.v[SWC.T] = SWC.SOMA
         for i, node in enumerate(nodes, 1):
