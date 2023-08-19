@@ -21,10 +21,6 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-measure: make dist a standard feature (-a dist)
 + swc-measure: add segment data option (-a seg) (see morph.py:get_segdata()), remove exp swc-meter
 + treem: add scripts/swc2pts.py
-- treem (swc2pts.py): consider export in dendrogram form (-g)
+x treem (swc2pts.py): consider export in dendrogram form (-g)
 x treem (setup.py): make scripts/* installable
-+ treem: doc update
-+ treem: add build status on github
-+ treem: add coverage status on github
-- treem: fix flake8 warnings
-- treem: release v1.1.0
++ treem: release v1.1.0
