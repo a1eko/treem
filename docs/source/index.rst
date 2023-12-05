@@ -5,9 +5,10 @@ treem - neuron morphology processing tool
 
 .. rubric:: Module ``treem``
 
-Module provides data structure and command-line tools for accessing and
-manipulating the digital reconstructions of the neuron morphology in
-Stockley-Wheal-Cannon format (SWC).
+Module ``treem`` (pronounced as "trim") provides data structure
+and command-line tools for accessing and manipulating the digital
+reconstructions of the neuron morphology in Stockley-Wheal-Cannon format
+(SWC).
 
 
 .. rubric:: Main classes
