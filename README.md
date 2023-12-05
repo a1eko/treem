@@ -2,9 +2,10 @@
 treem - neuron morphology processing tool
 =========================================
 
-Module provides data structure and command-line tools for accessing and
-manipulating the digital reconstructions of the neuron morphology in
-Stockley-Wheal-Cannon format (SWC).
+Module ``treem`` (prononounced as "trim") provides data structure
+and command-line tools for accessing and manipulating the digital
+reconstructions of the neuron morphology in Stockley-Wheal-Cannon format
+(SWC).
 
 [![PyPI version](https://badge.fury.io/py/treem.svg)](https://badge.fury.io/py/treem)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
