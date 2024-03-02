@@ -42,7 +42,7 @@ class Tree():
             yield node
 
     def postorder(self):
-        """Traverses tree in post-order (depth first).
+        """Traverses tree in post-order (breadth first).
 
         Yields:
             sequence of tree nodes (generator object).
