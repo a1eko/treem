@@ -21,13 +21,9 @@ class Tree():
         """Returns True if tree has no parent."""
         return self.parent is None
 
-    #def is_fork(self):
-    #    """Returns True for a branching point (except root)."""
-    #    return len(self.siblings) > 1 and not self.is_root()
-
     def is_fork(self):
-        """Returns True for a branching point."""
-        return len(self.siblings) > 1
+        """Returns True for a branching point (except root)."""
+        return len(self.siblings) > 1 and not self.is_root()
 
     def is_leaf(self):
         """Returns True for a terminal node."""
