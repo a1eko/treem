@@ -43,7 +43,6 @@ class Node(Tree):
         """Returns True if node is a stem node."""
         return (not self.is_root() and self.parent.is_root() and self.type() is not SWC.SOMA)
 
-    #triggered by the change in tree.is_fork()
     #def order(self):
     #    """Returns branch order (int). A primary neurite has order 1."""
     #    return (sum(1 for node in self.forks(iterator=Tree.ascendorder)) + 1
