@@ -378,7 +378,7 @@ def get_segdata(morph):
                 length = node.length()
                 xsec += length
                 if node.parent.is_fork() and node.parent != m.root:
-                    order += 1
+                    order = d[node.parent.ident()]['order'] + 1
                 dist = np.linalg.norm(center - node.coord())
                 path = d[node.parent.ident()]['path']
                 path += length
