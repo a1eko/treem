@@ -26,4 +26,3 @@ x treem (setup.py): make scripts/* installable
 + treem: release v1.1.0
 + swc-measure: wrong values of segment order (-a seg) limited to 1 and 2
 - swc-view: distance to object setting is ignored (-d) if 'ortho' projection is used (default)
-- swc-repair: seed value is not effective for repeatability
