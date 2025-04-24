@@ -142,8 +142,8 @@ def view(args):
             ax.set_xlabel('')
             ax.set_xticks([])
 
-    if args.dist:
-        ax.dist = args.dist
+    #if args.dist:
+    #    ax.dist = args.dist
 
     xmin = ax.xy_dataLim.xmin
     ymin = ax.xy_dataLim.ymin
