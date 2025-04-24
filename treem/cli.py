@@ -82,9 +82,9 @@ def cli():
     cmd_view.add_argument('-a', dest='angle', metavar='<float>', type=float,
                           nargs=2, help='initial rotation angles, deg. '
                                         '(elevation, azimuth)')
-    cmd_view.add_argument('-d', dest='dist', metavar='<float>', type=float,
-                          default=10.0,
-                          help='initial distance to object, rel. [10.0]')
+    #cmd_view.add_argument('-d', dest='dist', metavar='<float>', type=float,
+    #                      default=10.0,
+    #                      help='initial distance to object, rel. [10.0]')
     cmd_view.add_argument('-x', dest='xlim', metavar='<float>', type=float, default=[],
                           nargs=2, help='set limits for x-axis (min, max) [auto]')
     cmd_view.add_argument('-y', dest='ylim', metavar='<float>', type=float, default=[],

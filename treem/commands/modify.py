@@ -129,7 +129,9 @@ def modify(args):
 
     if args.swap:
         np.random.shuffle(nodes)
-        for node1, node2 in zip(nodes[:-1:2], nodes[1::2]):
+        #for node1, node2 in zip(nodes[:-1:2], nodes[1::2]):
+        # swap 2 nodes at a time
+        for node1, node2 in zip(nodes[:1], nodes[1:]):
             parent1 = node1.parent
             parent2 = node2.parent
             dir1 = node1.coord() - parent1.coord()
