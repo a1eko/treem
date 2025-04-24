@@ -185,7 +185,7 @@ def cli():
     cmd_modify.add_argument('-u', dest='prune', action='store_true',
                             help='prune branches')
     cmd_modify.add_argument('-a', dest='swap', action='store_true',
-                            help='swap branches')
+                            help='swap two random branches (from the list supplied to -i)')
     cmd_modify.add_argument('--seed', dest='seed', metavar='<int>', type=int,
                             help='random seed')
     cmd_modify.add_argument('-o', dest='out', metavar='<str>', type=str,
