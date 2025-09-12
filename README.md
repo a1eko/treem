@@ -87,14 +87,33 @@ third-party extensions:
 Documentation
 -------------
 
-Documentation is available online at [Read the Docs](https://treem.readthedocs.io/en/latest/).
+Documentation is available online at [Read the
+Docs](https://treem.readthedocs.io/en/latest/).
+
+
+References
+----------
+
+1. Hjorth JJJ, Hellgren Kotaleski J, Kozlov A. Predicting
+Synaptic Connectivity for Large-Scale Microcircuit Simulations
+Using Snudda. Neuroinformatics. 2021 Oct;19(4):685-701. doi:
+10.1007/s12021-021-09531-w.
 
 
 Funding
 -------
 
-Horizon 2020 Framework Programme (785907, HBP SGA2); Horizon 2020 Framework Programme (945539, HBP SGA3); Vetenskapsrådet (VR-M-2017-02806, VR-M-2020-01652); Swedish e-science Research Center (SeRC); KTH Digital Futures.
+Horizon 2020 Framework Programme (785907, HBP SGA2); Horizon 2020
+Framework Programme (945539, HBP SGA3); Vetenskapsrådet (VR-M-2017-02806,
+VR-M-2020-01652); Swedish e-science Research Center (SeRC); KTH Digital
+Futures.
 
-We acknowledge the use of Fenix Infrastructure resources, which are partially funded from the European Union's Horizon 2020 research and innovation programme through the ICEI project under the grant agreement No. 800858.
+We acknowledge the use of Fenix Infrastructure resources, which are
+partially funded from the European Union's Horizon 2020 research and
+innovation programme through the ICEI project under the grant agreement
+No. 800858.
 
-The computations and testing were enabled by resources provided by the Swedish National Infrastructure for Computing (SNIC) at PDC KTH partially funded by the Swedish Research Council through grant agreement no. 2018-05973.
+The computations and testing were enabled by resources provided by
+the Swedish National Infrastructure for Computing (SNIC) at PDC KTH
+partially funded by the Swedish Research Council through grant agreement
+no. 2018-05973.
