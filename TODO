@@ -24,12 +24,7 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 x treem (swc2pts.py): consider export in dendrogram form (-g)
 x treem (setup.py): make scripts/* installable
 + treem: release v1.1.0
-<<<<<<< HEAD
 + swc-view: distance to object setting is ignored (-d) if 'ortho' projection is used (default)
 + swc-measure: wrong values of segment order (-a seg) limited to 1 and 2
 + swc-modify: swap 2 nodes at a time, randomly selected from the input list
 - swc-render (W, write image to file): TypeError
-=======
-+ swc-measure: wrong values of segment order (-a seg) limited to 1 and 2
-- swc-view: distance to object setting is ignored (-d) if 'ortho' projection is used (default)
->>>>>>> refs/remotes/origin/master
