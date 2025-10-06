@@ -27,4 +27,6 @@ x treem (setup.py): make scripts/* installable
 + swc-view: distance to object setting is ignored (-d) if 'ortho' projection is used (default)
 + swc-measure: wrong values of segment order (-a seg) limited to 1 and 2
 + swc-modify: swap 2 nodes at a time, randomly selected from the input list
+o swc-render: 'no valid context' error in wayland, set PYOPENGL_PLATFORM='glx'
 - swc-render (W, write image to file): TypeError
+- swc-repair (resample): do not interpolate diameter if parent is root
