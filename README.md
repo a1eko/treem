@@ -80,7 +80,7 @@ third-party extensions:
 
 * ``sphinx`` with ``napoleon`` and ``programoutput`` extensions
 * ``pytest`` with ``pytest-cov`` plugin
-* ``csphinx-rtd-theme``
+* ``sphinx-rtd-theme``
 * ``coverage``
 
 

@@ -45,14 +45,14 @@ Traverse the tree starting from the root node.
 >>> [node.ident() for node in start_node.walk()]
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
-Traverse the tree starting from the node with ID 8.
+Traverse the tree starting from the node with ID ``8``.
 
 >>> start_node = m.node(8)
 >>> [node.ident() for node in start_node.walk()]
 [8, 9, 10, 11, 12, 13]
 
 By default, the tree is traversed in descending order. In the example above,
-a subtree (branch) starting at the node with ID 8 is iterated. To traverse
+a subtree (branch) starting at the node with ID ``8`` is iterated. To traverse
 the tree in ascending order, set the ``reverse`` argument of
 ``treem.Node.walk()`` to ``True``:
 
@@ -60,7 +60,7 @@ the tree in ascending order, set the ``reverse`` argument of
 [8, 3, 2, 1]
 
 Note that when ``reverse`` is enabled, the full tree is not traversed —
-iteration stops as soon as the root node (ID 1) is reached.
+iteration stops as soon as the root node (ID ``1``) is reached.
 
 During traversal, data stored at each node can be accessed directly.
 For example, to calculate the total length of a branch starting from
@@ -146,14 +146,14 @@ reconstruction::
 .. rubric:: Locating single nodes
 
 The `find` command locates individual nodes that satisfy multiple search
-criteria. For example, to find a node within the dendrites (point type 3)
+criteria. For example, to find a node within the dendrites (point type ``3``)
 with a diameter smaller than 0.1 µm, run the following::
 
     swc find pass_simple_branch.swc -p 3 -d 0.1 --comp lt
 
 .. program-output:: swc find ../../tests/data/pass_simple_branch.swc -p 3 -d 0.1 --comp lt
 
-The following command searches for nodes with a topological order of 1
+The following command searches for nodes with a topological order of ``1``
 (those belonging to primary neurite sections)::
 
     swc find pass_simple_branch.swc -e 1
@@ -330,4 +330,3 @@ and terminals) while slightly reducing the total length.
 
 For a complete list of the available options provided by the ``treem`` module,
 see :ref:`cli:Command-line interface` and :ref:`api:API reference`.
-
