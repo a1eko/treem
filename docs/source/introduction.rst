@@ -2,52 +2,52 @@
 Introduction
 ============
 
-Digital reconstructions of neuron morphology can be stored in different
-binary or plain text data formats depending on the processing platform
-or data repository (ASC, SWC, JSON and HDF5 to name a few).  The format
-developed by Stockley, Wheal and Cannon, hence `SWC` (`Cannon et al.,
-1998 <https://doi.org/10.1016/S0165-0270(98)00091-0>`_), is among the
-oldest and most commonly recognized. Module ``treem`` deals exclusively
-with reconstructions in SWC format.
+Digital reconstructions of neuron morphology can be stored in various
+binary or plain-text data formats, depending on the processing platform
+or data repository (e.g., ASC, SWC, JSON, or HDF5). Among these, the
+format developed by Stockley, Wheal, and Cannon - known as ``SWC``
+(`Cannon et al., 1998 <https://doi.org/10.1016/S0165-0270(98)00091-0>`_) -
+is one of the oldest and most widely recognized. The module ``treem``
+works exclusively with reconstructions in the SWC format.
 
 
 .. rubric:: SWC File Format
 
-An SWC file is a plain text file with metadata in '#'-comment lines,
-usually placed in the header section, and the reconstruction data in
-space-separated matrix. Each data line contains information from a single
-measurement along the reconstructed neurite in seven fields::
+An SWC file is a plain-text file that contains metadata in lines
+beginning with the ``#`` character, typically in the header section,
+and reconstruction data organized in a space-separated matrix. Each
+data line represents a single measurement along the reconstructed
+neurite and contains seven fields::
 
     <I> <T> <X> <Y> <Z> <R> <P>
 
-where the fields have the following meaning:
+The fields have the following meanings::
 
 ===== ====== ============== =========================
 Field Column Description    Values
 ===== ====== ============== =========================
  I    0      Node ID        ``int``: 1, 2, ...
  T    1      Point type     ``int``: 1, 2, 3, 4 [...]
- X    2      `x` coordinate ``float`` (in micrometers)
- Y    3      `y` coordinate ``float`` (in micrometers)
- Z    4      `z` coordinate ``float`` (in micrometers)
- R    5      Radius         ``float`` (in micrometers)
+ X    2      `X` coordinate ``float`` (micrometers)
+ Y    3      `Y` coordinate ``float`` (micrometers)
+ Z    4      `Z` coordinate ``float`` (micrometers)
+ R    5      Radius         ``float`` (micrometers)
  P    6      Parent node ID ``int``: -1, 1, 2, ...
 ===== ====== ============== =========================
 
-The `node ID` is a unique identifier of each reconstructed point.
-The `point type` is a user-defined flag denoting the specific part of the
-neuron structure. It is not a required part of the structure definition
-and there is no standard value format suggested by the authors. The
-commonly used values of the point type agreed upon by most of the
-developers are:
+The `Node ID` is a unique identifier of each reconstructed point.
+The `Point type` is a user-defined flag that denotes a specific part of
+the neuron’s structure. The original format specification does not
+define standard point-type values, but most developers follow these
+common conventions:
 
 ========== ==================================
 Point type Corresponding cell part
 ========== ==================================
 1          Soma
 2          Axon
-3          Dendrite in general (`e.g.` basal)
-4          Apical dendrite, specifically
+3          Dendrite (basal dendrite)
+4          Apical dendrite
 ========== ==================================
 
 One point in any file has a parent node ID of '-1', indicating it is the
@@ -59,114 +59,113 @@ of the neuron morphology reconstruction.
 .. rubric:: Tree Data Structure and Morphometry Terminology
 
 Tree
-    A tree is a hierarchical data structure where each element has
-    no more than one parent to which it becomes a child. An element in
-    the tree may link to one, several or no child elements. By definition,
-    a tree has no loops.
+    A tree is a hierarchical data structure in which each element has
+    at most one parent, to which it is considered a child. Each element
+    may have one, several, or no child elements. By definition, a tree
+    contains no loops.
 
 Node
-    An element of the tree. In ``treem``, each node contains the
-    reconstruction data of a single row of SWC file.
+    A single element of the tree. In ``treem``, each node contains the
+    reconstruction data corresponding to one row in an SWC file.
 
 Sub-tree, branch
-    Part of a tree descendant of a given node of that tree.
+    A part of the tree that descends from a specific node.
 
 Parent
-    A node in the tree which has a further descendant sub-tree.
+    A node that has one or more child nodes.
 
 Child
-    A node which has parent, is a child of the parent node.
+    A node that has a parent node and is considered its descendant.
 
 Root
     A node which has no parent. Each tree has always one unique root node.
 
 Siblings
-    All nodes with the same parent.
+    All child nodes of the same parent.
 
 Degree
-    The total number of children of the given node.
+    The total number of children that a given node has.
 
 Leaf, terminal, tip
-    A node which has no children. A leaf has degree of 0.
+    A node which has no children. A leaf has a degree of 0.
 
 Fork, branching point
-    A node which has more than one child. A fork has degree higher than
-    1. Forks with the degree of 2 are also called `bifurcation points`.
+    A node which has more than one child. A fork has a degree greater than
+    1. Forks with a degree of 2 are also called `bifurcation points`.
 
 Depth, level
-    The depth of a node is the number of connections from the root of
-    the tree to that node.
+    The depth of a node is the number of connections between the root of
+    the tree and that node.
 
 Path
-    A sequence of nodes in the descending order.
+    A sequence of nodes traversed in descending order from parent to child.
 
 Height
-    The total number of the nodes in the longest path of the tree,
+    The total number of nodes in the longest path of the tree,
     counted from the root.
 
 Size
-    The total number of the nodes in the tree.
+    The total number of nodes in the tree.
 
 Breadth
-    The total number of the leaves of a given sub-tree.
+    The total number of leaves in a given sub-tree.
 
 Width
-    The total number of the nodes of the same level as a given node.
+    The total number of the nodes at the same level as a given node.
 
 Segment
-    Geometrical part of the reconstructed neurite between the parent
-    and the child nodes, `i.e.` a cone with the radius of the parent
-    node at the base and the radius of the child node at the top. The
-    height of the cone is the eucledian distance between the parent and
-    the child nodes.
+    The geometric portion of a reconstructed neurite located between a
+    parent and its child node. It can be represented as a cone with the
+    radius of the parent node at the base and the radius of the child
+    node at the top. The height of the cone corresponds to the Euclidean
+    distance between the parent and child nodes.
 
 Section
-    A part of the tree between two structural points (root, fork
-    or leaf).
+    A portion of the tree located between two structural points
+    (root, fork, or leaf).
 
 Stem
-    The first non-somatic node of a section descendant to the root.
+    The first non-somatic node of a section descending from the root.
 
 Tree traversal
-    The method to visit all nodes of a tree. The tree traversal can be
-    done in depth-first search order or breadth-first search order. The
-    three forms of the deapth-first traversal are `in-order`, `pre-order`
-    and `post-order`. The breadth-first traversal is `level-order`.
-    For the recursive implementation of the above traversal algorithms
-    see the ``treem.Tree`` code.
+    A method for visiting all nodes of a tree. Traversal can be performed
+    in either depth-first search (DFS) or breadth-first search (BFS)
+    order. The three forms of depth-first traversal are `in-order`,
+    `pre-order`, and `post-order`, while breadth-first traversal is
+    referred to as `level-order`. For recursive implementations of these
+    traversal algorithms, see the ``treem.Tree`` source code.
 
 
 .. rubric:: Data Format Restrictions
 
-Original SWC format is fairly flexible in its definition. The only strict
-requirement is that the data has the uniform 7-field record length and
-defines a topological tree structure. By design of the module ``treem``,
-additional restrictions are imposed to standardize the data organisation
-and speed up the processing.
+The original SWC format is fairly flexible in its definition. The only
+strict requirement is that the data maintain a uniform seven-field record
+length and represent a topological tree structure. In the design of the
+``treem`` module, additional restrictions are introduced to standardize
+data organization and improve processing efficiency.
 
-* The input SWC file should have more than one data row. Comments and
-  the metadata lines starting with the symbol '#' are ignored.
+* The input SWC file must contain more than one data row. Comment and
+metadata lines that begin with the ``#`` symbol are ignored.
 
-* Each data row should have 7 fields.
+* Each data row must contain seven fields.
 
-* The first node has ID of '1' and the parent ID of '-1', i.e. it is the
-  root of the tree.
+* The first node must have an ID of ``1`` and a parent ID of ``-1``;
+  in other words, it represents the root of the tree.
 
-* The root node belongs to the soma.
+* The root node corresponds to the soma.
 
-* The point type could only be from the set '{1, 2, 3, 4}'.
+* The point type must belong to the set ``{1, 2, 3, 4}``.
 
-* The node IDs of type ``int`` are unique and positive. ID of '0' is
-  not defined.
+* Node IDs (of type ``int``) must be unique and positive. An ID of ``0``
+  is not defined.
 
-* The parent IDs are a subset of the node IDs, except the parent ID of
-  root, '-1'.
+* Parent IDs must form a subset of the node IDs, except for the parent
+  ID of the root, which is ``-1``.
 
-* The node IDs have the constant increment of '1'.
+* Node IDs must increase sequentially by a constant increment of ``1``.
 
-* The parent ID is always smaller than the node ID of a given node.
+* The parent ID of a node must always be smaller than its own node ID.
 
-* The point type of the node is the same as the point type of its parent,
-  unless the parent is root. Neurites of different types emerge from
-  the soma and don't change their type.
-
+* The point type of a node must match the point type of its parent,
+  unless the parent is the root. Neurites of different types emerge
+  from the soma and retain their type along their branches.

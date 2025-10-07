@@ -3,31 +3,30 @@ Installation
 
 .. rubric:: Basic installation
 
-Install the latest stable release::
+To install the latest stable release::
 
     pip3 install treem
 
-Install a development version::
+To install the development version::
 
     pip3 install git+https://github.com/a1eko/treem
 
-See also  ``pip3`` documentation for installation alternatives.
+For alternative installation methods, refer to the official ``pip3`` documentation.
 
 
 .. rubric:: Dependencies
 
-Module ``treem`` has minimal runtime dependencies:
+The ``treem`` module has minimal runtime dependencies:
 
-* ``python`` >= 3.7
+* Python >= 3.7
 * ``matplotlib``
 * ``numpy``
-* ``PyOpenGL`` (optional) enables ``swc render`` command
+* ``PyOpenGL`` (optional, required for the ``swc render`` command)
 
-For testing and documentation, ``treem`` needs development packages with
-third-party extensions:
+For testing and documentation purposes, ``treem`` requires the following
+development packages and third-party extensions:
 
-* ``sphinx`` with ``napoleon`` and ``programoutput``
-* ``pytest`` with ``pytest-cov``
-* ``csphinx_rtd_theme``
+* ``sphinx`` with the ``napoleon`` and ``programoutput`` extensions
+* ``pytest`` with ``pytest-cov`` plugin
+* ``sphinx_rtd_theme``
 * ``coverage``
-

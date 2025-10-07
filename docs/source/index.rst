@@ -1,20 +1,18 @@
 
-treem - neuron morphology processing tool
+treem - Neuron Morphology Processing Tool
 =========================================
 
 
 .. rubric:: Module ``treem``
 
-Module ``treem`` (pronounced as "trim") provides data structure
-and command-line tools for accessing and manipulating the digital
-reconstructions of the neuron morphology in Stockley-Wheal-Cannon format
-(SWC).
+The ``treem`` module (pronounced as "trim") provides data structures and
+command-line tools for accessing and manipulating digital reconstructions
+of neuron morphology in the Stockley-Wheal-Cannon (SWC) format.
 
 
 .. rubric:: Main classes
 
-Access to morphological data from the source code is supported by the
-classes ``Tree``, ``Node``, ``Morph`` and ``SWC``.
+Morphological data can be accessed from source code through the following classes::
 
 =========  =========================================================
 ``Tree``   Recursive tree data structure
@@ -29,29 +27,28 @@ reference`.
 
 .. rubric:: Commands
 
-Common operations with SWC files are possible via the ``swc`` command-line
-tool::
+Common operations with SWC files can be performed using the swc command-line tool::
 
     swc <command> [options] file
 
-or alternatively as::
+or::
 
     swc <command> file [file ...] [options] 
 
 List of ``swc`` commands:
 
 =========  =========================================================
-`check`    Test morphology reconstruction for structural consistency
-`convert`  Convert morphology to compliant SWC format
-`find`     Locate single nodes in the reconstruction
-`measure`  Calculate morphometric features
-`modify`   Manipulate morphology reconstruction
-`render`   Display 3D model of the reconstruction
-`repair`   Correct reconstruction errors
-`view`     Show morphology structure
+`check`    Tests the morphology reconstruction for structural consistency
+`convert`  Converts morphology data to a compliant SWC format
+`find`     Locates individual nodes in the reconstruction
+`measure`  Calculates morphometric features
+`modify`   Modifies morphology reconstruction
+`render`   Displays a 3D model of the reconstruction
+`repair`   Corrects reconstruction errors
+`view`     Displays the morphology structure
 =========  =========================================================
 
-For the detailed description of the commands and options, see 
+For detailed description of all commands and their options, see the
 :ref:`cli:Command-line interface`.
 
 .. toctree::
