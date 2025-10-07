@@ -1,11 +1,10 @@
 
-treem - neuron morphology processing tool
+treem - Neuron Morphology Processing Tool
 =========================================
 
-Module ``treem`` (prononounced as "trim") provides data structure
-and command-line tools for accessing and manipulating the digital
-reconstructions of the neuron morphology in Stockley-Wheal-Cannon format
-(SWC).
+The `treem` module (pronounced "trim") provides data structures and
+command-line tools for accessing and manipulating digital reconstructions
+of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 
 [![PyPI version](https://badge.fury.io/py/treem.svg)](https://badge.fury.io/py/treem)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
@@ -19,8 +18,8 @@ reconstructions of the neuron morphology in Stockley-Wheal-Cannon format
 Main classes
 ------------
 
-Access to morphological data from the source code is supported by the
-classes ``Tree``, ``Node``, ``Morph`` and ``SWC``.
+Access to morphological data from the source code is provided through the
+classes ``Tree``, ``Node``, ``Morph``, and ``SWC``:
 
 * ``Tree``   - Recursive tree data structure
 * ``Node``   - Morphology data storage
@@ -31,12 +30,12 @@ classes ``Tree``, ``Node``, ``Morph`` and ``SWC``.
 Commands
 --------
 
-Common operations with SWC files are possible via the ``swc`` command-line
-tool
+Common operations with SWC files can be performed using the ``swc``
+command-line tool:
 
     swc <command> [options] file
 
-or alternatively as
+Alternatively:
 
     swc <command> file [file ...] [options] 
 
@@ -69,19 +68,19 @@ See also ``pip3`` documentation for installation alternatives.
 Dependencies
 ------------
 
-Module ``treem`` has minimal runtime dependencies:
+The ``treem`` module has minimal runtime dependencies:
 
-* ``python`` >= 3.7
+* Python >= 3.7
 * ``matplotlib``
 * ``numpy``
-* ``PyOpenGL`` (optional) enables ``swc render`` command
+* ``PyOpenGL`` (optional, enables ``swc render`` command)
 
-For testing and documentation, ``treem`` needs development packages with
+For testing and documentation, ``treem`` requires additional development packages with
 third-party extensions:
 
-* ``sphinx`` with ``napoleon`` and ``programoutput``
-* ``pytest`` with ``pytest-cov``
-* ``csphinx_rtd_theme``
+* ``sphinx`` with ``napoleon`` and ``programoutput`` extensions
+* ``pytest`` with ``pytest-cov`` plugin
+* ``csphinx-rtd-theme``
 * ``coverage``
 
 

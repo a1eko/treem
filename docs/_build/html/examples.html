@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage examples &mdash; treem 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fc837d61"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Command-line interface" href="cli.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            treem
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#api-use-cases">API use cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cli-use-cases">CLI use cases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command-line interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">treem</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage-examples">
+<h1>Usage examples<a class="headerlink" href="#usage-examples" title="Link to this heading"></a></h1>
+<p>The procedures and scenarios described in this section illustrate several
+typical use cases for manipulating neuron morphology reconstructions using
+the <code class="docutils literal notranslate"><span class="pre">treem</span></code> module. Ensure that the module is properly installed and
+accessible. You can verify this by importing it and confirming that no
+errors are returned:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import treem&quot;</span>
+</pre></div>
+</div>
+<p>Python version 3.7 or higher is assumed. Ensure that the files from
+<code class="docutils literal notranslate"><span class="pre">tests/data/</span></code> within the module’s source tree are copied into the
+current working directory.</p>
+<section id="api-use-cases">
+<h2>API use cases<a class="headerlink" href="#api-use-cases" title="Link to this heading"></a></h2>
+<p class="rubric">Loading the reconstruction</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">treem</span><span class="w"> </span><span class="kn">import</span> <span class="n">Morph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Morph</span><span class="p">(</span><span class="s1">&#39;pass_simple_branch.swc&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">data</span>
+<span class="go">array([[ 1. ,  1. ,  0. ,  0. ,  0. ,  1. , -1. ],</span>
+<span class="go">       [ 2. ,  3. ,  1. ,  1. ,  0. ,  0.2,  1. ],</span>
+<span class="go">       [ 3. ,  3. ,  2. ,  2. ,  0. ,  0.2,  2. ],</span>
+<span class="go">       [ 4. ,  3. ,  1. ,  3. ,  0. ,  0.2,  3. ],</span>
+<span class="go">       [ 5. ,  3. ,  0. ,  4. ,  0. ,  0.02,  4. ],</span>
+<span class="go">       [ 6. ,  3. , -1. ,  5. ,  0. ,  0.2,  5. ],</span>
+<span class="go">       [ 7. ,  3. , -2. ,  6. ,  0. ,  0.2,  6. ],</span>
+<span class="go">       [ 8. ,  3. ,  3. ,  3. ,  0. ,  0.2,  3. ],</span>
+<span class="go">       [ 9. ,  3. ,  4. ,  4. ,  0. ,  0.2,  8. ],</span>
+<span class="go">       [10. ,  3. ,  3. ,  5. ,  0. ,  0.2,  9. ],</span>
+<span class="go">       [11. ,  3. ,  2. ,  6. ,  0. ,  0.2, 10. ],</span>
+<span class="go">       [12. ,  3. ,  5. ,  5. ,  0. ,  0.2,  9. ],</span>
+<span class="go">       [13. ,  3. ,  6. ,  6. ,  0. ,  0.2, 12. ]])</span>
+</pre></div>
+</div>
+<p class="rubric">Traversing the tree</p>
+<p>Traverse the tree starting from the root node.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">start_node</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">root</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">ident</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">start_node</span><span class="o">.</span><span class="n">walk</span><span class="p">()]</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]</span>
+</pre></div>
+</div>
+<p>Traverse the tree starting from the node with ID 8.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">start_node</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">ident</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">start_node</span><span class="o">.</span><span class="n">walk</span><span class="p">()]</span>
+<span class="go">[8, 9, 10, 11, 12, 13]</span>
+</pre></div>
+</div>
+<p>By default, the tree is traversed in descending order. In the example above,
+a subtree (branch) starting at the node with ID 8 is iterated. To traverse
+the tree in ascending order, set the <code class="docutils literal notranslate"><span class="pre">reverse</span></code> argument of
+<code class="docutils literal notranslate"><span class="pre">treem.Node.walk()</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">ident</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">start_node</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+<span class="go">[8, 3, 2, 1]</span>
+</pre></div>
+</div>
+<p>Note that when <code class="docutils literal notranslate"><span class="pre">reverse</span></code> is enabled, the full tree is not traversed —
+iteration stops as soon as the root node (ID 1) is reached.</p>
+<p>During traversal, data stored at each node can be accessed directly.
+For example, to calculate the total length of a branch starting from
+<code class="docutils literal notranslate"><span class="pre">start_node</span></code>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">length</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">start_node</span><span class="o">.</span><span class="n">walk</span><span class="p">())</span>
+<span class="go">8.485281374238571</span>
+</pre></div>
+</div>
+<p>An alternative way to traverse the tree is by iterating through its
+sections (in descending order):</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">start_node</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">([</span><span class="n">node</span><span class="o">.</span><span class="n">ident</span><span class="p">()</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">sec</span><span class="p">])</span>
+<span class="go">[8, 9]</span>
+<span class="go">[10, 11]</span>
+<span class="go">[12, 13]</span>
+</pre></div>
+</div>
+<p>The total length of the branch calculated in this way will be identical:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="n">sec</span><span class="p">)</span> <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="n">start_node</span><span class="o">.</span><span class="n">sections</span><span class="p">())</span>
+<span class="go">8.485281374238571</span>
+</pre></div>
+</div>
+</section>
+<section id="cli-use-cases">
+<h2>CLI use cases<a class="headerlink" href="#cli-use-cases" title="Link to this heading"></a></h2>
+<p class="rubric">Checking the input file</p>
+<p>Check the input SWC file for structural consistency and compliance
+with the format requirements defined by the <code class="docutils literal notranslate"><span class="pre">treem</span></code> module. For example,
+the records in the file <code class="docutils literal notranslate"><span class="pre">fail_unordered.swc</span></code> are not in the correct order,
+so the <cite>check</cite> command reports errors:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">check</span> <span class="n">fail_unordered</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>node1_not_id1: 2
+node1_has_parent: 1
+node1_not_soma: 3
+not_valid_parent_ids: 1
+</pre></div>
+</div>
+<p class="rubric">Converting the input file</p>
+<p>Attempt to convert the input file to a compliant format. If there are
+no critical errors in the file structure, the conversion will complete
+successfully:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">convert</span> <span class="n">fail_unordered</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">o</span> <span class="n">out</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>converted   7%
+converted  15%
+converted  23%
+converted  30%
+converted  38%
+converted  46%
+converted  53%
+converted  61%
+converted  69%
+converted  76%
+converted  84%
+converted  92%
+converted 100%
+</pre></div>
+</div>
+<p>Verify that the output file is valid:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">check</span> <span class="n">out</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<p class="rubric">Displaying the morphology</p>
+<p>The <cite>view</cite> command displays the structure of the morphology reconstruction.
+It renders only the centerline of the reconstructed segments, without showing
+their diameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">view</span> <span class="n">pass_nmo_1</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<p>The root node is displayed as a bold black dot, while soma points are
+shown as semi-transparent spherical markers. Colored lines correspond
+to neurites of different types.</p>
+<p>To display multiple cells, change the color mode to highlight individual
+cells:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">view</span> <span class="o">-</span><span class="n">c</span> <span class="n">cells</span> <span class="n">pass_mouselight_1</span><span class="o">.</span><span class="n">swc</span> <span class="n">pass_mouselight_2</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<p class="rubric">Measuring morphometry of the reconstruction</p>
+<p>The <cite>measure</cite> command prints the basic morphometric features of the
+reconstruction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">measure</span> <span class="n">pass_nmo_1</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>pass_nmo_1
+apic area        12584.5
+apic breadth          32
+apic contrac    0.932844
+apic degree            2
+apic diam       0.816706
+apic dist        748.044
+apic length      5690.72
+apic nbranch          31
+apic nstem             1
+[...]
+dend xdim         537.78
+dend ydim         332.53
+dend zdim          158.9
+soma area        3137.66
+soma diam         18.246
+soma volume      9541.64
+soma xroot             0
+soma yroot             0
+soma zroot             0
+</pre></div>
+</div>
+<p class="rubric">Locating single nodes</p>
+<p>The <cite>find</cite> command locates individual nodes that satisfy multiple search
+criteria. For example, to find a node within the dendrites (point type 3)
+with a diameter smaller than 0.1 µm, run the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">find</span> <span class="n">pass_simple_branch</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3</span> <span class="o">-</span><span class="n">d</span> <span class="mf">0.1</span> <span class="o">--</span><span class="n">comp</span> <span class="n">lt</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>5
+</pre></div>
+</div>
+<p>The following command searches for nodes with a topological order of 1
+(those belonging to primary neurite sections):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">find</span> <span class="n">pass_simple_branch</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">e</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>The following command displays the terminal sections of the dendrites:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swc view pass_simple_branch.swc -b `swc find pass_simple_branch.swc -p 3 -b 1 --sec`
+</pre></div>
+</div>
+<p class="rubric">Repairing damaged reconstructions</p>
+<p>A common reconstruction error is the so-called <cite>z-jump</cite>, which occurs
+when a portion of a neurite is displaced along the z-axis by several
+micrometers.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/zjump.png"><img alt="_images/zjump.png" src="_images/zjump.png" style="width: 200px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">An illustration of z-jump in the morphology reconstruction.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>To locate z-jumps greater than 10 µm, run the <cite>find</cite> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">find</span> <span class="n">pass_zjump</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">z</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+<p>Potential z-jumps can be corrected using the <cite>repair</cite> command with one
+of four methods: <cite>align</cite>, <cite>split</cite>, <cite>tilt</cite>, or <cite>join</cite> (default: <cite>align</cite>),
+as illustrated in the figure. To repair z-jumps, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swc repair pass_zjump.swc --zjump join -z `swc find pass_zjump.swc -z 10`
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="_images/zjump_corr.png"><img alt="_images/zjump_corr.png" src="_images/zjump_corr.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The four methods of correcting z-jumps.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Experimental slice preparation protocols may result in tissue shrinkage.
+As a consequence, morphology reconstructions appear smaller, with increased
+neurite contraction compared to <cite>in vivo</cite> conditions. To compensate for
+this effect, various options of the <cite>repair</cite> and <cite>modify</cite> commands can
+be used.</p>
+<p>Refer to the following options for correction and adjustment:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-s</span></code>, <code class="docutils literal notranslate"><span class="pre">-t</span></code>, and <code class="docutils literal notranslate"><span class="pre">-m</span></code> (<cite>modify</cite> command) - scaling, stretching,
+and smoothing, respectively.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-k</span></code> and <code class="docutils literal notranslate"><span class="pre">-kxy</span></code> (<cite>repair</cite> command) - shrinkage correction along
+the <cite>z</cite> axis and within the <cite>(x, y)</cite> plane, respectively.</p></li>
+</ul>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="_images/mod_stretch.png"><img alt="_images/mod_stretch.png" src="_images/mod_stretch.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Stretching the dendrites along the direction of each dendritic
+section. Length-preserving operation.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="_images/mod_smooth.png"><img alt="_images/mod_smooth.png" src="_images/mod_smooth.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Smoothing the dendrites with the rolling average spatial
+filter. Length-preserving operation.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Morphological reconstructions of neurons located near the surface of a
+slice are often incomplete, missing neurites that were cut during tissue
+sectioning. The cut points of dendrites can be identified using the
+<cite>find</cite> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">find</span> <span class="n">pass_nmo_2_cut</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">c</span> <span class="mi">10</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>322 341 547 1167
+</pre></div>
+</div>
+<p>In this example, it is assumed that the cut points are located within
+10 µm of the top surface of the slice along the z-axis. To invert
+the surface orientation, add the <code class="docutils literal notranslate"><span class="pre">--bottom-up</span></code> option.</p>
+<p>Inspect the cut points in the projection and note their ID numbers
+for subsequent repair:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swc view pass_nmo_2_cut.swc -p 3 -j xz --show-id -m `swc find pass_nmo_2_cut.swc -c 10 -p 3`
+</pre></div>
+</div>
+<p>If all cut points are correctly identified, pass them to the repair
+procedure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swc repair pass_nmo_2_cut.swc -c `swc find pass_nmo_2_cut.swc -c 10 -p 3`
+</pre></div>
+</div>
+<p>Alternatively, specify selected node IDs using the <code class="docutils literal notranslate"><span class="pre">-c</span></code> option of the
+<cite>repair</cite> command.</p>
+<p>The repaired reconstruction (<code class="docutils literal notranslate"><span class="pre">rep.swc</span></code>) can be compared with the original
+using the <cite>view</cite> command and the <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">shadow</span></code> option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">view</span> <span class="n">pass_nmo_2_cut</span><span class="o">.</span><span class="n">swc</span> <span class="n">rep</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3</span> <span class="o">-</span><span class="n">c</span> <span class="n">shadow</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/rep_cut.png"><img alt="_images/rep_cut.png" src="_images/rep_cut.png" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Repairing cut neurites. The cut points are orange, the repaired
+branches are red.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>When the <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">shadow</span></code> option is used, the second and all subsequent
+morphologies are plotted as underlying structures, with the first
+morphology rendered on top. The default shadow color is <cite>lightgray</cite>,
+and the line width is 3.0. To produce a plot like the one shown
+in the figure above, run the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">view</span> <span class="n">pass_nmo_2_cut</span><span class="o">.</span><span class="n">swc</span> <span class="n">rep</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3</span> <span class="o">-</span><span class="n">c</span> <span class="n">shadow</span> <span class="o">--</span><span class="n">shadow</span><span class="o">-</span><span class="n">color</span> <span class="n">red</span> <span class="o">--</span><span class="n">shadow</span><span class="o">-</span><span class="n">width</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+<p class="rubric">Modifying morphologies</p>
+<p>Corrected or repaired morphology reconstructions may require additional
+modifications before being used in the simulation pipeline. A common
+example is cloning the completed reconstructions with random alterations
+of their neurites. This approach increases variability within the
+population of morphologies while preserving their topological structure
+and statistical characteristics, as illustrated in the figure. For details,
+see the corresponding options of the <cite>modify</cite> and <cite>repair</cite> commands.</p>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="_images/mod_morph.png"><img alt="_images/mod_morph.png" src="_images/mod_morph.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Length-preserving modifications of the morphology reconstructions.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Morphological modifications are applied to clone existing reconstructions
+and increase morphological variability in simulations. As an example,
+consider the random morphology generated by the <cite>repair</cite> command,
+as described in the section above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>swc repair pass_nmo_2_cut.swc -c `swc find pass_nmo_2_cut.swc -c 10 -p 3` --seed 123
+</pre></div>
+</div>
+<p>The default name of the repaired morphology is <code class="docutils literal notranslate"><span class="pre">rep.swc</span></code>. In this example,
+the repaired morphology (<code class="docutils literal notranslate"><span class="pre">rep.swc</span></code>) is modified by twisting its dendrites
+at the branching points by a random angle of up to ±180 degrees. The resulting
+morphology (<code class="docutils literal notranslate"><span class="pre">mod.swc</span></code>) is then scaled in the <cite>x</cite>, <cite>y</cite>, and <cite>z</cite> dimensions
+by a factor of 0.8. The final structure is saved as <code class="docutils literal notranslate"><span class="pre">clone1.swc</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">modify</span> <span class="n">rep</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3</span> <span class="o">-</span><span class="n">w</span> <span class="mi">180</span>
+<span class="n">swc</span> <span class="n">modify</span> <span class="n">mod</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">s</span> <span class="mf">0.8</span> <span class="mf">0.8</span> <span class="mf">0.8</span> <span class="o">-</span><span class="n">o</span> <span class="n">clone1</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<p>Similarly, the dendrites of the reconstruction (<code class="docutils literal notranslate"><span class="pre">rep.swc</span></code>) are twisted
+and scaled by a factor of 1.2, producing the morphology <code class="docutils literal notranslate"><span class="pre">clone2.swc</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">swc</span> <span class="n">modify</span> <span class="n">rep</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">p</span> <span class="mi">3</span> <span class="o">-</span><span class="n">w</span> <span class="mi">360</span>
+<span class="n">swc</span> <span class="n">modify</span> <span class="n">mod</span><span class="o">.</span><span class="n">swc</span> <span class="o">-</span><span class="n">s</span> <span class="mf">1.2</span> <span class="mf">1.2</span> <span class="mf">1.2</span> <span class="o">-</span><span class="n">o</span> <span class="n">clone2</span><span class="o">.</span><span class="n">swc</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id7">
+<a class="reference internal image-reference" href="_images/mod_clone.png"><img alt="_images/mod_clone.png" src="_images/mod_clone.png" style="width: 600px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Cloning morphologies with random modifications. Original morphology
+in the middle. Cloned morphologies have the dendrites twisted randomly
+at the branching points and scaled by the factor of 0.8 (on the left)
+and 1.2 (on the right).</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Finally, the completed reconstructions can be resampled using a fixed
+spatial resolution. This operation preserves the positions of the
+structure-defining points (i.e., neurite stem points, branching points,
+and terminals) while slightly reducing the total length.</p>
+<figure class="align-center" id="id8">
+<a class="reference internal image-reference" href="_images/rep_sample.png"><img alt="_images/rep_sample.png" src="_images/rep_sample.png" style="width: 300px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Resampling morphology reconstruction with fixed spatial
+resolution. Structure points-preserving operation.</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>For a complete list of the available options provided by the <code class="docutils literal notranslate"><span class="pre">treem</span></code> module,
+see <a class="reference internal" href="cli.html#command-line-interface"><span class="std std-ref">Command-line interface</span></a> and <a class="reference internal" href="api.html#module-treem"><span class="std std-ref">API reference</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cli.html" class="btn btn-neutral float-right" title="Command-line interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alexander Kozlov (KTH, Stockholm).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
