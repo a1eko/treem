@@ -32,11 +32,11 @@ Commands
 --------
 
 Common operations with SWC files are possible via the ``swc`` command-line
-tool:
+tool
 
     swc <command> [options] file
 
-or sometimes more convenient as
+or alternatively as
 
     swc <command> file [file ...] [options] 
 
@@ -81,6 +81,7 @@ third-party extensions:
 
 * ``sphinx`` with ``napoleon`` and ``programoutput``
 * ``pytest`` with ``pytest-cov``
+* ``csphinx_rtd_theme``
 * ``coverage``
 
 

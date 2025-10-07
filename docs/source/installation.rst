@@ -9,7 +9,7 @@ Install the latest stable release::
 
 Install a development version::
 
-    pip3 install git+git://github.com/a1eko/treem
+    pip3 install git+https://github.com/a1eko/treem
 
 See also  ``pip3`` documentation for installation alternatives.
 
@@ -28,5 +28,6 @@ third-party extensions:
 
 * ``sphinx`` with ``napoleon`` and ``programoutput``
 * ``pytest`` with ``pytest-cov``
+* ``csphinx_rtd_theme``
 * ``coverage``
 
