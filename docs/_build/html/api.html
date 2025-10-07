@@ -1,0 +1,864 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API reference &mdash; treem 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fc837d61"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Command-line interface" href="cli.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            treem
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Usage examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command-line interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-tree">Module tree</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#treem.Tree"><code class="docutils literal notranslate"><span class="pre">Tree</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.add"><code class="docutils literal notranslate"><span class="pre">Tree.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.ascendorder"><code class="docutils literal notranslate"><span class="pre">Tree.ascendorder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.breadth"><code class="docutils literal notranslate"><span class="pre">Tree.breadth()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.degree"><code class="docutils literal notranslate"><span class="pre">Tree.degree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.depth"><code class="docutils literal notranslate"><span class="pre">Tree.depth()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.forks"><code class="docutils literal notranslate"><span class="pre">Tree.forks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.height"><code class="docutils literal notranslate"><span class="pre">Tree.height()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.is_fork"><code class="docutils literal notranslate"><span class="pre">Tree.is_fork()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.is_leaf"><code class="docutils literal notranslate"><span class="pre">Tree.is_leaf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.is_root"><code class="docutils literal notranslate"><span class="pre">Tree.is_root()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.leaves"><code class="docutils literal notranslate"><span class="pre">Tree.leaves()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.level"><code class="docutils literal notranslate"><span class="pre">Tree.level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.levelorder"><code class="docutils literal notranslate"><span class="pre">Tree.levelorder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.postorder"><code class="docutils literal notranslate"><span class="pre">Tree.postorder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.preorder"><code class="docutils literal notranslate"><span class="pre">Tree.preorder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.size"><code class="docutils literal notranslate"><span class="pre">Tree.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Tree.width"><code class="docutils literal notranslate"><span class="pre">Tree.width()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-morph">Module morph</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#treem.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.area"><code class="docutils literal notranslate"><span class="pre">Node.area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.coord"><code class="docutils literal notranslate"><span class="pre">Node.coord()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.diam"><code class="docutils literal notranslate"><span class="pre">Node.diam()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.dist"><code class="docutils literal notranslate"><span class="pre">Node.dist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.ident"><code class="docutils literal notranslate"><span class="pre">Node.ident()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.is_stem"><code class="docutils literal notranslate"><span class="pre">Node.is_stem()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.length"><code class="docutils literal notranslate"><span class="pre">Node.length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.order"><code class="docutils literal notranslate"><span class="pre">Node.order()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.parent_ident"><code class="docutils literal notranslate"><span class="pre">Node.parent_ident()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.point"><code class="docutils literal notranslate"><span class="pre">Node.point()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.radius"><code class="docutils literal notranslate"><span class="pre">Node.radius()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.section"><code class="docutils literal notranslate"><span class="pre">Node.section()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.sections"><code class="docutils literal notranslate"><span class="pre">Node.sections()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.type"><code class="docutils literal notranslate"><span class="pre">Node.type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.volume"><code class="docutils literal notranslate"><span class="pre">Node.volume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Node.walk"><code class="docutils literal notranslate"><span class="pre">Node.walk()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#treem.Morph"><code class="docutils literal notranslate"><span class="pre">Morph</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.area"><code class="docutils literal notranslate"><span class="pre">Morph.area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.coords"><code class="docutils literal notranslate"><span class="pre">Morph.coords()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.copy"><code class="docutils literal notranslate"><span class="pre">Morph.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.delete"><code class="docutils literal notranslate"><span class="pre">Morph.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.graft"><code class="docutils literal notranslate"><span class="pre">Morph.graft()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.insert"><code class="docutils literal notranslate"><span class="pre">Morph.insert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.length"><code class="docutils literal notranslate"><span class="pre">Morph.length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.load"><code class="docutils literal notranslate"><span class="pre">Morph.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.move"><code class="docutils literal notranslate"><span class="pre">Morph.move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.node"><code class="docutils literal notranslate"><span class="pre">Morph.node()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.points"><code class="docutils literal notranslate"><span class="pre">Morph.points()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.prune"><code class="docutils literal notranslate"><span class="pre">Morph.prune()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.radii"><code class="docutils literal notranslate"><span class="pre">Morph.radii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.rotate"><code class="docutils literal notranslate"><span class="pre">Morph.rotate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.save"><code class="docutils literal notranslate"><span class="pre">Morph.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.stems"><code class="docutils literal notranslate"><span class="pre">Morph.stems()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.translate"><code class="docutils literal notranslate"><span class="pre">Morph.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.Morph.volume"><code class="docutils literal notranslate"><span class="pre">Morph.volume()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-treem.io">Module io</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#treem.io.SWC"><code class="docutils literal notranslate"><span class="pre">SWC</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#treem.io.TreemEncoder"><code class="docutils literal notranslate"><span class="pre">TreemEncoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#treem.io.TreemEncoder.default"><code class="docutils literal notranslate"><span class="pre">TreemEncoder.default()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#treem.io.load_swc"><code class="docutils literal notranslate"><span class="pre">load_swc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#treem.io.save_swc"><code class="docutils literal notranslate"><span class="pre">save_swc()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-treem.utils">Module utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-treem.utils.geom">Module utils.geom</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.geom.angle_between"><code class="docutils literal notranslate"><span class="pre">angle_between()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.geom.fibonacci_sphere"><code class="docutils literal notranslate"><span class="pre">fibonacci_sphere()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.geom.norm"><code class="docutils literal notranslate"><span class="pre">norm()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.geom.repair_branch"><code class="docutils literal notranslate"><span class="pre">repair_branch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.geom.rotation"><code class="docutils literal notranslate"><span class="pre">rotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.geom.rotation_matrix"><code class="docutils literal notranslate"><span class="pre">rotation_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.geom.sample"><code class="docutils literal notranslate"><span class="pre">sample()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-treem.utils.plot">Module utils.plot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.plot.plot_neuron"><code class="docutils literal notranslate"><span class="pre">plot_neuron()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.plot.plot_points"><code class="docutils literal notranslate"><span class="pre">plot_points()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.plot.plot_section"><code class="docutils literal notranslate"><span class="pre">plot_section()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#treem.utils.plot.plot_tree"><code class="docutils literal notranslate"><span class="pre">plot_tree()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-treem.cli">Module cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#treem.cli.cli"><code class="docutils literal notranslate"><span class="pre">cli()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">treem</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-treem">
+<span id="api-reference"></span><h1>API reference<a class="headerlink" href="#module-treem" title="Link to this heading"></a></h1>
+<p>Modules for processing tree-like morphology reconstructions.</p>
+<section id="module-tree">
+<h2>Module tree<a class="headerlink" href="#module-tree" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="treem.Tree">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">treem.</span></span><span class="sig-name descname"><span class="pre">Tree</span></span><a class="reference internal" href="_modules/treem/tree.html#Tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree" title="Link to this definition"></a></dt>
+<dd><p>Recursive tree data structure.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.add" title="Link to this definition"></a></dt>
+<dd><p>Appends tree as continuation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.ascendorder">
+<span class="sig-name descname"><span class="pre">ascendorder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.ascendorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.ascendorder" title="Link to this definition"></a></dt>
+<dd><p>Iterates tree nodes in ascending order until root is reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sequence of tree nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.breadth">
+<span class="sig-name descname"><span class="pre">breadth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.breadth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.breadth" title="Link to this definition"></a></dt>
+<dd><p>Returns tree breadth.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.degree">
+<span class="sig-name descname"><span class="pre">degree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.degree" title="Link to this definition"></a></dt>
+<dd><p>Returns node degree.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.depth">
+<span class="sig-name descname"><span class="pre">depth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.depth" title="Link to this definition"></a></dt>
+<dd><p>Returns node depth.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.forks">
+<span class="sig-name descname"><span class="pre">forks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterator=&lt;function</span> <span class="pre">Tree.preorder&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.forks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.forks" title="Link to this definition"></a></dt>
+<dd><p>Iterates tree branching points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iterator</strong> – iterator type (defaults to <code class="docutils literal notranslate"><span class="pre">Tree.preorder</span></code>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>sequence of tree nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.height">
+<span class="sig-name descname"><span class="pre">height</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.height" title="Link to this definition"></a></dt>
+<dd><p>Returns tree height.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.is_fork">
+<span class="sig-name descname"><span class="pre">is_fork</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.is_fork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.is_fork" title="Link to this definition"></a></dt>
+<dd><p>Returns True for a branching point (except root).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.is_leaf">
+<span class="sig-name descname"><span class="pre">is_leaf</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.is_leaf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.is_leaf" title="Link to this definition"></a></dt>
+<dd><p>Returns True for a terminal node.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.is_root">
+<span class="sig-name descname"><span class="pre">is_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.is_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.is_root" title="Link to this definition"></a></dt>
+<dd><p>Returns True if tree has no parent.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.leaves">
+<span class="sig-name descname"><span class="pre">leaves</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.leaves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.leaves" title="Link to this definition"></a></dt>
+<dd><p>Iterates tree terminals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sequence of tree nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.level">
+<span class="sig-name descname"><span class="pre">level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#treem.Tree.level" title="Link to this definition"></a></dt>
+<dd><p>Returns node depth.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.levelorder">
+<span class="sig-name descname"><span class="pre">levelorder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.levelorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.levelorder" title="Link to this definition"></a></dt>
+<dd><p>Traverses tree in level-order (breadth first).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sequence of tree nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.postorder">
+<span class="sig-name descname"><span class="pre">postorder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.postorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.postorder" title="Link to this definition"></a></dt>
+<dd><p>Traverses tree in post-order (breadth first).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sequence of tree nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.preorder">
+<span class="sig-name descname"><span class="pre">preorder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.preorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.preorder" title="Link to this definition"></a></dt>
+<dd><p>Traverses tree in pre-order (depth first).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sequence of tree nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.size" title="Link to this definition"></a></dt>
+<dd><p>Returns tree size.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Tree.width">
+<span class="sig-name descname"><span class="pre">width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/tree.html#Tree.width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Tree.width" title="Link to this definition"></a></dt>
+<dd><p>Returns tree width.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-morph">
+<h2>Module morph<a class="headerlink" href="#module-morph" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="treem.Node">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">treem.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node" title="Link to this definition"></a></dt>
+<dd><p>Morphology data storage.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.area">
+<span class="sig-name descname"><span class="pre">area</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.area" title="Link to this definition"></a></dt>
+<dd><p>Returns segment area at the node (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.coord">
+<span class="sig-name descname"><span class="pre">coord</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.coord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.coord" title="Link to this definition"></a></dt>
+<dd><p>Returns coordinates of the node (x,y,z) (NumPy ndarray[3]).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.diam">
+<span class="sig-name descname"><span class="pre">diam</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.diam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.diam" title="Link to this definition"></a></dt>
+<dd><p>Returns diameter of the node (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.dist">
+<span class="sig-name descname"><span class="pre">dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.dist" title="Link to this definition"></a></dt>
+<dd><p>Returns Euclidean distance of the node to origin (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.ident">
+<span class="sig-name descname"><span class="pre">ident</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.ident"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.ident" title="Link to this definition"></a></dt>
+<dd><p>Returns node ID (int).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.is_stem">
+<span class="sig-name descname"><span class="pre">is_stem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.is_stem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.is_stem" title="Link to this definition"></a></dt>
+<dd><p>Returns True if node is a stem node.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.length">
+<span class="sig-name descname"><span class="pre">length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.length" title="Link to this definition"></a></dt>
+<dd><p>Returns segment length at the node (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.order">
+<span class="sig-name descname"><span class="pre">order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.order" title="Link to this definition"></a></dt>
+<dd><p>Returns branch order (int). A primary neurite has order 1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.parent_ident">
+<span class="sig-name descname"><span class="pre">parent_ident</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.parent_ident"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.parent_ident" title="Link to this definition"></a></dt>
+<dd><p>Returns node’s parent ID (int).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.point">
+<span class="sig-name descname"><span class="pre">point</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.point" title="Link to this definition"></a></dt>
+<dd><p>Returns point data of the node (x,y,z,r) (NumPy ndarray[4]).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.radius">
+<span class="sig-name descname"><span class="pre">radius</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.radius"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.radius" title="Link to this definition"></a></dt>
+<dd><p>Returns radius of the node (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.section">
+<span class="sig-name descname"><span class="pre">section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.section" title="Link to this definition"></a></dt>
+<dd><p>Iterates through the nodes of the section.</p>
+<p>Iteration starts with the current node and procedes until the
+end of the section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reverse</strong> (<em>bool</em>) – ascending order if True (defaults to False).</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p>sequence of nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.sections">
+<span class="sig-name descname"><span class="pre">sections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.sections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.sections" title="Link to this definition"></a></dt>
+<dd><p>Iterates through the sections in descending order.</p>
+<p>Iterations traverse entire branch starting with the current node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sequence of sections (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.type">
+<span class="sig-name descname"><span class="pre">type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.type" title="Link to this definition"></a></dt>
+<dd><p>Returns point type of the node (int).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.volume">
+<span class="sig-name descname"><span class="pre">volume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.volume" title="Link to this definition"></a></dt>
+<dd><p>Returns segment volume at the node (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Node.walk">
+<span class="sig-name descname"><span class="pre">walk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Node.walk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Node.walk" title="Link to this definition"></a></dt>
+<dd><p>Iterates through the tree nodes starting from the current node.</p>
+<p>Iteration is terminated when root is reached if reverse is
+True. If False, full tree is traversed downstream in pre-order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reverse</strong> (<em>bool</em>) – walk the tree in ascending order if True.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>sequence of tree nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="treem.Morph">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">treem.</span></span><span class="sig-name descname"><span class="pre">Morph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph" title="Link to this definition"></a></dt>
+<dd><p>Neuron morphology representation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.area">
+<span class="sig-name descname"><span class="pre">area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.area" title="Link to this definition"></a></dt>
+<dd><p>Returns section area (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.coords">
+<span class="sig-name descname"><span class="pre">coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.coords" title="Link to this definition"></a></dt>
+<dd><p>Returns reference to section coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.copy" title="Link to this definition"></a></dt>
+<dd><p>Copies branch at the node (defaults to root).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.delete" title="Link to this definition"></a></dt>
+<dd><p>Delete node.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.graft">
+<span class="sig-name descname"><span class="pre">graft</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.graft"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.graft" title="Link to this definition"></a></dt>
+<dd><p>Grafts tree at the given node (defaults to root).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.insert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.insert" title="Link to this definition"></a></dt>
+<dd><p>Inserts new node before the given node.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.length">
+<span class="sig-name descname"><span class="pre">length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.length" title="Link to this definition"></a></dt>
+<dd><p>Returns section length (float).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.load" title="Link to this definition"></a></dt>
+<dd><p>Fill-in Morph from source file or data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em>) – source file (swc).</p></li>
+<li><p><strong>data</strong> (<em>NumPy ndarray</em>) – morphology data (N, 7).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.move">
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.move" title="Link to this definition"></a></dt>
+<dd><p>Shifts node coordinates by 3D vector (float[3]).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.node">
+<span class="sig-name descname"><span class="pre">node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ident</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.node" title="Link to this definition"></a></dt>
+<dd><p>Returns node by it’s ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.points">
+<span class="sig-name descname"><span class="pre">points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.points" title="Link to this definition"></a></dt>
+<dd><p>Returns reference to section data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.prune">
+<span class="sig-name descname"><span class="pre">prune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.prune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.prune" title="Link to this definition"></a></dt>
+<dd><p>Prunes branch at the given node.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.radii">
+<span class="sig-name descname"><span class="pre">radii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.radii"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.radii" title="Link to this definition"></a></dt>
+<dd><p>Returns reference to section radii.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.rotate" title="Link to this definition"></a></dt>
+<dd><p>Rotates branch at the node.</p>
+<p>Branch is traversed downstream from the given node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<em>float</em><em>[</em><em>3</em><em>]</em>) – rotation axis.</p></li>
+<li><p><strong>angle</strong> (<em>float</em>) – rotation angle in degrees.</p></li>
+<li><p><strong>node</strong> (<a class="reference internal" href="#treem.Node" title="treem.Node"><em>treem.Node</em></a>) – starting node (defaults to root).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.save" title="Link to this definition"></a></dt>
+<dd><p>Writes morphology to file (str).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.stems">
+<span class="sig-name descname"><span class="pre">stems</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.stems"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.stems" title="Link to this definition"></a></dt>
+<dd><p>Iterates through stem nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>sequence of stem nodes (generator object).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shift</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.translate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.translate" title="Link to this definition"></a></dt>
+<dd><p>Shifts coordinates of the branch at the given node.</p>
+<p>Branch is traversed downstream from the given node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shift</strong> (<em>float</em><em>[</em><em>3</em><em>]</em>) – translation vector.</p></li>
+<li><p><strong>node</strong> (<a class="reference internal" href="#treem.Node" title="treem.Node"><em>treem.Node</em></a>) – starting node (defaults to root).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.Morph.volume">
+<span class="sig-name descname"><span class="pre">volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/morph.html#Morph.volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.Morph.volume" title="Link to this definition"></a></dt>
+<dd><p>Returns section volume (float).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-treem.io">
+<span id="module-io"></span><h2>Module io<a class="headerlink" href="#module-treem.io" title="Link to this heading"></a></h2>
+<p>SWC data format defintion and services.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="treem.io.SWC">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">treem.io.</span></span><span class="sig-name descname"><span class="pre">SWC</span></span><a class="reference internal" href="_modules/treem/io.html#SWC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.io.SWC" title="Link to this definition"></a></dt>
+<dd><p>Definitions of the data format.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="treem.io.TreemEncoder">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">treem.io.</span></span><span class="sig-name descname"><span class="pre">TreemEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/io.html#TreemEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.io.TreemEncoder" title="Link to this definition"></a></dt>
+<dd><p>Extended JSONEncoder to serialize treem objects.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="treem.io.TreemEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/io.html#TreemEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.io.TreemEncoder.default" title="Link to this definition"></a></dt>
+<dd><p>Implement this method in a subclass such that it returns
+a serializable object for <code class="docutils literal notranslate"><span class="pre">o</span></code>, or calls the base implementation
+(to raise a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>).</p>
+<p>For example, to support arbitrary iterators, you could
+implement default like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="c1"># Let the base class default method raise the TypeError</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.io.load_swc">
+<span class="sig-prename descclassname"><span class="pre">treem.io.</span></span><span class="sig-name descname"><span class="pre">load_swc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/io.html#load_swc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.io.load_swc" title="Link to this definition"></a></dt>
+<dd><p>Reads data from SWC file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.io.save_swc">
+<span class="sig-prename descclassname"><span class="pre">treem.io.</span></span><span class="sig-name descname"><span class="pre">save_swc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/io.html#save_swc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.io.save_swc" title="Link to this definition"></a></dt>
+<dd><p>Writes data to SWC file.</p>
+</dd></dl>
+
+</section>
+<section id="module-treem.utils">
+<span id="module-utils"></span><h2>Module utils<a class="headerlink" href="#module-treem.utils" title="Link to this heading"></a></h2>
+<p>Miscellaneous functions.</p>
+<section id="module-treem.utils.geom">
+<span id="module-utils-geom"></span><h3>Module utils.geom<a class="headerlink" href="#module-treem.utils.geom" title="Link to this heading"></a></h3>
+<p>Utilities for manipulating geometry of morphology reconstructions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.geom.angle_between">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.geom.</span></span><span class="sig-name descname"><span class="pre">angle_between</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/geom.html#angle_between"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.geom.angle_between" title="Link to this definition"></a></dt>
+<dd><p>Returns angle in radians between two 3D vectors (float[3]).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.geom.fibonacci_sphere">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.geom.</span></span><span class="sig-name descname"><span class="pre">fibonacci_sphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">npoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/geom.html#fibonacci_sphere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.geom.fibonacci_sphere" title="Link to this definition"></a></dt>
+<dd><p>Samples equally spaced points on a unit sphere.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>npoints</strong> (<em>int</em>) – sample size [100].</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>array of 3D points (NumPy ndarray[3]).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.geom.norm">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.geom.</span></span><span class="sig-name descname"><span class="pre">norm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/geom.html#norm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.geom.norm" title="Link to this definition"></a></dt>
+<dd><p>Returns magnitude of a 3D vector.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.geom.repair_branch">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.geom.</span></span><span class="sig-name descname"><span class="pre">repair_branch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmorph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rmorph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_radii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/geom.html#repair_branch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.geom.repair_branch" title="Link to this definition"></a></dt>
+<dd><p>Attempts to extend cut neurite using intact branch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmorph</strong> (<a class="reference internal" href="#treem.Morph" title="treem.Morph"><em>treem.Morph</em></a>) – cut morphology.</p></li>
+<li><p><strong>cut</strong> (<a class="reference internal" href="#treem.Node" title="treem.Node"><em>treem.Node</em></a>) – cut node, from cmorph.</p></li>
+<li><p><strong>rmorph</strong> (<a class="reference internal" href="#treem.Morph" title="treem.Morph"><em>treem.Morph</em></a>) – repair morphology.</p></li>
+<li><p><strong>rep</strong> (<a class="reference internal" href="#treem.Node" title="treem.Node"><em>treem.Node</em></a>) – undamaged branch start node, from rmorph.</p></li>
+<li><p><strong>force</strong> (<em>bool</em>) – force repair if branch is too short.</p></li>
+<li><p><strong>keep_radii</strong> (<em>bool</em>) – do not scale radii of repaired branch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if repaired.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.geom.rotation">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.geom.</span></span><span class="sig-name descname"><span class="pre">rotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/geom.html#rotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.geom.rotation" title="Link to this definition"></a></dt>
+<dd><p>Computes rotation axis and angle for two 3D vectors (float[3]).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>axis (NumPy ndarray[3]), angle (float)</p>
+<p>rotation axis, rotation angle in radians.</p>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.geom.rotation_matrix">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.geom.</span></span><span class="sig-name descname"><span class="pre">rotation_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/geom.html#rotation_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.geom.rotation_matrix" title="Link to this definition"></a></dt>
+<dd><p>Computes rotation matrix for 3D manipulations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<em>float</em><em>[</em><em>3</em><em>]</em>) – rotation axis.</p></li>
+<li><p><strong>angle</strong> (<em>float</em>) – rotation angle in radians.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>rotation matrix (NumPy ndarray).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.geom.sample">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.geom.</span></span><span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/geom.html#sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.geom.sample" title="Link to this definition"></a></dt>
+<dd><p>Samples points with fixed resolution using linear interpolation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>NumPy ndarray</em><em>[</em><em>4</em><em>]</em>) – array of 4D data points (x,y,z,r).</p></li>
+<li><p><strong>num</strong> (<em>int</em>) – sample size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>array of 4D points (NumPy ndarray[4]).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-treem.utils.plot">
+<span id="module-utils-plot"></span><h3>Module utils.plot<a class="headerlink" href="#module-treem.utils.plot" title="Link to this heading"></a></h3>
+<p>Plotting utilities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.plot.plot_neuron">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.plot.</span></span><span class="sig-name descname"><span class="pre">plot_neuron</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">morph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">range(1,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/plot.html#plot_neuron"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.plot.plot_neuron" title="Link to this definition"></a></dt>
+<dd><p>Plots neuron morphology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> – matplotlib axes object.</p></li>
+<li><p><strong>morph</strong> (<a class="reference internal" href="#treem.Morph" title="treem.Morph"><em>treem.Morph</em></a>) – neuron morphology.</p></li>
+<li><p><strong>types</strong> (<em>int iterable</em>) – point types to be displayed.</p></li>
+<li><p><strong>colors</strong> (<em>dict</em>) – colors for point types ({pt: colspec}).</p></li>
+<li><p><strong>linewidth</strong> (<em>int</em>) – line width.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.plot.plot_points">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.plot.</span></span><span class="sig-name descname"><span class="pre">plot_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">morph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">range(1,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markersize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/plot.html#plot_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.plot.plot_points" title="Link to this definition"></a></dt>
+<dd><p>Plots marker points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> – matplotlib axes object.</p></li>
+<li><p><strong>morph</strong> (<a class="reference internal" href="#treem.Morph" title="treem.Morph"><em>treem.Morph</em></a>) – neuron morphology.</p></li>
+<li><p><strong>ids</strong> (<em>int iterable</em>) – list of node IDs.</p></li>
+<li><p><strong>types</strong> (<em>int iterable</em>) – point types to display.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.plot.plot_section">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.plot.</span></span><span class="sig-name descname"><span class="pre">plot_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/plot.html#plot_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.plot.plot_section" title="Link to this definition"></a></dt>
+<dd><p>Plots single section.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> – matplotlib axes object.</p></li>
+<li><p><strong>tree</strong> (<a class="reference internal" href="#treem.Node" title="treem.Node"><em>treem.Node</em></a>) – branch start node.</p></li>
+<li><p><strong>data</strong> (<em>NumPy ndarray</em>) – raw data of morphology Morph.</p></li>
+<li><p><strong>kwargs</strong> – arguments for matplotlib plot().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.utils.plot.plot_tree">
+<span class="sig-prename descclassname"><span class="pre">treem.utils.plot.</span></span><span class="sig-name descname"><span class="pre">plot_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/utils/plot.html#plot_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.utils.plot.plot_tree" title="Link to this definition"></a></dt>
+<dd><p>Plots entire branch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax</strong> – matplotlib axes object.</p></li>
+<li><p><strong>tree</strong> (<a class="reference internal" href="#treem.Node" title="treem.Node"><em>treem.Node</em></a>) – branch start node.</p></li>
+<li><p><strong>data</strong> (<em>NumPy ndarray</em>) – raw data of morphology Morph.</p></li>
+<li><p><strong>kwargs</strong> – arguments for matplotlib plot().</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="module-treem.cli">
+<span id="module-cli"></span><h2>Module cli<a class="headerlink" href="#module-treem.cli" title="Link to this heading"></a></h2>
+<p>Command-line interface to package treem.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="treem.cli.cli">
+<span class="sig-prename descclassname"><span class="pre">treem.cli.</span></span><span class="sig-name descname"><span class="pre">cli</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/treem/cli.html#cli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#treem.cli.cli" title="Link to this definition"></a></dt>
+<dd><p>Command-line interface definition.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cli.html" class="btn btn-neutral float-left" title="Command-line interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alexander Kozlov (KTH, Stockholm).</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
