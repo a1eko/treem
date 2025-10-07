@@ -28,5 +28,5 @@ development packages and third-party extensions:
 
 * ``sphinx`` with the ``napoleon`` and ``programoutput`` extensions
 * ``pytest`` with ``pytest-cov`` plugin
-* ``sphinx_rtd_theme``
+* ``sphinx-rtd-theme``
 * ``coverage``

@@ -12,7 +12,7 @@ of neuron morphology in the Stockley-Wheal-Cannon (SWC) format.
 
 .. rubric:: Main classes
 
-Morphological data can be accessed from source code through the following classes::
+Morphological data can be accessed from source code through the following classes:
 
 =========  =========================================================
 ``Tree``   Recursive tree data structure
