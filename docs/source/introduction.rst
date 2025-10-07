@@ -21,7 +21,7 @@ neurite and contains seven fields::
 
     <I> <T> <X> <Y> <Z> <R> <P>
 
-The fields have the following meanings::
+The fields have the following meanings:
 
 ===== ====== ============== =========================
 Field Column Description    Values
