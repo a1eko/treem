@@ -1,4 +1,3 @@
 treem
 sphinx_rtd_theme
-sphinxcontrib-napoleon
 sphinxcontrib-programoutput
