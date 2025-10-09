@@ -29,4 +29,4 @@ x treem (setup.py): make scripts/* installable
 + swc-modify: swap 2 nodes at a time, randomly selected from the input list
 o swc-render: 'no valid context' error in wayland, set PYOPENGL_PLATFORM='glx'
 + swc-render (W, write image to file): TypeError
-- swc-repair (resample): do not interpolate diameter if parent is root
+x swc-repair (sample): do not interpolate diameter if parent is root
