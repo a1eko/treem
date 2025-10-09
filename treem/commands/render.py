@@ -325,6 +325,7 @@ class App:
         # pylint: disable=no-value-for-parameter
         glPixelStorei(GL_PACK_ALIGNMENT, 1)
         width, height = glGetFloatv(GL_VIEWPORT)[2:4]
+        width, height = int(width), int(height)
         data = glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE)
         image = Image.frombytes('RGBA', (width, height), data)
         image = ImageOps.flip(image)
