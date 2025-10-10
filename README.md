@@ -91,13 +91,13 @@ Documentation is available online at [Read the
 Docs](https://treem.readthedocs.io/en/latest/).
 
 
-References
-----------
+Citation
+--------
 
-1. Hjorth JJJ, Hellgren Kotaleski J, Kozlov A. Predicting
+Hjorth JJJ, Hellgren Kotaleski J, Kozlov A. Predicting
 Synaptic Connectivity for Large-Scale Microcircuit Simulations
 Using Snudda. Neuroinformatics. 2021 Oct;19(4):685-701. doi:
-10.1007/s12021-021-09531-w.
+[10.1007/s12021-021-09531-w](https://doi.org/10.1007/s12021-021-09531-w).
 
 
 Funding
@@ -113,7 +113,9 @@ partially funded from the European Union's Horizon 2020 research and
 innovation programme through the ICEI project under the grant agreement
 No. 800858.
 
-The computations and testing were enabled by resources provided by
+The computations and testing were enabled by resources provided by the National 
+Academic Infrastructure for Supercomputing in Sweden (NAISS), partially funded by 
+the Swedish Research Council through grant agreement no. 2022-06725, also by
 the Swedish National Infrastructure for Computing (SNIC) at PDC KTH
 partially funded by the Swedish Research Council through grant agreement
 no. 2018-05973.
