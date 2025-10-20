@@ -12,6 +12,7 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=a1eko_treem)](https://sonarcloud.io/summary/new_code?id=a1eko_treem)
 [![codecov.io](https://codecov.io/gh/a1eko/treem/coverage.svg)](https://codecov.io/gh/a1eko/treem)
 [![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
+
 [![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
 
 
