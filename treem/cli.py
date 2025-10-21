@@ -24,6 +24,8 @@ except ImportError:
     pass
 
 
+INPUT_SWC = 'input morphology file (swc)'
+
 def cli():
     """Command-line interface definition."""
     parser = argparse.ArgumentParser()
@@ -34,8 +36,7 @@ def cli():
         epilog='prints out error codes and IDs of error nodes; '
                'returns the number of errors',
         help='test morphology reconstruction for structural consistency')  # noqa
-    cmd_check.add_argument('file', type=str,
-                           help='input morphology file (swc)')
+    cmd_check.add_argument('file', type=str, help=INPUT_SWC)
     cmd_check.add_argument('-q', dest='quiet', action='store_true',
                            help='disable output')
     cmd_check.add_argument('-o', dest='out', metavar='<str>', type=str,
@@ -43,8 +44,7 @@ def cli():
     cmd_check.set_defaults(func=check)
 
     cmd_view = subparsers.add_parser('view', help='view morphology')
-    cmd_view.add_argument('file', type=str, nargs='+',
-                          help='input morphology file (swc)')
+    cmd_view.add_argument('file', type=str, nargs='+', help=INPUT_SWC)
     cmd_view.add_argument('-p', dest='type', metavar='<int>', type=int,
                           nargs='+', choices=SWC.TYPES,
                           help='point type {1,2,3,4} [all]')
@@ -112,8 +112,7 @@ def cli():
 
     cmd_find = subparsers.add_parser('find', epilog='prints out point ids',
                                      help='locate single points')
-    cmd_find.add_argument('file', type=str,
-                          help='input morphology file (swc)')
+    cmd_find.add_argument('file', type=str, help=INPUT_SWC)
     cmd_find.add_argument('-p', dest='type', metavar='<int>', type=int,
                           nargs='+', choices=SWC.TYPES,
                           help='point type {1,2,3,4} [any]')
@@ -156,8 +155,7 @@ def cli():
     cmd_find.set_defaults(func=find)
 
     cmd_modify = subparsers.add_parser('modify', help='modify morphology')
-    cmd_modify.add_argument('file', type=str,
-                            help='input morphology file (swc)')
+    cmd_modify.add_argument('file', type=str, help=INPUT_SWC)
     cmd_modify.add_argument('-p', dest='type', metavar='<int>', type=int,
                             nargs='+',
                             choices=set(SWC.TYPES).difference((SWC.SOMA,)),
@@ -194,8 +192,7 @@ def cli():
     cmd_modify.set_defaults(func=modify)
 
     cmd_repair = subparsers.add_parser('repair', help='repair morphology')
-    cmd_repair.add_argument('file', type=str,
-                            help='input morphology file (swc)')
+    cmd_repair.add_argument('file', type=str, help=INPUT_SWC)
     cmd_repair.add_argument('-n', dest='center', action='store_true',
                             help='center root')
     cmd_repair.add_argument('-t', dest='translate', metavar='<float>',
@@ -264,8 +261,7 @@ def cli():
     cmd_repair.set_defaults(func=repair)
 
     cmd_measure = subparsers.add_parser('measure', help='measure morphology')
-    cmd_measure.add_argument('file', type=str, nargs='+',
-                             help='input morphology file (swc)')
+    cmd_measure.add_argument('file', type=str, nargs='+', help=INPUT_SWC)
     cmd_measure.add_argument('-p', dest='type', metavar='<int>', type=int,
                              nargs='+', choices=SWC.TYPES,
                              help='point type {1,2,3,4} [all]')
@@ -283,8 +279,7 @@ def cli():
     cmd_measure.set_defaults(func=measure)
 
     cmd_convert = subparsers.add_parser('convert', help='convert input file')
-    cmd_convert.add_argument('file', type=str,
-                             help='input morphology file (swc)')
+    cmd_convert.add_argument('file', type=str, help=INPUT_SWC)
     cmd_convert.add_argument('-p', dest='type', metavar='<int>', type=int,
                              nargs='+', choices=SWC.TYPES,
                              help='point type {1,2,3,4} [all]')
@@ -299,8 +294,7 @@ def cli():
         cmd_render = subparsers.add_parser(
             'render', help='show 3D model', epilog=_HELP,
             formatter_class=argparse.RawDescriptionHelpFormatter)
-        cmd_render.add_argument('file', type=str,
-                                help='input morphology file (swc)')
+        cmd_render.add_argument('file', type=str, help=INPUT_SWC)
         cmd_render.set_defaults(func=render)
 
     args = parser.parse_args()
