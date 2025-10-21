@@ -41,14 +41,14 @@ Alternatively:
 
 List of ``swc`` commands:
 
-* ``check``    - Test morphology reconstruction for structural consistency
-* ``convert``  - Convert morphology to compliant SWC format
-* ``find``     - Locate single nodes in the reconstruction
-* ``measure``  - Calculate morphometric features
-* ``modify``   - Manipulate morphology reconstruction
-* ``render``   - Display 3D model of the reconstruction
-* ``repair``   - Correct reconstruction errors
-* ``view``     - Show morphology structure
+* ``check``    - tests morphology reconstruction for structural consistency
+* ``convert``  - converts morphology to compliant SWC format
+* ``find``     - locates single nodes in the reconstruction
+* ``measure``  - calculates morphometric features
+* ``modify``   - manipulates morphology reconstruction
+* ``render``   - displays 3D model of the reconstruction
+* ``repair``   - corrects reconstruction errors
+* ``view``     - shows morphology structure
 
 
 Installation
@@ -56,13 +56,13 @@ Installation
 
 Install the latest stable release:
 
-    pip3 install treem
+    pip install treem
 
 Install a development version:
 
-    pip3 install git+https://github.com/a1eko/treem
+    pip install git+https://github.com/a1eko/treem
 
-See also ``pip3`` documentation for installation alternatives.
+See also ``pip`` documentation for installation alternatives.
 
 
 Dependencies
