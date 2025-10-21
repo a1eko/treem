@@ -100,7 +100,7 @@ Using Snudda. *Neuroinformatics*, **19**(4):685-701. DOI:
 [10.1007/s12021-021-09531-w](https://doi.org/10.1007/s12021-021-09531-w).
 
 * Kozlov AK (2021) Treem - neuron morphology processing tool. *Zenodo*.
-DOI:[10.5281/zenodo.4890844](https://doi.org/10.5281/zenodo.4890844).
+DOI: [10.5281/zenodo.4890844](https://doi.org/10.5281/zenodo.4890844).
 
 
 Funding
