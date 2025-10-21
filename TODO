@@ -27,3 +27,4 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 o swc-render: 'no valid context' error in wayland, set PYOPENGL_PLATFORM='glx'
 + swc-render (W, write image to file): TypeError
 + treem: release v1.1.1
+- treem: refactor code to resolve SonarQube issues
