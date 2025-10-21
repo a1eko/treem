@@ -321,8 +321,6 @@ def repair(args):
             length = morph.length(sec)
             points = morph.points(sec)
             parent_point = sec[0].parent.v[SWC.XYZR]
-            #if sec[0].parent.is_root():
-            #    parent_point[3] = sec[0].v[SWC.R]
             # pylint: disable=unsubscriptable-object
             points = np.insert(points, 0, parent_point, axis=0)
             points = sample(points, np.ceil(length / args.res).astype(int))

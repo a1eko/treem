@@ -96,9 +96,6 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
         if keep_radii:
             scale_r = 1
         else:
-            # possibly unsafe use of memory block in radii() may cause errors in swc-repair
-            # rcut = cmorph.radii(cutsec).mean()
-            # rrep = rmorph.radii(repsec).mean()
             rcut = np.mean([node.radius() for node in cutsec])
             rrep = np.mean([node.radius() for node in repsec])
             scale_r = rcut / rrep

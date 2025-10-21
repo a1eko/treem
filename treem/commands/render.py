@@ -271,8 +271,6 @@ class App:
                 nr = node.radius()
                 px, py, pz = node.parent.coord()
                 pr = node.parent.radius()
-                #if node.parent == morph.root:
-                #    pr = nr
                 glPushMatrix()
                 glTranslatef(px, py, pz)
                 axis, angle = rotation(
