@@ -10,7 +10,7 @@ dependencies = [
 
 setuptools.setup(
     name="treem",
-    version="1.1.1",
+    version="1.1.2dev1",
     author="Alexander Kozlov",
     author_email="akozlov@kth.se",
     description="Tree-like morphology data processing",
