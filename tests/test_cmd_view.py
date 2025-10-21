@@ -4,11 +4,11 @@ import subprocess
 import os
 
 
-def test_png():
+def test_png(tmp_path):
     """Tests for common plot."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'view', 'pass_simple_branch.swc',
-                             '-o', '/tmp/test_treem.png'],
+                             '-o', tmp_path / 'test_treem.png'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -18,7 +18,7 @@ def test_png():
     assert stderr == ''
 
 
-def test_pdf():
+def test_pdf(tmp_path):
     """Tests for plot options."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'view', 'pass_simple_branch.swc',
@@ -26,7 +26,7 @@ def test_pdf():
                              '--scale', '100', '-c', 'cells',
                              '-b', '2', '-s', '4', '-m', '3', '9',
                              '-a', '20', '30',
-                             '-o', '/tmp/test_treem.pdf'],
+                             '-o', tmp_path / 'test_treem.pdf'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -36,12 +36,12 @@ def test_pdf():
     assert stderr == ''
 
 
-def test_shadow():
+def test_shadow(tmp_path):
     """Tests for plot options."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'view', 'pass_simple_branch.swc',
                              'pass_zjump.swc', '-c', 'shadow',
-                             '-o', '/tmp/test_treem.png'],
+                             '-o', tmp_path / 'test_treem.png'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -51,12 +51,12 @@ def test_shadow():
     assert stderr == ''
 
 
-def test_proj_xy():
+def test_proj_xy(tmp_path):
     """Tests for plot projection."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'view', 'pass_simple_branch.swc',
                              '-j', 'xy',
-                             '-o', '/tmp/test_treem.png'],
+                             '-o', tmp_path / 'test_treem.png'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -66,12 +66,12 @@ def test_proj_xy():
     assert stderr == ''
 
 
-def test_proj_xz():
+def test_proj_xz(tmp_path):
     """Tests for plot projection."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'view', 'pass_simple_branch.swc',
                              '-j', 'xz',
-                             '-o', '/tmp/test_treem.png'],
+                             '-o', tmp_path / 'test_treem.png'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -81,12 +81,12 @@ def test_proj_xz():
     assert stderr == ''
 
 
-def test_proj_yz():
+def test_proj_yz(tmp_path):
     """Tests for plot projection."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'view', 'pass_simple_branch.swc',
                              '-j', 'yz',
-                             '-o', '/tmp/test_treem.png'],
+                             '-o', tmp_path / 'test_treem.png'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
