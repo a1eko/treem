@@ -262,8 +262,7 @@ def cli():
     cmd_measure = subparsers.add_parser('measure', help='measure morphology')
     cmd_measure.add_argument('file', type=str, nargs='+', help=INPUT_SWC)
     cmd_measure.add_argument('-p', dest='type', metavar='INT', type=int,
-                             nargs='+', choices=SWC.TYPES,
-                             help='point type {1,2,3,4} [all]')
+                             nargs='+', choices=SWC.TYPES, help=POINT_TYPE)
     cmd_measure.add_argument('-a', dest='opt', metavar='STR', type=str,
                              nargs='+', choices=['path', 'sec', 'seg', 'sholl'],
                              help='optional feature {path,sec,seg,sholl}')
@@ -280,8 +279,7 @@ def cli():
     cmd_convert = subparsers.add_parser('convert', help='convert input file')
     cmd_convert.add_argument('file', type=str, help=INPUT_SWC)
     cmd_convert.add_argument('-p', dest='type', metavar='INT', type=int,
-                             nargs='+', choices=SWC.TYPES,
-                             help='point type {1,2,3,4} [all]')
+                             nargs='+', choices=SWC.TYPES, help=POINT_TYPE)
     cmd_convert.add_argument('-o', dest='out', metavar='STR', type=str,
                              default='inp.swc',
                              help='converted morphology file (swc) [inp.swc]')
