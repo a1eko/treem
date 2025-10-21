@@ -31,11 +31,11 @@ def modify(args):
     nodes = list(nodes)
 
     if args.scale_radius:
-        scale = np.abs(args.scale_radius)
+        scale_radius = np.abs(args.scale_radius)
         for node in nodes:
             sec = list(node.section())
             radii = morph.radii(sec)
-            radii *= scale
+            radii *= scale_radius
 
     if args.scale:
         scale = np.abs(args.scale)
@@ -44,7 +44,7 @@ def modify(args):
             head = sec[0].coord().copy()
             tail = sec[-1].coord().copy()
             coords = morph.coords(sec)
-            coords *= np.array(args.scale)
+            coords *= np.array(scale)
             shift = head - sec[0].coord()
             coords += shift
             for child in sec[-1].siblings:
@@ -72,8 +72,8 @@ def modify(args):
                         xlen += node.length()
                         vec = args.jitter * rnd * xlen / length
                         morph.move(vec, node)
-                scale = length / morph.length(sec[1:])
-                coords *= scale
+                scale_jitter = length / morph.length(sec[1:])
+                coords *= scale_jitter
                 shift = head - sec[0].coord()
                 coords += shift
                 for child in sec[-1].siblings:
@@ -99,8 +99,8 @@ def modify(args):
                 for secnode in sec[1:]:
                     coord = secnode.coord()
                     coord += vdir * np.linalg.norm(coord - head) * args.stretch
-                scale = length / morph.length(sec[1:])
-                coords *= scale
+                scale_stretch = length / morph.length(sec[1:])
+                coords *= scale_stretch
                 shift = head - sec[0].coord()
                 coords += shift
                 for child in sec[-1].siblings:
@@ -119,8 +119,8 @@ def modify(args):
                     for secnode in sec[-1::-1]:
                         coord = secnode.coord()
                         coord += secnode.parent.coord()
-                    scale = length / morph.length(sec[1:])
-                    coords *= scale
+                    scale_smooth = length / morph.length(sec[1:])
+                    coords *= scale_smooth
                     shift = head - sec[0].coord()
                     coords += shift
                 for child in sec[-1].siblings:
@@ -129,7 +129,6 @@ def modify(args):
 
     if args.swap:
         np.random.shuffle(nodes)
-        #for node1, node2 in zip(nodes[:-1:2], nodes[1::2]):
         # swap 2 nodes at a time
         for node1, node2 in zip(nodes[:1], nodes[1:]):
             parent1 = node1.parent
