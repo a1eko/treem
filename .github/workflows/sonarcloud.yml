@@ -18,7 +18,8 @@ jobs:
           fetch-depth: 0  # Required for proper analysis
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v2
+        #uses: SonarSource/sonarqube-scan-action@v4.2.2
+        uses: SonarSource/sonarqube-scan-action@689fb39b34b9aa95ebc5f8f119343ddd51542402
         with:
           args: >
             -Dsonar.organization=a1eko
