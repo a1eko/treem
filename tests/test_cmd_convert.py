@@ -4,11 +4,11 @@ import subprocess
 import os
 
 
-def test_unordered():
+def test_unordered(tmp_path):
     """Tests for converting unordered SWC file."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'convert', 'fail_unordered.swc',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -18,11 +18,11 @@ def test_unordered():
     assert stderr == ''
 
 
-def test_not_array():
+def test_not_array(tmp_path):
     """Tests for converting incorrect file."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'convert', 'fail_not_array_1.swc',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
