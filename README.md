@@ -14,6 +14,7 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 [![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=a1eko_treem)](https://sonarcloud.io/summary/new_code?id=a1eko_treem)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=a1eko_treem&metric=alert_status)](https://sonarcloud.io/dashboard?id=myorg_myrepo)
 
 
 Main classes
