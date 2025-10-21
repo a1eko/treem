@@ -274,11 +274,11 @@ not_valid_parent_ids: 1
     assert stderr == ''
 
 
-def test_simple_branch():
+def test_simple_branch(tmp_path):
     """Tests unordered SWC file."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'check', 'pass_simple_branch.swc',
-                             '-o', '/tmp/test_treem.json'],
+                             '-o', tmp_path / 'test_treem.json'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
