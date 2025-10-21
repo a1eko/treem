@@ -96,7 +96,7 @@ Citation
 
 * Hjorth JJJ, Hellgren Kotaleski J, Kozlov A (2021) Predicting
 Synaptic Connectivity for Large-Scale Microcircuit Simulations
-Using Snudda. *Neuroinformatics*, **19**(4):685-701. doi:
+Using Snudda. *Neuroinformatics*, **19**(4):685-701. DOI:
 [10.1007/s12021-021-09531-w](https://doi.org/10.1007/s12021-021-09531-w).
 
 
