@@ -73,9 +73,9 @@ class InteractionMatrix():
 class MouseInteractor():
     """Class for mouse control."""
     # pylint: disable=invalid-name
-    def __init__(self, translationScale=0.1, rotationScale=0.2):
-        self.scaling_factor_rotation = rotationScale
-        self.scaling_factor_translation = translationScale
+    def __init__(self, translation_scale=0.1, rotation_scale=0.2):
+        self.scaling_factor_rotation = rotation_scale
+        self.scaling_factor_translation = translation_scale
         self.rotation_matrix = InteractionMatrix()
         self.translation_matrix = InteractionMatrix()
         self.mouse_button_pressed = None

@@ -46,7 +46,7 @@ class Node(Tree):
     def order(self):
         """Returns branch order (int). A primary neurite has order 1."""
         one = 1 if not self.is_fork() else 0
-        return (sum(1 for node in self.forks(iterator=Tree.ascendorder)) + one
+        return (sum(1 for _ in self.forks(iterator=Tree.ascendorder)) + one
                 if not self.is_root() else 0)
 
     def ident(self):
@@ -438,7 +438,7 @@ class DGram(Morph):
                     data[SWC.X] = segd[SEG.PATH]
             if ystep == 0.0 or zstep == 0.0:
                 maxdist = max(node.dist() for node in morph.root.leaves())
-                ntips = sum(1 for node in morph.root.leaves())
+                ntips = sum(1 for _ in morph.root.leaves())
                 dgram_step = maxdist / ntips
             ystep = ystep if ystep != 0.0 else dgram_step
             zstep = zstep if zstep != 0.0 else dgram_step
