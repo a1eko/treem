@@ -45,7 +45,7 @@ def get_lines(reconstruction):
     lines = {}
     lines[name] = {}
     for point_type in SWC.TYPES:
-        points = list()
+        points = []
         for sec in filter(lambda x: x[0].type() == point_type,
                           morph.root.sections()):
             points.append(morph.coords(sec))
