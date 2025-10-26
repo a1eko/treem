@@ -13,7 +13,7 @@ setuptools.setup(
     version="1.1.2dev1",
     author="Alexander Kozlov",
     author_email="akozlov@kth.se",
-    description="Tree-like morphology data processing",
+    description="Tree-like morphology data processing tool",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/a1eko/treem",
