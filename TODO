@@ -1,4 +1,4 @@
-Key: - todo, + done, o pending/attention, x ignore
+Key: - todo, + done, o pending, ! attention, x ignore
 
 + swc-check: detect soma nodes (type 1) separated by other nodes (see  Ilaria's 210525_s6_v4.swc)
 + swc-repair: assumes centered input morphology; should do this internally if needed and return original root coordinates unless -n explicitly applied
@@ -8,7 +8,7 @@ Key: - todo, + done, o pending/attention, x ignore
 + swc-measure: add optional features (-a {sholl,dist,path,sec})
 + swc-find: distance to origin
 + swc-repair: add neurite to root if id=1 is in the list of the cut points
-o swc-view: run gdk-pixbuf-register to enable matplotlib backends
+! swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + morph (get_segdata): extract extended segment data (two-pass parsing)
 + swc-view: add dendrogram view
 + swc-view: add axes limits
@@ -24,9 +24,10 @@ o swc-view: run gdk-pixbuf-register to enable matplotlib backends
 + swc-view: distance to object setting is ignored (-d) if 'ortho' projection is used (default)
 + swc-measure: wrong values of segment order (-a seg) limited to 1 and 2
 + swc-modify: swap 2 nodes at a time, randomly selected from the input list
-o swc-render: 'no valid context' error in wayland, set PYOPENGL_PLATFORM='glx'
+! swc-render: 'no valid context' error in wayland, set PYOPENGL_PLATFORM='glx'
 + swc-render (W, write image to file): TypeError
 + treem: release v1.1.1
-- treem: refactor code to resolve SonarQube issues
+o treem: refactor code to resolve SonarQube issues
 + treem: replace legacy setup.py bdist_wheel mechanism with pyproject.toml
 + treem: run tests with 'hatch run pytest ...' command
+- treem: use tox to test against several python versions
