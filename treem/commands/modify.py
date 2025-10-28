@@ -35,8 +35,7 @@ def modify(args):
         for node in nodes:
             sec = list(node.section())
             radii = morph.radii(sec)
-            #radii *= scale_radius
-            radii = radii * scale_radius
+            radii = radii * scale_radius  # same as *=
 
     if args.scale:
         scale = np.abs(args.scale)
