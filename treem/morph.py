@@ -11,6 +11,9 @@ from treem.io import SWC, load_swc, save_swc
 from treem.utils.geom import rotation_matrix, norm
 
 
+TOLERANCE = 1e-9
+
+
 class Node(Tree):
     """Morphology data storage."""
 
@@ -430,18 +433,19 @@ class DGram(Morph):
             graph = Morph(data=morph.data)
             segdata = get_segdata(graph)
             for sec in graph.root.sections():
-                start_node = sec[0]
                 for node in sec:
                     ident = node.ident()
                     data = graph.data[ident - 1]
                     segd = segdata[ident - 1]
                     data[SWC.X] = segd[SEG.PATH]
-            if ystep == 0.0 or zstep == 0.0:
+            if math.isclose(ystep, 0.0, abs_tol=TOLERANCE) or math.isclose(zstep, 0.0, abs_tol=TOLERANCE):
                 maxdist = max(node.dist() for node in morph.root.leaves())
                 ntips = sum(1 for _ in morph.root.leaves())
                 dgram_step = maxdist / ntips
-            ystep = ystep if ystep != 0.0 else dgram_step
-            zstep = zstep if zstep != 0.0 else dgram_step
+            if math.isclose(ystep, 0.0, abs_tol=TOLERANCE): 
+                ystep = dgram_step
+            if math.isclose(zstep, 0.0, abs_tol=TOLERANCE): 
+                zstep = dgram_step
             graph.data[:, SWC.YZ] = [0.0, zorder * zstep]
             for stem in graph.stems():
                 for sec in stem.sections():
