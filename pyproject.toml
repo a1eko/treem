@@ -9,7 +9,7 @@ description = "Tree-like morphology data processing tool"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
-requires-python = ">=3.7"
+requires-python = ">=3.7, <4.0"
 authors = [
     { name = "Alexander Kozlov", email = "akozlov@kth.se" },
 ]
