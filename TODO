@@ -29,3 +29,4 @@ o swc-render: 'no valid context' error in wayland, set PYOPENGL_PLATFORM='glx'
 + treem: release v1.1.1
 - treem: refactor code to resolve SonarQube issues
 - treem: replace legacy setup.py bdist_wheel mechanism with pyproject.toml
+- treem: run tests with 'hatch run pytest ...' command

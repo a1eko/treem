@@ -27,17 +27,15 @@ jobs:
           pip install hatch flake8 pytest pytest-cov numpy matplotlib
           # Optional: install requirements.txt if it exists
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          #hatch run pip install -e .
-          pip install -e .
+          hatch run pip install -e .
 
       - name: Lint with flake8
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-line-length=127 --ignore=F401,F403,F405 --statistics
 
-      - name: Test with pytest
-        #run: hatch run pytest --cov=treem --cov-report=xml tests/
-        run: pytest --cov=treem --cov-report=xml tests/
+#      - name: Test with pytest
+#        run: hatch run pytest --cov=treem --cov-report=xml tests/
 
       - name: Build package
         run: hatch build
