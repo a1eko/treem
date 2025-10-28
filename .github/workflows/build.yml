@@ -15,7 +15,7 @@ jobs:
     strategy:
       # 1. New: Define the Python versions in a matrix
       matrix:
-        python-version: ["3.7", "3.12"]
+        python-version: ["3.8", "3.12"]
 
     steps:
       - uses: actions/checkout@v4 # Updated to a modern action version
@@ -34,7 +34,7 @@ jobs:
       - name: Run Tox Tests
         # We run the environment that matches the matrix version (e.g., tox -e py37)
         # This logic transforms '3.7' into 'py37' and '3.12' into 'py312'
-        run: tox -e py${{ matrix.python-version == '3.7' && '37' || '312' }}
+        run: tox -e py${{ matrix.python-version == '3.8' && '38' || '312' }}
 
       # The original 'hatch build' step remains
       - name: Build package
