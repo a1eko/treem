@@ -37,7 +37,7 @@ def cli():
         epilog='prints out error codes and IDs of error nodes; '
                'returns the number of errors',
         help='test morphology reconstruction for structural consistency')  # noqa
-    cmd_check.add_argument('file', type=str, help=INPUT_SWC)
+    cmd_check.add_argument('FILE', type=str, help=INPUT_SWC)
     cmd_check.add_argument('-q', dest='quiet', action='store_true',
                            help='disable output')
     cmd_check.add_argument('-o', dest='out', metavar='STR', type=str,
@@ -45,7 +45,7 @@ def cli():
     cmd_check.set_defaults(func=check)
 
     cmd_view = subparsers.add_parser('view', help='view morphology')
-    cmd_view.add_argument('file', type=str, nargs='+', help=INPUT_SWC)
+    cmd_view.add_argument('FILE', type=str, nargs='+', help=INPUT_SWC)
     cmd_view.add_argument('-p', dest='type', metavar='INT', type=int,
                           nargs='+', choices=SWC.TYPES, help=POINT_TYPE)
     cmd_view.add_argument('-b', dest='branch', type=int, metavar='INT',
@@ -112,7 +112,7 @@ def cli():
 
     cmd_find = subparsers.add_parser('find', epilog='prints out point ids',
                                      help='locate single points')
-    cmd_find.add_argument('file', type=str, help=INPUT_SWC)
+    cmd_find.add_argument('FILE', type=str, help=INPUT_SWC)
     cmd_find.add_argument('-p', dest='type', metavar='INT', type=int,
                           nargs='+', choices=SWC.TYPES, help=POINT_TYPE)
     cmd_find.add_argument('-e', dest='order', metavar='INT', type=int,
@@ -154,7 +154,7 @@ def cli():
     cmd_find.set_defaults(func=find)
 
     cmd_modify = subparsers.add_parser('modify', help='modify morphology')
-    cmd_modify.add_argument('file', type=str, help=INPUT_SWC)
+    cmd_modify.add_argument('FILE', type=str, help=INPUT_SWC)
     cmd_modify.add_argument('-p', dest='type', metavar='INT', type=int,
                             nargs='+',
                             choices=set(SWC.TYPES).difference((SWC.SOMA,)),
@@ -191,7 +191,7 @@ def cli():
     cmd_modify.set_defaults(func=modify)
 
     cmd_repair = subparsers.add_parser('repair', help='repair morphology')
-    cmd_repair.add_argument('file', type=str, help=INPUT_SWC)
+    cmd_repair.add_argument('FILE', type=str, help=INPUT_SWC)
     cmd_repair.add_argument('-n', dest='center', action='store_true',
                             help='center root')
     cmd_repair.add_argument('-t', dest='translate', metavar='FLOAT',
@@ -260,7 +260,7 @@ def cli():
     cmd_repair.set_defaults(func=repair)
 
     cmd_measure = subparsers.add_parser('measure', help='measure morphology')
-    cmd_measure.add_argument('file', type=str, nargs='+', help=INPUT_SWC)
+    cmd_measure.add_argument('FILE', type=str, nargs='+', help=INPUT_SWC)
     cmd_measure.add_argument('-p', dest='type', metavar='INT', type=int,
                              nargs='+', choices=SWC.TYPES, help=POINT_TYPE)
     cmd_measure.add_argument('-a', dest='opt', metavar='STR', type=str,
@@ -277,7 +277,7 @@ def cli():
     cmd_measure.set_defaults(func=measure)
 
     cmd_convert = subparsers.add_parser('convert', help='convert input file')
-    cmd_convert.add_argument('file', type=str, help=INPUT_SWC)
+    cmd_convert.add_argument('FILE', type=str, help=INPUT_SWC)
     cmd_convert.add_argument('-p', dest='type', metavar='INT', type=int,
                              nargs='+', choices=SWC.TYPES, help=POINT_TYPE)
     cmd_convert.add_argument('-o', dest='out', metavar='STR', type=str,
@@ -291,8 +291,11 @@ def cli():
         cmd_render = subparsers.add_parser(
             'render', help='show 3D model', epilog=_HELP,
             formatter_class=argparse.RawDescriptionHelpFormatter)
-        cmd_render.add_argument('file', type=str, help=INPUT_SWC)
+        cmd_render.add_argument('FILE', type=str, help=INPUT_SWC)
         cmd_render.set_defaults(func=render)
 
+    if len(sys.argv) == 1:
+        print('treem command-line interface\nusage: swc -h')
+        sys.exit(1)
     args = parser.parse_args()
     sys.exit(args.func(args))
