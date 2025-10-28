@@ -248,7 +248,7 @@ class Morph():
         node = node if node else self.root
         for sec in node.sections():
             points = self.coords(sec)
-            points += shift
+            points = points + shift  # same as +=
 
     def rotate(self, axis, angle, node=None):
         """Rotates branch at the node.
