@@ -49,13 +49,13 @@ def check(args):
         if len(soma_ids > 1):
             inc = soma_ids[1:] - soma_ids[:-1]
             if not (inc == 1).all():
-                err['non_sequential_soma_ids'] = soma_ids[np.where(inc != 1)[0] + 1]
+                err['non_sequential_soma_ids'] = soma_ids[np.nonzero(inc != 1)[0] + 1]
         types = set(data[:, SWC.T].astype(int))
         if not types.issubset(SWC.TYPES):
             err['not_valid_types'] =\
                 [data[x][SWC.I].astype(int)
                  for t in types.difference(SWC.TYPES)
-                 for x in np.where(data[:, SWC.T] == t)[0]]
+                 for x in np.nonzero(data[:, SWC.T] == t)[0]]
         ids = data[:, SWC.I].astype(int)
         if not (ids > 0).all():
             err['not_valid_ids'] = ids[ids <= 0]
@@ -75,25 +75,25 @@ def check(args):
             err['undef_parent_ids'] =\
                 [data[x][SWC.I].astype(int)
                  for p in idp_set.difference(ids_set)
-                 for x in np.where(data[:, SWC.P] == p)[0]]
+                 for x in np.nonzero(data[:, SWC.P] == p)[0]]
             break
         inc = ids[1:] - ids[:-1]
         if not (inc > 0).all():
-            err['non_increasing_ids'] = ids[np.where(inc <= 0)[0] + 1]
+            err['non_increasing_ids'] = ids[np.nonzero(inc <= 0)[0] + 1]
             break
         if not (inc == 1).all():
-            err['non_sequential_ids'] = ids[np.where(inc != 1)[0] + 1]
+            err['non_sequential_ids'] = ids[np.nonzero(inc != 1)[0] + 1]
             break
         if not (ids[1:] > idp).all():
-            err['non_descendant'] = ids[np.where(ids[1:] <= idp)[0] + 1]
+            err['non_descendant'] = ids[np.nonzero(ids[1:] <= idp)[0] + 1]
             break
         if [data[x][SWC.I].astype(int) for t in types.difference([1])
-                for x in np.where(data[:, SWC.T] == t)[0][:1]
+                for x in np.nonzero(data[:, SWC.T] == t)[0][:1]
                 if data[x][SWC.P] != 1]:
             err['non_stem_neurite'] =\
                 [data[x][SWC.I].astype(int)
                  for t in types.difference([1])
-                 for x in np.where(data[:, SWC.T] == t)[0][:1]
+                 for x in np.nonzero(data[:, SWC.T] == t)[0][:1]
                  if data[x][SWC.P] != 1]
         break
 
