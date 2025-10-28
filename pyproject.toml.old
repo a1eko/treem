@@ -40,13 +40,8 @@ swc = "treem.cli:cli"
 Homepage = "https://github.com/a1eko/treem"
 
 [project.optional-dependencies]
-test = [
-    "pytest",
-    "pytest-cov",
-    "flake8",
-    "numpy",
-    "matplotlib",
-]
+dev = ["pytest", "pytest-cov", "flake8"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["treem"]
 

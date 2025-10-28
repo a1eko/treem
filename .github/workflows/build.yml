@@ -1,46 +1,47 @@
-name: build
+name: Test with Tox
 
 on:
   push:
-    branches: ["master"]
+    branches: [ "master" ]
   pull_request:
-    branches: ["master"]
+    branches: [ "master" ]
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  test: # Renamed job for clarity
     runs-on: ubuntu-latest
+    strategy:
+      # 1. New: Define the Python versions in a matrix
+      matrix:
+        python-version: ["3.7", "3.12"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # Updated to a modern action version
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v3
+      # 2. New: Setup Python based on the current matrix version
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install Hatch and dev dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install hatch flake8 pytest pytest-cov numpy matplotlib
-          # Optional: install requirements.txt if it exists
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          hatch run pip install -e .
+      # 3. New: Install Tox globally (it manages the rest of the dependencies)
+      - name: Install Tox
+        run: python -m pip install tox
 
-      - name: Lint with flake8
-        run: |
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --count --exit-zero --max-line-length=127 --ignore=F401,F403,F405 --statistics
+      # 4. New: Run the Tox environment specific to this Python version
+      - name: Run Tox Tests
+        # We run the environment that matches the matrix version (e.g., tox -e py37)
+        # This logic transforms '3.7' into 'py37' and '3.12' into 'py312'
+        run: tox -e py${{ matrix.python-version == '3.7' && '37' || '312' }}
 
-      - name: Test with pytest
-        run: hatch run pytest --cov=treem --cov-report=xml tests/
-
+      # The original 'hatch build' step remains
       - name: Build package
         run: hatch build
 
+      # The original 'Upload coverage to Codecov' step remains
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4 # Updated action version
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
