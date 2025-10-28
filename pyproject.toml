@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "treem"
+version = "1.1.2.dev1"
+description = "Tree-like morphology data processing tool"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+requires-python = ">=3.7"
+authors = [
+    { name = "Alexander Kozlov", email = "akozlov@kth.se" },
+]
+keywords = [
+    "modification",
+    "morphology",
+    "morphometry",
+    "neuron",
+    "processing",
+    "reconstruction",
+    "repair",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "matplotlib",
+    "numpy",
+]
+
+[project.scripts]
+swc = "treem.cli:cli"
+
+[project.urls]
+Homepage = "https://github.com/a1eko/treem"
+
+[tool.hatch.build.targets.wheel]
+packages = ["treem"]
