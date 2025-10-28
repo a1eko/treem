@@ -54,7 +54,7 @@ def modify(args):
     if args.seed:
         rng = np.random.default_rng(seed=args.seed)
     else:
-        rng = np.random.default_rng()
+        rng = np.random.default_rng(0)
 
     if args.jitter:
         for node in nodes:
