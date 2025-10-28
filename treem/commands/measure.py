@@ -75,7 +75,7 @@ def get_morphometry(reconstruction, args):
             if args.opt and 'sec' in args.opt:
                 d['_sec'] = ndata.transpose()
             if args.opt and 'seg' in args.opt:
-                sel = np.where(segdata[:, SEG.T] == point_type)
+                sel = np.nonzero(segdata[:, SEG.T] == point_type)
                 d['_seg'] = segdata[sel]
 
     for point_type in set(types).intersection((SWC.SOMA,)):
