@@ -96,8 +96,10 @@ def view(args):
         for group in args.branch:
             # pylint: disable=cell-var-from-loop
             # pylint: disable=undefined-loop-variable
-            nodes = filter(lambda x: x.ident() in group, morph.root.walk())
-            nodes = filter(lambda x: x.type() in types, nodes)
+            group_capture = group
+            types_capture = types
+            nodes = filter(lambda x, g=group_capture: x.ident() in g, morph.root.walk())
+            nodes = filter(lambda x, t=types_capture: x.type() in t, nodes)
             for branch in nodes:
                 plot_tree(ax, branch, morph.data,
                           linewidth=1.5 * args.linewidth, color='C5')
@@ -109,8 +111,10 @@ def view(args):
         for group in args.sec:
             # pylint: disable=undefined-loop-variable
             # pylint: disable=cell-var-from-loop
-            nodes = filter(lambda x: x.ident() in group, morph.root.walk())
-            nodes = filter(lambda x: x.type() in types, nodes)
+            group_capture = group
+            types_capture = types
+            nodes = filter(lambda x, g=group_capture: x.ident() in g, morph.root.walk())
+            nodes = filter(lambda x, t=types_capture: x.type() in t, nodes)
             for sec in nodes:
                 plot_section(ax, sec, morph.data,
                              linewidth=1.5 * args.linewidth, color='C5')

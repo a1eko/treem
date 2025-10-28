@@ -200,11 +200,9 @@ def repair(args):
         types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
         for point_type in types:
             intact_branches = {}
-            type_capture = point_type  #
+            type_capture = point_type
             if args.pool:
                 for rec in pool:
-                    #sections = filter(lambda x: x[0].type() == point_type,
-                    #                  rec.root.sections())
                     sections = filter(lambda x, pt=type_capture: x[0].type() == pt, 
                                       rec.root.sections())
                     nodes = chain(x[0] for x in sections)
@@ -214,8 +212,6 @@ def repair(args):
                             intact_branches[order] = []
                         intact_branches[order].append((rec, node))
             else:
-                #sections = filter(lambda x: x[0].type() == point_type,
-                #                  morig.root.sections())
                 sections = filter(lambda x, pt=type_capture: x[0].type() == pt, 
                                   morig.root.sections())
                 nodes = chain(x[0] for x in sections)
