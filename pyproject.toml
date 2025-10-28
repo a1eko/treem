@@ -41,3 +41,6 @@ Homepage = "https://github.com/a1eko/treem"
 
 [tool.hatch.build.targets.wheel]
 packages = ["treem"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov"]
