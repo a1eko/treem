@@ -7,17 +7,7 @@ command-line tools for accessing and manipulating digital reconstructions
 of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 
 [![PyPI - Version](https://img.shields.io/pypi/v/treem)](https://pypi.org/project/treem/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
-![Build Status](https://github.com/a1eko/treem/actions/workflows/build.yml/badge.svg)
-![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=a1eko_treem&metric=alert_status)
-![codecov.io](https://codecov.io/gh/a1eko/treem/coverage.svg)
-[![Documentation Status](https://readthedocs.org/projects/treem/badge/?version=latest)](https://treem.readthedocs.io/en/latest/?badge=latest)
-[![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
-
-xxx
-
-[![PyPI - Version](https://img.shields.io/pypi/v/treem)](https://pypi.org/project/treem/)
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Python Versions Tested](https://img.shields.io/badge/python-3.8%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
 
 [![Build Status](https://github.com/a1eko/treem/actions/workflows/build.yml/badge.svg)](https://github.com/a1eko/treem/actions/workflows/build.yml)
