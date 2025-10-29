@@ -1,0 +1,24 @@
+[tox]
+# Defines the list of environments to run when you execute 'tox'
+env_list = py38, py312
+
+[testenv]
+# Dependencies that will be installed in *each* environment (py38 and py312)
+deps =
+    # Core testing framework
+    pytest
+    # Coverage tool (used by pytest)
+    pytest-cov
+    # Other dependencies your tests require
+    numpy
+    matplotlib
+
+# Commands to execute in *each* environment
+commands =
+    # 1. Run pytest with coverage enabled.
+    # --cov=your_package_name: Tells pytest-cov which package/module to measure coverage for.
+    # --cov-report=xml: Tells pytest-cov to output a coverage.xml file, which Codecov often looks for.
+    #
+    # NOTE: You MUST replace 'your_package_name' with the actual name of your Python source code directory/module (e.g., 'src' or 'my_project').
+    pytest --cov=treem --cov-report=xml tests/
+
