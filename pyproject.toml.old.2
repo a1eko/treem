@@ -49,3 +49,12 @@ test = [
 ]
 [tool.hatch.build.targets.wheel]
 packages = ["treem"]
+
+[tool.hatch.envs.default]
+dependencies = [
+    "pytest",
+    "pytest-cov",
+    "flake8",
+    "numpy",
+    "matplotlib",
+]
