@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "treem"
-version = "1.1.2.dev2"
+version = "1.1.2.dev3"
 description = "Tree-like morphology data processing tool"
 readme = "README.md"
 license = "MIT"
