@@ -31,4 +31,5 @@ o treem: refactor code to resolve SonarQube issues
 + treem: replace legacy setup.py bdist_wheel mechanism with pyproject.toml
 + treem: run tests with 'hatch run pytest ...' command
 + treem: use tox to test against several python versions and os platforms
-- treem: cleanup tox/hatch configs
++ treem: cleanup tox/hatch configs
+- treem (tests): revise coverage of cli code (tests run but coverage not counted)
