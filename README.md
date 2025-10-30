@@ -32,7 +32,7 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 <img src="https://img.shields.io/badge/tested%20on-macOS-000000?style=flat&amp;logo=apple&amp;logoColor=white" alt="macOS">
 <img src="https://img.shields.io/badge/tested%20on-Windows-0078D4?style=flat&amp;logo=windows&amp;logoColor=white" alt="Windows"></sub></sub><br>
 <code>Development</code>
-<sub><sub><a href="https://github.com/a1eko/treem/actions/workflows/build.yml"><img src="https://github.com/a1eko/treem/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>
+<sub><sub><a href="https://github.com/a1eko/treem/actions/workflows/build.yml"><img src="https://github.com/a1eko/treem/actions/workflows/build.yml/badge.svg;logoColor=white" alt="Build Status"></a>
 <a href="https://sonarcloud.io/dashboard?id=a1eko_treem"><img src="https://sonarcloud.io/api/project_badges/measure?project=a1eko_treem&amp;metric=alert_status" alt="Quality Gate Status"></a>
 <a href="https://codecov.io/gh/a1eko/treem"><img src="https://codecov.io/gh/a1eko/treem/coverage.svg" alt="codecov.io"></a>
 <a href="https://treem.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/treem/badge/?version=latest" alt="Documentation Status"></a></sub></sub><br>
