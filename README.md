@@ -23,9 +23,9 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 ``   Citation``
 [![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
 
-<h2 align="left" style="vertical-align: middle;"><sup><sub><code>&nbsp;&nbsp;Release</code></sub></sup> <a href="https://pypi.org/project/treem/"><img src="https://img.shields.io/pypi/v/treem" alt="PyPI - Version"></a>
+<p align="left" style="vertical-align: middle;"><code>&nbsp;&nbsp;Release</code> <sub><a href="https://pypi.org/project/treem/"><img src="https://img.shields.io/pypi/v/treem" alt="PyPI - Version"></a>
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9%20%7C%203.12-blue.svg" alt="Python Versions Tested">
-<a href="https://github.com/a1eko/treem/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT"></a></h2>
+<a href="https://github.com/a1eko/treem/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT"></a></sub></p>
 <p><code>Platforms</code> <img src="https://img.shields.io/badge/tested%20on-Linux-fcc624?style=flat&amp;logo=linux&amp;logoColor=white" alt="Linux">
 <img src="https://img.shields.io/badge/tested%20on-macOS-000000?style=flat&amp;logo=apple&amp;logoColor=white" alt="macOS">
 <img src="https://img.shields.io/badge/tested%20on-Windows-0078D4?style=flat&amp;logo=windows&amp;logoColor=white" alt="Windows"></p>
