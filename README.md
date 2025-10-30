@@ -6,6 +6,8 @@ The `treem` module (pronounced "trim") provides data structures and
 command-line tools for accessing and manipulating digital reconstructions
 of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 
+|     |     |
+| --- | --- |
 | **Release** |
 [![PyPI - Version](https://img.shields.io/pypi/v/treem)](https://pypi.org/project/treem/)
 [![Python Versions Tested](https://img.shields.io/badge/python-3.9%20%7C%203.12-blue.svg)](https://www.python.org/)
