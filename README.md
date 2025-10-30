@@ -33,10 +33,10 @@ Main classes
 Access to morphological data from the source code is provided through the
 classes ``Tree``, ``Node``, ``Morph``, and ``SWC``:
 
-* ``Tree``   recursive tree data structure
-* ``Node``   morphology data storage
-* ``Morph``  neuron morphology representation
-* ``SWC``    definitions of the data format
+* ``Tree``   for recursive tree data structure
+* ``Node``   for morphology data storage
+* ``Morph``  for neuron morphology representation
+* ``SWC``    for definitions of the data format
 
 
 Commands
