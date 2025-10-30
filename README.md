@@ -23,6 +23,21 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 ``   Citation``
 [![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
 
+<p align="left" style="vertical-align: middle;"><sup><sub><code>Release</code></sub></sup> <a href="https://pypi.org/project/treem/"><img src="https://img.shields.io/pypi/v/treem" alt="PyPI - Version"></a>
+<a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9%20%7C%203.12-blue.svg" alt="Python Versions Tested"></a>
+<a href="https://github.com/a1eko/treem/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT"></a></p>
+<p><code>Platforms</code> <img src="https://img.shields.io/badge/tested%20on-Linux-fcc624?style=flat&amp;logo=linux&amp;logoColor=white" alt="Linux">
+<img src="https://img.shields.io/badge/tested%20on-macOS-000000?style=flat&amp;logo=apple&amp;logoColor=white" alt="macOS">
+<img src="https://img.shields.io/badge/tested%20on-Windows-0078D4?style=flat&amp;logo=windows&amp;logoColor=white" alt="Windows"></p>
+<p><code>Development</code>
+<a href="https://github.com/a1eko/treem/actions/workflows/build.yml"><img src="https://github.com/a1eko/treem/actions/workflows/build.yml/badge.svg" alt="Build Status"></a>
+<a href="https://sonarcloud.io/dashboard?id=a1eko_treem"><img src="https://sonarcloud.io/api/project_badges/measure?project=a1eko_treem&amp;metric=alert_status" alt="Quality Gate Status"></a>
+<a href="https://codecov.io/gh/a1eko/treem"><img src="https://codecov.io/gh/a1eko/treem/coverage.svg" alt="codecov.io"></a>
+<a href="https://treem.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/treem/badge/?version=latest" alt="Documentation Status"></a></p>
+<p><code>Citation</code>
+<a href="https://doi.org/10.5281/zenodo.4890844"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg" alt="Citation"></a></p>
+
+
 <!-- h2 align="left" style="vertical-align: middle;">
     <img src="https://img.shields.io/badge/Download-1.0.0-blue.svg"><sup><sub> - MIN API 16</sub></sup>
 </h2 -->
