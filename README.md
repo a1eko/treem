@@ -1,5 +1,5 @@
 
-treem - Neuron Morphology Processing Tool
+treem &mdash; Neuron Morphology Processing Tool
 =========================================
 
 The `treem` module (pronounced "trim") provides data structures and
