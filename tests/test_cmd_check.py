@@ -3,6 +3,8 @@
 import subprocess
 import os
 
+from treem.cli import cli
+
 
 def test_no_file():
     """Tests for missing file."""
