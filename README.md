@@ -23,6 +23,10 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 ``   Citation``
 [![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
 
+<!-- h2 align="left" style="vertical-align: middle;">
+    <img src="https://img.shields.io/badge/Download-1.0.0-blue.svg"><sup><sub> - MIN API 16</sub></sup>
+</h2 -->
+
 Main classes
 ------------
 
