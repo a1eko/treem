@@ -1,6 +1,6 @@
 
-treem &mdash; Neuron Morphology Processing Tool
-=========================================
+treem &ndash; Neuron Morphology Processing Tool
+===============================================
 
 The `treem` module (pronounced "trim") provides data structures and
 command-line tools for accessing and manipulating digital reconstructions
