@@ -6,6 +6,7 @@ The `treem` module (pronounced "trim") provides data structures and
 command-line tools for accessing and manipulating digital reconstructions
 of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 
+<!--
 ``    Release`` [![PyPI - Version](https://img.shields.io/pypi/v/treem)](https://pypi.org/project/treem/)
 [![Python Versions Tested](https://img.shields.io/badge/python-3.9%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/a1eko/treem/blob/master/LICENSE)
@@ -22,6 +23,7 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 
 ``   Citation``
 [![Citation](https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg)](https://doi.org/10.5281/zenodo.4890844)
+-->
 
 <p><code>    Release</code> <sub><sub><a href="https://pypi.org/project/treem/"><img src="https://img.shields.io/pypi/v/treem" alt="PyPI - Version"></a>
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9%20%7C%203.12-blue.svg" alt="Python Versions Tested">
@@ -34,7 +36,7 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 <a href="https://sonarcloud.io/dashboard?id=a1eko_treem"><img src="https://sonarcloud.io/api/project_badges/measure?project=a1eko_treem&amp;metric=alert_status" alt="Quality Gate Status"></a>
 <a href="https://codecov.io/gh/a1eko/treem"><img src="https://codecov.io/gh/a1eko/treem/coverage.svg" alt="codecov.io"></a>
 <a href="https://treem.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/treem/badge/?version=latest" alt="Documentation Status"></a></sub></sub></p>
-<p><code>Citation</code>
+<p><code>   Citation</code>
 <sub><sub><a href="https://doi.org/10.5281/zenodo.4890844"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg" alt="Citation"></a></sub></sub></p>
 
 
