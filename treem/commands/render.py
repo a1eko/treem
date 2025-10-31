@@ -42,7 +42,7 @@ class InteractionMatrix():
         """Reset current matrix."""
         GL.glPushMatrix()
         GL.glLoadIdentity()
-        self.current_matrix = GL.glGetFloatv(GL_MODELVIEW_MATRIX)
+        self.current_matrix = GL.glGetFloatv(GL.GL_MODELVIEW_MATRIX)
         GL.glPopMatrix()
 
     def add_translation(self, x, y, z):
@@ -51,7 +51,7 @@ class InteractionMatrix():
         GL.glLoadIdentity()
         GL.glTranslatef(x, y, z)
         GL.glMultMatrixf(self.current_matrix)
-        self.current_matrix = GL.glGetFloatv(GL_MODELVIEW_MATRIX)
+        self.current_matrix = GL.glGetFloatv(GL.GL_MODELVIEW_MATRIX)
         GL.glPopMatrix()
 
     def add_rotation(self, angle, x, y, z):
@@ -60,7 +60,7 @@ class InteractionMatrix():
         GL.glLoadIdentity()
         GL.glRotatef(angle, x, y, z)
         GL.glMultMatrixf(self.current_matrix)
-        self.current_matrix = GL.glGetFloatv(GL_MODELVIEW_MATRIX)
+        self.current_matrix = GL.glGetFloatv(GL.GL_MODELVIEW_MATRIX)
         GL.glPopMatrix()
 
     def get_current_matrix(self):
@@ -83,7 +83,7 @@ class MouseInteractor():
 
     def mouse_button(self, button, mode, x, y):
         """Detect button press."""
-        if mode == GLUT_DOWN:
+        if mode == GLUT.GLUT_DOWN:
             self.mouse_button_pressed = button
         else:
             self.mouse_button_pressed = None
@@ -94,11 +94,11 @@ class MouseInteractor():
         """Detect mouse motion."""
         dx = x - self.old_mouse_pos[0]
         dy = y - self.old_mouse_pos[1]
-        if self.mouse_button_pressed == GLUT_RIGHT_BUTTON:
+        if self.mouse_button_pressed == GLUT.GLUT_RIGHT_BUTTON:
             tx = dx * self.scaling_factor_translation
             ty = dy * self.scaling_factor_translation
             self.translation_matrix.add_translation(tx, -ty, 0)
-        elif self.mouse_button_pressed == GLUT_LEFT_BUTTON:
+        elif self.mouse_button_pressed == GLUT.GLUT_LEFT_BUTTON:
             ry = dx * self.scaling_factor_rotation
             self.rotation_matrix.add_rotation(ry, 0, 1, 0)
             rx = dy * self.scaling_factor_rotation
@@ -121,13 +121,13 @@ class App:
     # pylint: disable=too-many-instance-attributes
     def __init__(self, morph, title='render'):
         GLUT.glutInit()
-        GLUT.glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
+        GLUT.glutInitDisplayMode(GLUT.GLUT_SINGLE | GLUT.GLUT_RGB | GLUT.GLUT_DEPTH)
         GLUT.glutInitWindowSize(1200, 900)
         GLUT.glutInitWindowPosition(100, 100)
         GLUT.glutCreateWindow(title)
-        GL.glMatrixMode(GL_PROJECTION)
+        GL.glMatrixMode(GL.GL_PROJECTION)
         GL.glLoadIdentity()
-        GL.glMatrixMode(GL_MODELVIEW)
+        GL.glMatrixMode(GL.GL_MODELVIEW)
 
         GLUT.glutDisplayFunc(self.display)
         GLUT.glutKeyboardFunc(self.keyboard)
@@ -160,17 +160,17 @@ class App:
         light_diffuse = [0.8, 0.8, 0.8, 1.0]
         light_position = [self.cmin[0], self.cmax[1], self.cmax[2], 0.0]
 
-        GL.glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient)
-        GL.glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse)
-        GL.glLightfv(GL_LIGHT0, GL_POSITION, light_position)
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, light_ambient)
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, light_diffuse)
+        GL.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, light_position)
 
-        GL.glEnable(GL_LIGHTING)
-        GL.glEnable(GL_LIGHT0)
-        GL.glEnable(GL_DEPTH_TEST)
+        GL.glEnable(GL.GL_LIGHTING)
+        GL.glEnable(GL.GL_LIGHT0)
+        GL.glEnable(GL.GL_DEPTH_TEST)
 
-        GL.glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE)
-        GL.glEnable(GL_COLOR_MATERIAL)
-        GL.glEnable(GL_NORMALIZE)
+        GL.glColorMaterial(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE)
+        GL.glEnable(GL.GL_COLOR_MATERIAL)
+        GL.glEnable(GL.GL_NORMALIZE)
 
         self.disp_points = self.genlist_points(morph)
         self.disp_lines = self.genlist_lines(morph)
@@ -198,15 +198,15 @@ class App:
     def genlist_points(self, morph):
         """Create display list for points."""
         disp_list = GL.glGenLists(1)
-        GL.glNewList(disp_list, GL_COMPILE)
+        GL.glNewList(disp_list, GL.GL_COMPILE)
 
-        GL.glBegin(GL_POINTS)
+        GL.glBegin(GL.GL_POINTS)
         self.set_nrncolor(morph.root.type())
         GL.glVertex(morph.root.coord())
         GL.glEnd()
 
         for stem in morph.stems():
-            GL.glBegin(GL_POINTS)
+            GL.glBegin(GL.GL_POINTS)
             self.set_nrncolor(stem.type())
             for node in stem.walk():
                 GL.glVertex(node.coord())
@@ -219,12 +219,12 @@ class App:
     def genlist_lines(self, morph):
         """Create display list for lines."""
         disp_list = GL.glGenLists(1)
-        GL.glNewList(disp_list, GL_COMPILE)
+        GL.glNewList(disp_list, GL.GL_COMPILE)
 
         for stem in morph.stems():
             self.set_nrncolor(stem.type())
             for node in stem.walk():
-                GL.glBegin(GL_LINES)
+                GL.glBegin(GL.GL_LINES)
                 GL.glVertex(node.parent.coord())
                 GL.glVertex(node.coord())
                 GL.glEnd()
@@ -235,7 +235,7 @@ class App:
     def genlist_nodes(self, morph):
         """Create display list for nodes."""
         disp_list = GL.glGenLists(1)
-        GL.glNewList(disp_list, GL_COMPILE)
+        GL.glNewList(disp_list, GL.GL_COMPILE)
 
         self.set_nrncolor(morph.root.type())
         nx, ny, nz = morph.root.coord()
@@ -261,7 +261,7 @@ class App:
     def genlist_segments(self, morph):
         """Create display list for segments."""
         disp_list = GL.glGenLists(1)
-        GL.glNewList(disp_list, GL_COMPILE)
+        GL.glNewList(disp_list, GL.GL_COMPILE)
 
         for stem in morph.stems():
             self.set_nrncolor(stem.type())
@@ -275,7 +275,7 @@ class App:
                     (0.0, 0.0, 1.0), node.coord() - node.parent.coord())
                 rx, ry, rz = axis
                 GL.glRotate(angle / np.pi * 180, rx, ry, rz)
-                GLU.gluCylinder(gluNewQuadric(), pr, nr, node.length(), 8, 1)
+                GLU.gluCylinder(GLU.gluNewQuadric(), pr, nr, node.length(), 8, 1)
                 GL.glPopMatrix()
 
         GL.glEndList()
@@ -283,11 +283,11 @@ class App:
 
     def display(self):
         """Display callback function."""
-        GL.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
 
-        GL.glMatrixMode(GL_PROJECTION)
+        GL.glMatrixMode(GL.GL_PROJECTION)
         GL.glLoadIdentity()
-        width, height = GL.glGetFloatv(GL_VIEWPORT)[2:4]
+        width, height = GL.glGetFloatv(GL.GL_VIEWPORT)[2:4]
         aspect = width / height
         total_size = np.linalg.norm(self.cmax - self.cmin)
         GL.glOrtho((self.center[0] - self.view_size) * aspect,
@@ -298,7 +298,7 @@ class App:
         GL.glTranslate(0.0, 0.0, -self.camera_dist)
         GL.glRotate(self.camera_tilt, 1.0, 0.0, 0.0)
         GL.glRotate(self.camera_rot, 0.0, 1.0, 0.0)
-        GL.glMatrixMode(GL_MODELVIEW)
+        GL.glMatrixMode(GL.GL_MODELVIEW)
         GL.glLoadIdentity()
         self.mouse.apply()
 
@@ -316,9 +316,9 @@ class App:
     def write_img(self):
         """Save image buffer to file."""
         # pylint: disable=no-value-for-parameter
-        GL.glPixelStorei(GL_PACK_ALIGNMENT, 1)
-        width, height = GL.glGetFloatv(GL_VIEWPORT).astype(int)[2:4]
-        data = GL.glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE)
+        GL.glPixelStorei(GL.GL_PACK_ALIGNMENT, 1)
+        width, height = GL.glGetFloatv(GL.GL_VIEWPORT).astype(int)[2:4]
+        data = GL.glReadPixels(0, 0, width, height, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE)
         image = Image.frombytes('RGBA', (width, height), data)
         image = ImageOps.flip(image)
         self.img_count += 1
