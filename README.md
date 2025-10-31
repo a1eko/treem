@@ -35,7 +35,7 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
             </sub>
         </sub>
     <br>
-    <code>   Citation</code>
+    <code>  Reference</code>
         <sub>
             <sub>
                 <img src="https://api.juleskreuer.eu/citation-badge.php?doi=10.1007/s12021-021-09531-w" alt="Citation Badge">
