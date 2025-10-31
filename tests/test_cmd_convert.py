@@ -14,7 +14,6 @@ def test_unordered(tmp_path):
                             universal_newlines=True)
     _, stderr = proc.communicate()
     assert proc.returncode == 0
-    # assert stdout == ''
     assert stderr == ''
 
 
