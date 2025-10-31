@@ -108,8 +108,8 @@ For testing and documentation, ``treem`` requires additional development package
 third-party extensions:
 
 * ``sphinx`` with ``napoleon`` and ``programoutput`` extensions
-* ``pytest`` with ``pytest-cov`` plugin
 * ``sphinx-rtd-theme``
+* ``pytest`` with optional ``pytest-cov`` plugin
 * ``coverage``
 
 
