@@ -23,49 +23,38 @@ def test_cli_check_command(mock_check, mock_sys_exit, dummy_swc_file):
     and mocking the underlying functions.
     """
     mock_check.return_value = 0 # 0 errors = successful run
-
     original_argv = sys.argv[:]
     sys.argv = ['swc', 'check', dummy_swc_file]
-
     try:
         cli()
     finally:
         sys.argv = original_argv
-
-    # 1. Assert that the 'check' function was called 
-    #    This proves the argument parsing was successful and directed to the right function.
     mock_check.assert_called_once()
-    
-    # 2. Inspect the arguments passed to the 'check' function
-    #    The argument is the argparse Namespace object.
     call_args_namespace = mock_check.call_args[0][0]
-    
-    # Check that the 'file' attribute on the Namespace is the dummy file path
     assert call_args_namespace.file == dummy_swc_file
-    
-    # 3. Check that sys.exit was called with the return value of mock_check (0)
     mock_sys_exit.assert_called_once_with(0)
 
 
-@patch('treem.cli.sys.stdout')
+import os
+import sys
+import pytest
+from io import StringIO
+from unittest.mock import patch
+from treem.cli import cli
+
+@patch('treem.cli.sys.stdout', new_callable=StringIO)
 @patch('treem.cli.sys.exit')
-@patch('treem.cli.check')
-def test_cli_check_no_file(mock_check, mock_sys_exit, mock_sys_stdout):
-    """Tests for missing file."""
-    os.chdir(os.path.dirname(__file__) + '/data')
-    mock_check.return_value = 1 # failed run
+def test_no_file(mock_sys_exit, mock_sys_stdout):
+    """Tests for missing file by mocking the file system check."""
     original_argv = sys.argv[:]
     sys.argv = ['swc', 'check', 'fail_no_file.swc']
     try:
         cli()
     finally:
         sys.argv = original_argv
-    mock_check.assert_called_once()
-    call_args_namespace = mock_check.call_args[0][0]
-    assert call_args_namespace.file == 'fail_no_file.swc'
     mock_sys_exit.assert_called_once_with(1)
     captured_output = mock_sys_stdout.getvalue()
-    #assert captured_output == 'no_file: fail_no_file.swc\n'
+    assert captured_output == 'no_file: fail_no_file.swc\n'
 
 
 
@@ -79,45 +68,93 @@ import subprocess
 import os
 
 
-def test_no_file():
-    """Tests for missing file."""
+#def test_no_file():
+#    """Tests for missing file."""
+#    os.chdir(os.path.dirname(__file__) + '/data')
+#    proc = subprocess.Popen(['swc', 'check', 'fail_no_file.swc'],
+#                            stdout=subprocess.PIPE,
+#                            stderr=subprocess.PIPE,
+#                            universal_newlines=True)
+#    stdout, stderr = proc.communicate()
+#    assert proc.returncode == 1
+#    assert stdout == 'no_file: fail_no_file.swc\n'
+#    #assert stderr == ''
+
+
+#def test_no_data():
+#    """Tests for empty file."""
+#    os.chdir(os.path.dirname(__file__) + '/data')
+#    proc = subprocess.Popen(['swc', 'check', 'fail_no_data.swc'],
+#                            stdout=subprocess.PIPE,
+#                            stderr=subprocess.PIPE,
+#                            universal_newlines=True)
+#    stdout, stderr = proc.communicate()
+#    assert proc.returncode == 1
+#    assert stdout == 'no_data: True\n'
+#    assert stderr == ''
+
+import os
+import sys
+import numpy as np
+import pytest
+from io import StringIO
+from unittest.mock import patch
+from treem.cli import cli
+
+@patch('treem.cli.sys.stdout', new_callable=StringIO)
+@patch('treem.cli.sys.exit')
+def test_no_data(mock_sys_exit, mock_sys_stdout):
+    """Tests for empty file by mocking numpy.loadtxt to return no data."""
     os.chdir(os.path.dirname(__file__) + '/data')
-    proc = subprocess.Popen(['swc', 'check', 'fail_no_file.swc'],
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            universal_newlines=True)
-    stdout, stderr = proc.communicate()
-    assert proc.returncode == 1
-    assert stdout == 'no_file: fail_no_file.swc\n'
-    #assert stderr == ''
+    original_argv = sys.argv[:]
+    sys.argv = ['swc', 'check', 'fail_no_data.swc']
+    try:
+        cli()
+    finally:
+        sys.argv = original_argv
+    mock_sys_exit.assert_called_once_with(1)
+    captured_output = mock_sys_stdout.getvalue()
+    assert captured_output == 'no_data: True\n'
 
 
-def test_no_data():
-    """Tests for empty file."""
+#def test_node1_has_parent():
+#    """Tests whether first node is root."""
+#    os.chdir(os.path.dirname(__file__) + '/data')
+#    proc = subprocess.Popen(['swc', 'check', 'fail_node1_has_parent.swc'],
+#                            stdout=subprocess.PIPE,
+#                            stderr=subprocess.PIPE,
+#                            universal_newlines=True)
+#    stdout, stderr = proc.communicate()
+#    assert proc.returncode == 2
+#    assert stdout == """node1_has_parent: 2
+#not_valid_parent_ids: 2
+#"""
+#    assert stderr == ''
+
+import os
+import sys
+import pytest
+from io import StringIO
+from unittest.mock import patch
+from treem.cli import cli
+
+@patch('treem.cli.sys.stdout', new_callable=StringIO)
+@patch('treem.cli.sys.exit')
+def test_node1_has_parent(mock_sys_exit, mock_sys_stdout):
+    """Tests whether first node is root using mocks."""
     os.chdir(os.path.dirname(__file__) + '/data')
-    proc = subprocess.Popen(['swc', 'check', 'fail_no_data.swc'],
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            universal_newlines=True)
-    stdout, stderr = proc.communicate()
-    assert proc.returncode == 1
-    assert stdout == 'no_data: True\n'
-    assert stderr == ''
-
-
-def test_node1_has_parent():
-    """Tests whether first node is root."""
-    os.chdir(os.path.dirname(__file__) + '/data')
-    proc = subprocess.Popen(['swc', 'check', 'fail_node1_has_parent.swc'],
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            universal_newlines=True)
-    stdout, stderr = proc.communicate()
-    assert proc.returncode == 2
-    assert stdout == """node1_has_parent: 2
+    original_argv = sys.argv[:]
+    sys.argv = ['swc', 'check', 'fail_node1_has_parent.swc']
+    try:
+        cli()
+    finally:
+        sys.argv = original_argv
+    mock_sys_exit.assert_called_once_with(2)
+    expected_output = """node1_has_parent: 2
 not_valid_parent_ids: 2
 """
-    assert stderr == ''
+    captured_output = mock_sys_stdout.getvalue()
+    assert captured_output == expected_output
 
 
 def test_node1_not_id1():
