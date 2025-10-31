@@ -30,5 +30,5 @@ Key: - todo, + done, o pending, ! attention, x ignore
 o treem: refactor code to resolve SonarQube issues
 + treem: replace legacy setup.py bdist_wheel mechanism with pyproject.toml
 + treem: use tox to test against several python versions and os platforms
-+ treem: cleanup tox/hatch configs
 + treem (tests): revise coverage of cli code, run cli tests in the same process as pytest 'coverage run -m pytest tests/'
+- treem (tests): improve coverage, add tests for new code
