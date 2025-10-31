@@ -29,7 +29,6 @@ Key: - todo, + done, o pending, ! attention, x ignore
 + treem: release v1.1.1
 o treem: refactor code to resolve SonarQube issues
 + treem: replace legacy setup.py bdist_wheel mechanism with pyproject.toml
-+ treem: run tests with 'hatch run pytest ...' command
 + treem: use tox to test against several python versions and os platforms
 + treem: cleanup tox/hatch configs
-- treem (tests): revise coverage of cli code, import command directly instead of calling it with subprocess.Popen()
++ treem (tests): revise coverage of cli code, run cli tests in the same process as pytest 'coverage run -m pytest tests/'
