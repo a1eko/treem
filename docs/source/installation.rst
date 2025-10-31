@@ -26,7 +26,7 @@ The ``treem`` module has minimal runtime dependencies:
 For testing and documentation purposes, ``treem`` requires the following
 development packages and third-party extensions:
 
-* ``sphinx`` with the ``napoleon`` and ``programoutput`` extensions
-* ``pytest`` with ``pytest-cov`` plugin
+* ``sphinx`` with ``napoleon`` and ``programoutput`` extensions
 * ``sphinx-rtd-theme``
+* ``pytest`` with optional ``pytest-cov`` plugin
 * ``coverage``
