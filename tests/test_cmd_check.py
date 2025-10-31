@@ -11,10 +11,9 @@ def test_no_file():
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
-    stdout, stderr = proc.communicate()
+    stdout, _ = proc.communicate()
     assert proc.returncode == 1
     assert stdout == 'no_file: fail_no_file.swc\n'
-    #assert stderr == ''
 
 
 def test_no_data():

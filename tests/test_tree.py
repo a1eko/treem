@@ -9,9 +9,9 @@ def test_tree_traversal():
     tree1 = tree0.add(Tree())
     tree2 = tree1.add(Tree())
     tree3 = tree1.add(Tree())
-    pre = list(x for x in tree0.preorder())
-    post = list(x for x in tree0.postorder())
-    level = list(x for x in tree0.levelorder())
+    pre = list(tree0.preorder())
+    post = list(tree0.postorder())
+    level = list(tree0.levelorder())
     assert pre == [tree0, tree1, tree2, tree3]
     assert post == [tree2, tree3, tree1, tree0]
     assert level == [tree3, tree2, tree1, tree0]
