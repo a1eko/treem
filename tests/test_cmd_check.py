@@ -1,9 +1,82 @@
 """Testing CLI command check."""
 
+import os
+import sys
+import pytest
+from unittest.mock import patch
+from treem.cli import cli
+import treem
+
+@pytest.fixture
+def dummy_swc_file(tmp_path):
+    """Creates a minimal dummy SWC file for testing."""
+    file_content = "1 1 0 0 0 1 -1\n" # A single root node
+    f = tmp_path / "dummy.swc"
+    f.write_text(file_content)
+    return str(f)
+
+@patch('treem.cli.sys.exit')
+@patch('treem.cli.check')
+def test_cli_check_command(mock_check, mock_sys_exit, dummy_swc_file):
+    """
+    Tests the 'swc check <file>' command by simulating command-line input
+    and mocking the underlying functions.
+    """
+    mock_check.return_value = 0 # 0 errors = successful run
+
+    original_argv = sys.argv[:]
+    sys.argv = ['swc', 'check', dummy_swc_file]
+
+    try:
+        cli()
+    finally:
+        sys.argv = original_argv
+
+    # 1. Assert that the 'check' function was called 
+    #    This proves the argument parsing was successful and directed to the right function.
+    mock_check.assert_called_once()
+    
+    # 2. Inspect the arguments passed to the 'check' function
+    #    The argument is the argparse Namespace object.
+    call_args_namespace = mock_check.call_args[0][0]
+    
+    # Check that the 'file' attribute on the Namespace is the dummy file path
+    assert call_args_namespace.file == dummy_swc_file
+    
+    # 3. Check that sys.exit was called with the return value of mock_check (0)
+    mock_sys_exit.assert_called_once_with(0)
+
+
+@patch('treem.cli.sys.stdout')
+@patch('treem.cli.sys.exit')
+@patch('treem.cli.check')
+def test_cli_check_no_file(mock_check, mock_sys_exit, mock_sys_stdout):
+    """Tests for missing file."""
+    os.chdir(os.path.dirname(__file__) + '/data')
+    mock_check.return_value = 1 # failed run
+    original_argv = sys.argv[:]
+    sys.argv = ['swc', 'check', 'fail_no_file.swc']
+    try:
+        cli()
+    finally:
+        sys.argv = original_argv
+    mock_check.assert_called_once()
+    call_args_namespace = mock_check.call_args[0][0]
+    assert call_args_namespace.file == 'fail_no_file.swc'
+    mock_sys_exit.assert_called_once_with(1)
+    captured_output = mock_sys_stdout.getvalue()
+    #assert captured_output == 'no_file: fail_no_file.swc\n'
+
+
+
+
+
+
+
+
+
 import subprocess
 import os
-
-from treem.cli import cli
 
 
 def test_no_file():
