@@ -127,6 +127,16 @@ def _check_non_stem_neurite(data, err):
     if non_stem_list:
         err['non_stem_neurite'] = non_stem_list
 
+def _dump_results(err, quiet=False, out=False):
+    """Print out and save check results."""
+    if not quiet:
+        for k in err:
+            print(f'{k}:', end=' ')
+            print(*err[k])
+    if out:
+        with open(out, 'w', encoding='utf-8') as file:
+            json.dump(err, file, cls=TreemEncoder)
+
 
 def check(args):
     """Checks morphology reconstruction for structural consistency."""
@@ -134,6 +144,7 @@ def check(args):
 
     # basic file checks
     if not _validate_file_path(args, err):
+        _dump_results(err, args.quiet, args.out)
         return len(err)
 
     _check_file_extension(args, err)
@@ -141,6 +152,7 @@ def check(args):
     # data loading checks
     data = _load_data_array(args, err)
     if data is None or len(err) > 0:
+        _dump_results(err, args.quiet, args.out)
         return len(err)
 
     # structural node checks
@@ -151,26 +163,21 @@ def check(args):
     # id consistency checks
     ids, ids_set = _check_ids(data, err)
     if ids is None or len(err) > 0:
+        _dump_results(err, args.quiet, args.out)
         return len(err)
 
     idp = _check_parent_ids(data, ids_set, err)
     if idp is False or len(err) > 0:
+        _dump_results(err, args.quiet, args.out)
         return len(err)
 
     # id sequence and descent checks
     if not _check_id_sequence_and_descent(data, ids, idp, err):
+        _dump_results(err, args.quiet, args.out)
         return len(err)
 
     # final structural check
     _check_non_stem_neurite(data, err)
 
-    if not args.quiet:
-        for k in err:
-            print(f'{k}:', end=' ')
-            print(*err[k])
-
-    if args.out:
-        with open(args.out, 'w', encoding='utf-8') as file:
-            json.dump(err, file, cls=TreemEncoder)
-
+    _dump_results(err, args.quiet, args.out)
     return len(err)
