@@ -162,9 +162,9 @@ def check(args):
 
     # id consistency checks
     ids, ids_set = _check_ids(data, err)
-    if ids is None or len(err) > 0:
-        _dump_results(err, args.quiet, args.out)
-        return len(err)
+    #if ids is None or len(err) > 0:
+    #    _dump_results(err, args.quiet, args.out)
+    #    return len(err)
 
     idp = _check_parent_ids(data, ids_set, err)
     if idp is False or len(err) > 0:
