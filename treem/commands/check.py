@@ -159,6 +159,7 @@ def check(args):
     _check_first_node(data, err)
     _check_soma_nodes(data, err)
     _check_valid_types(data, err)
+    _check_non_stem_neurite(data, err)
 
     # id consistency checks
     ids, ids_set = _check_ids(data, err)
@@ -175,9 +176,6 @@ def check(args):
     if not _check_id_sequence_and_descent(data, ids, idp, err):
         _dump_results(err, args.quiet, args.out)
         return len(err)
-
-    # final structural check
-    _check_non_stem_neurite(data, err)
 
     _dump_results(err, args.quiet, args.out)
     return len(err)
