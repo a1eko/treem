@@ -76,12 +76,12 @@ def _check_ids(data, err):
     ids = data[:, SWC.I].astype(int)
     if not (ids > 0).all():
         err['not_valid_ids'] = ids[ids <= 0]
-        return None # critical error, must break validation
+        #return ids, None # critical error, must break validation
     ids_set = set(ids)
     if len(ids_set) != len(ids):
         seen = set()
         err['non_unique_ids'] = {x for x in ids if x in seen or seen.add(x)}
-        return None # critical error, must break validation
+        #return None # critical error, must break validation
     return ids, ids_set
 
 def _check_parent_ids(data, ids_set, err):
@@ -168,9 +168,9 @@ def check(args):
     #    return len(err)
 
     idp = _check_parent_ids(data, ids_set, err)
-    if idp is False or len(err) > 0:
-        _dump_results(err, args.quiet, args.out)
-        return len(err)
+    #if idp is False or len(err) > 0:
+    #    _dump_results(err, args.quiet, args.out)
+    #    return len(err)
 
     # id sequence and descent checks
     if not _check_id_sequence_and_descent(data, ids, idp, err):
