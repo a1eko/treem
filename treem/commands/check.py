@@ -76,12 +76,10 @@ def _check_ids(data, err):
     ids = data[:, SWC.I].astype(int)
     if not (ids > 0).all():
         err['not_valid_ids'] = ids[ids <= 0]
-        #return ids, None # critical error, must break validation
     ids_set = set(ids)
     if len(ids_set) != len(ids):
         seen = set()
         err['non_unique_ids'] = {x for x in ids if x in seen or seen.add(x)}
-        #return None # critical error, must break validation
     return ids, ids_set
 
 def _check_parent_ids(data, ids_set, err):
@@ -90,7 +88,7 @@ def _check_parent_ids(data, ids_set, err):
     idp = data[1:, SWC.P].astype(int)
     if not (idp > 0).all():
         err['not_valid_parent_ids'] = ids[1:][idp <= 0]
-        return False # critical error, must break validation
+        return False
     idp_set = set(idp)
     if not idp_set.issubset(ids_set):
         err['undef_parent_ids'] = [
@@ -98,21 +96,21 @@ def _check_parent_ids(data, ids_set, err):
             for p in idp_set.difference(ids_set)
             for x in np.nonzero(data[:, SWC.P] == p)[0]
         ]
-        return False # critical error, must break validation
+        return False
     return idp
 
-def _check_id_sequence_and_descent(data, ids, idp, err):
+def _check_id_sequence_and_descent(ids, idp, err):
     """Checks ID order and parent/child relationship."""
     inc = ids[1:] - ids[:-1]
     if not (inc > 0).all():
         err['non_increasing_ids'] = ids[np.nonzero(inc <= 0)[0] + 1]
-        return False # critical error, must break validation
+        return False
     if not (inc == 1).all():
         err['non_sequential_ids'] = ids[np.nonzero(inc != 1)[0] + 1]
-        return False # critical error, must break validation
+        return False
     if not (ids[1:] > idp).all():
         err['non_descendant'] = ids[np.nonzero(ids[1:] <= idp)[0] + 1]
-        return False # critical error, must break validation
+        return False
     return True
 
 def _check_non_stem_neurite(data, err):
@@ -163,17 +161,10 @@ def check(args):
 
     # id consistency checks
     ids, ids_set = _check_ids(data, err)
-    #if ids is None or len(err) > 0:
-    #    _dump_results(err, args.quiet, args.out)
-    #    return len(err)
-
     idp = _check_parent_ids(data, ids_set, err)
-    #if idp is False or len(err) > 0:
-    #    _dump_results(err, args.quiet, args.out)
-    #    return len(err)
 
     # id sequence and descent checks
-    if not _check_id_sequence_and_descent(data, ids, idp, err):
+    if not _check_id_sequence_and_descent(ids, idp, err):
         _dump_results(err, args.quiet, args.out)
         return len(err)
 
