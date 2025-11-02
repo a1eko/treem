@@ -32,4 +32,4 @@ o treem: refactor code to resolve SonarQube issues
 + treem: use tox to test against several python versions and os platforms
 + treem (tests): revise coverage of cli code, run cli tests in the same process as pytest 'coverage run -m pytest tests/'
 - treem (tests): improve coverage, add tests for new code
-- treem (build): re-enable flake8 for new and old code
+- treem (build): re-enable flake8 lint test for new and old code
