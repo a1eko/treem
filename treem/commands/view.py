@@ -81,93 +81,6 @@ def _load_and_plot_morphology(ax, args, types):
     return morph
 
 
-#def _plot_special_features(ax, args, morph, types):
-#    """Plot branches, sections, and marks."""
-#    if not morph:
-#        return
-#
-#    nodes_to_plot = []
-#    if args.branch:
-#        groups = args.branch
-#        plot_func = plot_tree
-#    elif args.sec:
-#        groups = args.sec
-#        plot_func = plot_section
-#    else:
-#        groups = []
-#        plot_func = None
-#
-#    if plot_func and groups:
-#        for group in groups:
-#            group_capture = group
-#            types_capture = types
-#            # find nodes that match group ID and type
-#            nodes = filter(lambda x, g=group_capture: x.ident() in g, morph.root.walk())
-#            nodes = filter(lambda x, t=types_capture: x.type() in t, nodes)
-#            nodes_to_plot.extend(list(nodes))
-#            for node in nodes_to_plot:
-#                plot_func(ax, node, morph.data,
-#                          linewidth=1.5 * args.linewidth, color='C5')
-#            if args.show_id:
-#                plot_points(ax, morph, group, types,
-#                            show_id=args.show_id, markersize=6 * args.linewidth)
-#
-#    if args.mark:
-#        for group in args.mark:
-#            plot_points(ax, morph, group, types,
-#                        show_id=args.show_id, markersize=6 * args.linewidth)
-#
-#
-#def _set_view_and_limits(ax, args):
-#    """Set view angle, projection, axis limits, aspect ratio, and scale bar."""
-#    if args.angle:
-#        ax.view_init(args.angle[0], args.angle[1])
-#
-#    if args.proj:
-#        if args.proj.lower() == 'xy':
-#            ax.view_init(89.99, -90.01)
-#            ax.set_zlabel(''); ax.set_zticks([])
-#        if args.proj.lower() == 'xz':
-#            ax.view_init(0.00, -90.01)
-#            ax.set_ylabel(''); ax.set_yticks([])
-#        if args.proj.lower() == 'yz':
-#            ax.view_init(0.00, 0.01)
-#            ax.set_xlabel(''); ax.set_xticks([])
-#
-#    xmin, ymin = ax.xy_dataLim.xmin, ax.xy_dataLim.ymin
-#    xmax, ymax = ax.xy_dataLim.xmax, ax.xy_dataLim.ymax
-#    zmin, zmax = ax.zz_dataLim.xmin, ax.zz_dataLim.xmax
-#    smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
-#
-#    # set limits for 1:1:1 aspect ratio
-#    if args.xlim:
-#        ax.set_xlim(args.xlim[0], args.xlim[1])
-#    else:
-#        ax.set_xlim((xmin + xmax - smax) / 2, (xmin + xmax + smax) / 2)
-#    if args.ylim:
-#        ax.set_ylim(args.ylim[0], args.ylim[1])
-#    else:
-#        ax.set_ylim((ymin + ymax - smax) / 2, (ymin + ymax + smax) / 2)
-#    if args.zlim:
-#        ax.set_zlim(args.zlim[0], args.zlim[1])
-#    else:
-#        ax.set_zlim((zmin + zmax - smax) / 2, (zmin + zmax + smax) / 2)
-#    ax.set_box_aspect([1, 1, 1])
-#
-#    if args.scale and args.scale > 0:
-#        if args.dgram:
-#            # scale bar for DGram mode
-#            ax.plot([xmax - args.scale, xmax], [ymin - smax / 10, ymin - smax / 10], [zmin, zmin],
-#                    color='k', linewidth=3)
-#        else:
-#            # standard 3D scale bar (X, Y, Z axes)
-#            ax.plot([xmax - args.scale, xmax], [ymin, ymin], [zmin, zmin],
-#                    color='k', linewidth=3)
-#            ax.plot([xmax, xmax], [ymin, ymin + args.scale], [zmin, zmin],
-#                    color='k', linewidth=3)
-#            ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin + args.scale],
-#                    color='k', linewidth=3)
-
 
 def _apply_group_plotting(ax, args, morph, types, groups, plot_func):
     """Helper to handle the plotting logic for branches or sections."""
@@ -257,7 +170,7 @@ def _set_view_and_limits(ax, args):
     smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
     _set_aspect_and_limits(ax, args, smax)
     if args.scale and args.scale > 0:
-        xmin, ymin = ax.xy_dataLim.xmin, ax.xy_dataLim.ymin
+        ymin = ax.xy_dataLim.ymin
         xmax = ax.xy_dataLim.xmax
         zmin = ax.zz_dataLim.xmin
         _draw_scale_bar(ax, args, xmax, ymin, zmin, smax)
