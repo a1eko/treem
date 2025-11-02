@@ -174,6 +174,22 @@ def _calculate_sholl_analysis(morph, args, types, ptmap, morphometry, name):
             d['sholl'] = {'radii': radii, 'crossings': cross}
 
 
+def _format_and_print_metrics(metric):
+    """Handles the output formatting logic."""
+    # This function contains the logic extracted from measure()
+    for name in metric:
+        print(name)
+        for point_type in sorted(metric[name]):
+            for feature in sorted(metric[name][point_type]):
+                if feature not in ('sholl', '_sec', '_seg'):
+                    print(f'{point_type} {feature:10s} '
+                          f'{metric[name][point_type][feature]:>8g}')
+                elif feature == 'sholl':
+                    print(f'{point_type} {feature:10s} '
+                          f'{sum(metric[name][point_type][feature]["crossings"]):>8g}')
+        print()
+
+
 def get_morphometry(reconstruction, args):
     """Computes morphometric features of a reconstruction."""
     types = args.type if args.type else SWC.TYPES
@@ -215,19 +231,9 @@ def measure(args):
         for morphometry in pool.starmap(get_morphometry, items):
             metric.update(morphometry)
 
-    # output formatting
+    # output formatting logic is now simplified
     if not args.out:
-        for name in metric:
-            print(name)
-            for point_type in sorted(metric[name]):
-                for feature in sorted(metric[name][point_type]):
-                    if feature not in ('sholl', '_sec', '_seg'):
-                        print(f'{point_type} {feature:10s} '
-                              f'{metric[name][point_type][feature]:>8g}')
-                    elif feature == 'sholl':
-                        print(f'{point_type} {feature:10s} '
-                              f'{sum(metric[name][point_type][feature]["crossings"]):>8g}')
-            print()
+        _format_and_print_metrics(metric)
     else:
         with open(args.out, 'w', encoding='utf-8') as file:
             json.dump(metric, file, indent=4, sort_keys=True, cls=TreemEncoder)
