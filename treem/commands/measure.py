@@ -134,25 +134,37 @@ def _get_sholl_coords(node, args):
     return node.parent.coord(), node.coord()
 
 
-def _calculate_sholl_analysis(morph, args, types, ptmap, morphometry, name):
-    """Performs Sholl analysis."""
-    c0 = _get_sholl_center(morph, args)
+def _count_sholl_crossings(morph, args, types, c0):
+    """Counts Sholl crossings for all relevant nodes and radii."""
     sholl_data = {}
+
     # iterate over all nodes to collect crossings
     for node in morph.root.walk():
         point_type = node.type()
+
         if point_type in set(types).difference((SWC.SOMA,)):
             if point_type not in sholl_data:
                 sholl_data[point_type] = {}
+
             c1, c2 = _get_sholl_coords(node, args)
+
             # calculate radii indices
             n1 = math.ceil(np.linalg.norm(c1 - c0) / args.sholl_res)
             n2 = math.ceil(np.linalg.norm(c2 - c0) / args.sholl_res)
+
             # count crossings for each circle (bin)
             for circle in range(min(n1, n2), max(n1, n2) + 1):
                 if circle not in sholl_data[point_type]:
                     sholl_data[point_type][circle] = 0
                 sholl_data[point_type][circle] += 1
+
+    return sholl_data
+
+
+def _calculate_sholl_analysis(morph, args, types, ptmap, morphometry, name):
+    """Performs Sholl analysis."""
+    c0 = _get_sholl_center(morph, args)
+    sholl_data = _count_sholl_crossings(morph, args, types, c0)
     # format and save Sholl data
     for point_type, data in sholl_data.items():
         radii = [r * args.sholl_res for r in data]
@@ -198,7 +210,7 @@ def measure(args):
     reconstructions = args.file
     items = zip(reconstructions, (args,) * len(reconstructions))
 
-    # Use multiprocessing pool for parallel computation
+    # use multiprocessing pool for parallel computation
     with mp.Pool() as pool:
         for morphometry in pool.starmap(get_morphometry, items):
             metric.update(morphometry)
