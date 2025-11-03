@@ -11,9 +11,6 @@ from treem.io import SWC, load_swc, save_swc
 from treem.utils.geom import rotation_matrix, norm
 
 
-TOLERANCE = 1e-9
-
-
 class Node(Tree):
     """Morphology data storage."""
 
@@ -474,15 +471,15 @@ class DGram(Morph):
     def _calculate_dgram_steps(self, morph, zorder, ystep, zstep):
         """Calculates default dgram steps if not provided and initializes YZ plane."""
         dgram_step = 0.0
-        if math.isclose(ystep, 0.0, abs_tol=TOLERANCE) or math.isclose(zstep, 0.0, abs_tol=TOLERANCE):
+        if math.isclose(ystep, 0.0) or math.isclose(zstep, 0.0):
             maxdist = max(node.dist() for node in morph.root.leaves())
             ntips = sum(1 for _ in morph.root.leaves())
             dgram_step = maxdist / ntips if ntips > 0 else 1.0
-        if math.isclose(ystep, 0.0, abs_tol=TOLERANCE): 
+        if math.isclose(ystep, 0.0): 
             self.ystep = dgram_step
         else:
             self.ystep = ystep
-        if math.isclose(zstep, 0.0, abs_tol=TOLERANCE): 
+        if math.isclose(zstep, 0.0): 
             self.zstep = dgram_step
         else:
             self.zstep = zstep
