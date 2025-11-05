@@ -323,15 +323,17 @@ def repair(args):
                           morph.root.sections()):
             length = morph.length(sec)
             points = morph.points(sec)
-            parent_point = sec[0].parent.v[SWC.XYZR]
-            # pylint: disable=unsubscriptable-object
+            start_node = sec[0]
+            parent_point = start_node.parent.v[SWC.XYZR]
+            if start_node.parent.is_root():
+                parent_point[3] = start_node.radius()
             points = np.insert(points, 0, parent_point, axis=0)
             points = sample(points, np.ceil(length / args.res).astype(int))
             points = points[1:]
             start = True
             for ident, point in enumerate(points, ident):
                 x, y, z, r = point
-                pid = idmap[sec[0].parent_ident()] if start else ident - 1
+                pid = idmap[start_node.parent_ident()] if start else ident - 1
                 v = np.array([ident, sec[0].type(), x, y, z, r, pid])
                 start = False if start else start
                 data.append(v)
