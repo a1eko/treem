@@ -27,6 +27,7 @@ interactive commands:
     n       show/hide nodes
     s       show/hide segments
     W       write image to file
+    q       quit
     h/?     help message
 """
 
@@ -268,7 +269,7 @@ class App:
             for node in stem.walk():
                 nr = node.radius()
                 px, py, pz = node.parent.coord()
-                pr = node.parent.radius()
+                pr = node.parent.radius() if not node.parent.is_root() else nr
                 GL.glPushMatrix()
                 GL.glTranslatef(px, py, pz)
                 axis, angle = rotation(
@@ -352,6 +353,8 @@ class App:
             self.write_img()
         elif key in ('h', '?'):
             print(_HELP)
+        elif key == 'q':
+            GLUT.glutLeaveMainLoop()
         GLUT.glutPostRedisplay()
 
     def run(self):
