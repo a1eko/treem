@@ -37,9 +37,8 @@ def test_node1_has_parent():
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
-    assert proc.returncode == 3
+    assert proc.returncode == 2
     assert stdout == """node1_has_parent: 2
-non_stem_neurite: 2
 not_valid_parent_ids: 2
 """
     assert stderr == ''
@@ -83,10 +82,8 @@ def test_non_descendant():
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
-    assert proc.returncode == 2
-    assert stdout == """non_stem_neurite: 2
-non_descendant: 2 3
-"""
+    assert proc.returncode == 1
+    assert stdout == 'non_descendant: 2 3\n'
     assert stderr == ''
 
 
@@ -137,10 +134,8 @@ def test_non_unique_ids():
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
-    assert proc.returncode == 2
-    assert stdout == """non_unique_ids: 2 3
-non_increasing_ids: 2
-"""
+    assert proc.returncode == 1
+    assert stdout == 'non_unique_ids: 2 3\n'
     assert stderr == ''
 
 
@@ -204,10 +199,8 @@ def test_not_valid_ids():
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
-    assert proc.returncode == 2
-    assert stdout == """not_valid_ids: 0 -1
-non_increasing_ids: 0 -1
-"""
+    assert proc.returncode == 1
+    assert stdout == 'not_valid_ids: 0 -1\n'
     assert stderr == ''
 
 
@@ -271,12 +264,11 @@ def test_unordered():
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
-    assert proc.returncode == 5
+    assert proc.returncode == 4
     assert stdout == """node1_not_id1: 2
 node1_has_parent: 1
 node1_not_soma: 3
 not_valid_parent_ids: 1
-non_increasing_ids: 10 9 6 1 4
 """
     assert stderr == ''
 
