@@ -448,14 +448,14 @@ class DGram(Morph):
                     segd = segdata[ident - 1]
                     data[SWC.X] = segd[SEG.PATH]
                     # data[SWC.R] = secrad
-            if ystep == 0.0 or zstep == 0.0:
+            if np.isclose(ystep, 0.0) or np.isclose(zstep, 0.0):
                 # maxdist = max([node.dist() for node in morph.root.leaves()])
                 # ntips = sum([1 for node in morph.root.leaves()])
                 maxdist = max(node.dist() for node in morph.root.leaves())
                 ntips = sum(1 for node in morph.root.leaves())
                 dgram_step = maxdist / ntips
-            ystep = ystep if ystep != 0.0 else dgram_step
-            zstep = zstep if zstep != 0.0 else dgram_step
+            ystep = ystep if not np.isclose(ystep, 0.0) else dgram_step
+            zstep = zstep if not np.isclose(zstep, 0.0) else dgram_step
             graph.data[:, SWC.YZ] = [0.0, zorder * zstep]
             for stem in graph.stems():
                 for sec in stem.sections():
