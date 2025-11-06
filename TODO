@@ -33,9 +33,9 @@ Key: - todo, + done, o pending, ! attention, x ignore
 + swc-render: add quit option
 + swc-render: avoid wildcard import
 + treem: release v1.1.2
-- treem: start v1.2.0.dev line
-- treem: replace TODO file with CHANGELOG.md (see https://keepachangelog.com/en/1.1.0)
-- treem: refactor code to reduce cognitive complexity
++ treem: start v1.2.0.dev line
+- treem: replace TODO file with CHANGELOG.md, see https://keepachangelog.com/en/1.1.0/
+- treem: refactor code to comply with SonarQube quality requirements
 - treem (render, measure, repair, morph): do not interpolate diam if the parent is root
 - treem (tests): improve coverage, add tests for new code
 - treem (build): re-enable flake8 lint testing
