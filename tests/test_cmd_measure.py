@@ -40,11 +40,11 @@ soma zroot             0\n
     assert stderr == ''
 
 
-def test_out(tmp_path):
+def test_out():
     """Tests for writing to file."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'measure', 'pass_simple_branch.swc',
-                             '-o', tmp_path / 'test_treem.json'],
+                             '-o', '/tmp/test_treem.json'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
