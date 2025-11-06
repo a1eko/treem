@@ -30,8 +30,8 @@ Key: - todo, + done, o pending, ! attention, x ignore
 + treem: replace legacy setup.py bdist_wheel mechanism with pyproject.toml
 + treem: use tox to test against several python versions and os platforms
 + treem (tests): run cli tests in the same process as pytest 'coverage run -m pytest tests/'
-- swc-render: add quit by pressing 'q'
-- swc-render: avoid wildcard importing
++ swc-render: add quit option
++ swc-render: avoid wildcard import
 - treem: release v1.1.2
 - treem: start v1.2.0.dev line
 - treem: replace TODO file with CHANGELOG.md (see https://keepachangelog.com/en/1.1.0)
