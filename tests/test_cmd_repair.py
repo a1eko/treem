@@ -4,13 +4,13 @@ import subprocess
 import os
 
 
-def test_transpose():
+def test_transpose(tmp_path):
     """Tests for changing location."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-t', '2', '2', '2',
                              '-a', '90', '90', '90',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -20,12 +20,12 @@ def test_transpose():
     assert stderr == ''
 
 
-def test_shrink():
+def test_shrink(tmp_path):
     """Tests for shrinkage correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_zjump.swc',
                              '-k', '1.33', '-kxy', '1.11', '-n',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -35,13 +35,13 @@ def test_shrink():
     assert stderr == ''
 
 
-def test_shrink_bottom_up():
+def test_shrink_bottom_up(tmp_path):
     """Tests for shrinkage correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_zjump.swc',
                              '-k', '1.33', '-kxy', '1.11',
                              '--bottom-up',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -51,12 +51,12 @@ def test_shrink_bottom_up():
     assert stderr == ''
 
 
-def test_zjump_align():
+def test_zjump_align(tmp_path):
     """Tests for zjump correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_zjump.swc',
                              '-z', '4', '--zjump', 'align',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -66,12 +66,12 @@ def test_zjump_align():
     assert stderr == ''
 
 
-def test_zjump_split():
+def test_zjump_split(tmp_path):
     """Tests for zjump correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_zjump.swc',
                              '-z', '4', '--zjump', 'split',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -81,12 +81,12 @@ def test_zjump_split():
     assert stderr == ''
 
 
-def test_zjump_tilt():
+def test_zjump_tilt(tmp_path):
     """Tests for zjump correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_zjump.swc',
                              '-z', '4', '--zjump', 'tilt',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -96,12 +96,12 @@ def test_zjump_tilt():
     assert stderr == ''
 
 
-def test_zjump_join():
+def test_zjump_join(tmp_path):
     """Tests for zjump correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_zjump.swc',
                              '-z', '4', '--zjump', 'join',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -111,12 +111,12 @@ def test_zjump_join():
     assert stderr == ''
 
 
-def test_diam_joint():
+def test_diam_joint(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'joint',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -126,12 +126,12 @@ def test_diam_joint():
     assert stderr == ''
 
 
-def test_diam_joint_fail():
+def test_diam_joint_fail(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'fail_diam.swc',
                              '-d', '2', '--diam', 'joint',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -141,12 +141,12 @@ def test_diam_joint_fail():
     assert stderr == ''
 
 
-def test_diam_sec():
+def test_diam_sec(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'sec',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -156,12 +156,12 @@ def test_diam_sec():
     assert stderr == ''
 
 
-def test_diam_order():
+def test_diam_order(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'order',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -171,13 +171,13 @@ def test_diam_order():
     assert stderr == ''
 
 
-def test_diam_order_pool():
+def test_diam_order_pool(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'order',
                              '--pool', 'pass_zjump.swc',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -187,13 +187,13 @@ def test_diam_order_pool():
     assert stderr == ''
 
 
-def test_diam_order_pool_err():
+def test_diam_order_pool_err(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'order',
                              '--pool', 'pass_soma.swc',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -203,12 +203,12 @@ def test_diam_order_pool_err():
     assert stderr == ''
 
 
-def test_diam_breadth():
+def test_diam_breadth(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'breadth',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -218,13 +218,13 @@ def test_diam_breadth():
     assert stderr == ''
 
 
-def test_diam_breadth_pool():
+def test_diam_breadth_pool(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'breadth',
                              '--pool', 'pass_zjump.swc',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -234,13 +234,13 @@ def test_diam_breadth_pool():
     assert stderr == ''
 
 
-def test_diam_breadth_pool_err():
+def test_diam_breadth_pool_err(tmp_path):
     """Tests for diameter correction."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-d', '5', '--diam', 'breadth',
                              '--pool', 'pass_soma.swc',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -250,13 +250,13 @@ def test_diam_breadth_pool_err():
     assert stderr == ''
 
 
-def test_cut_repair():
+def test_cut_repair(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_nmo_2_cut.swc',
                              '-c', '322', '341', '547', '1167',
                              '--seed', '1',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -266,12 +266,12 @@ def test_cut_repair():
     assert stderr == ''
 
 
-def test_cut_repair_alt():
+def test_cut_repair_alt(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-c', '11', '13', '--seed', '1',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -281,12 +281,12 @@ def test_cut_repair_alt():
     assert stderr == ''
 
 
-def test_cut_repair_err():
+def test_cut_repair_err(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-c', '7', '11', '13',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -296,13 +296,13 @@ def test_cut_repair_err():
     assert stderr == ''
 
 
-def test_cut_repair_err_force():
+def test_cut_repair_err_force(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-c', '7', '11', '13',
                              '--force-repair',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -312,13 +312,13 @@ def test_cut_repair_err_force():
     assert stderr == ''
 
 
-def test_cut_repair_force():
+def test_cut_repair_force(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch_2.swc',
                              '-c', '11', '13', '14', '--seed', '1',
                              '--force-repair',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -328,14 +328,14 @@ def test_cut_repair_force():
     assert stderr == ''
 
 
-def test_cut_repair_pool():
+def test_cut_repair_pool(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_nmo_2_cut.swc',
                              '-c', '322', '341', '547', '1167',
                              '--pool', 'pass_nmo_1.swc',
                              '--seed', '1',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -345,12 +345,12 @@ def test_cut_repair_pool():
     assert stderr == ''
 
 
-def test_cut_delete():
+def test_cut_delete(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-l', '4', '8',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -360,12 +360,12 @@ def test_cut_delete():
     assert stderr == ''
 
 
-def test_cut_resample():
+def test_cut_resample(tmp_path):
     """Tests for repairing cut neurites."""
     os.chdir(os.path.dirname(__file__) + '/data')
     proc = subprocess.Popen(['swc', 'repair', 'pass_simple_branch.swc',
                              '-r', '0.5',
-                             '-o', '/tmp/test_treem.swc'],
+                             '-o', tmp_path / 'test_treem.swc'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
