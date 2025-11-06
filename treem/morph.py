@@ -43,10 +43,15 @@ class Node(Tree):
         """Returns True if node is a stem node."""
         return (not self.is_root() and self.parent.is_root() and self.type() is not SWC.SOMA)
 
+    #def order(self):
+    #    """Returns branch order (int). A primary neurite has order 1."""
+    #    return (sum(1 for node in self.forks(iterator=Tree.ascendorder)) + 1
+    #            if not self.is_root() else 0)
+
     def order(self):
         """Returns branch order (int). A primary neurite has order 1."""
         one = 1 if not self.is_fork() else 0
-        return (sum(1 for _ in self.forks(iterator=Tree.ascendorder)) + one
+        return (sum(1 for node in self.forks(iterator=Tree.ascendorder)) + one
                 if not self.is_root() else 0)
 
     def ident(self):
@@ -205,13 +210,16 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZ]
+        # return np.array([node.coord() for node in sec])
 
     def radii(self, sec):
         """Returns reference to section radii."""
         first = sec[0].ident() - 1
         last = sec[-1].ident()
         block = slice(first, last)
+        # possibly unsafe addressing, see repair_branch()
         return self.data[block, SWC.RADII]
+        # return np.array([node.radius() for node in sec])
 
     def points(self, sec):
         """Returns reference to section data."""
@@ -219,6 +227,7 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZR]
+        # return np.array([node.v[XYZR] for node in sec])
 
     def length(self, sec):
         """Returns section length (float)."""
@@ -248,7 +257,7 @@ class Morph():
         node = node if node else self.root
         for sec in node.sections():
             points = self.coords(sec)
-            points = points + shift  # same as +=
+            points += shift
 
     def rotate(self, axis, angle, node=None):
         """Rotates branch at the node.
@@ -335,17 +344,17 @@ class Morph():
         self.__renumber()
 
 
-def _init_segdata_dict(m):
-    """Initializes segment data dictionary from morphology data."""
+def get_segdata(morph):
+    """Collects extended segment data."""
+    # pylint: disable=invalid-name
+    # pylint: disable=too-many-locals
+    m = morph
     d = {}
     for i, t, x, y, z, r, p in m.data:
         i, t, x, y, z, r, p = int(i), int(t), float(x), float(y), float(z), float(r), int(p)
         d[i] = {'t': t, 'x': x, 'y': y, 'z': z, 'r': r, 'p': p}
-    return d
 
-
-def _init_soma_data(m, d):
-    """Initializes soma node data fields."""
+    center = m.root.coord()
     for node in m.root.walk():
         if node.type() == SWC.SOMA:
             ident = node.ident()
@@ -359,40 +368,30 @@ def _init_soma_data(m, d):
             d[ident]['breadth'] = 0
             d[ident]['totlen'] = 0.0
 
-
-def _process_section_nodes(sec, m, d, center):
-    """Calculates data for nodes within a section."""
-    seclen = m.length(sec)
-    xsec = 0.0
-    for node in sec:
-        ident = node.ident()
-        length = node.length()
-        xsec += length
-        order = 1
-        if node.parent.is_fork() and node.parent != m.root:
-            order = d[node.parent.ident()]['order'] + 1
-        dist = np.linalg.norm(center - node.coord())
-        path = d[node.parent.ident()]['path'] + length
-        d[ident]['length'] = length
-        d[ident]['path'] = path
-        d[ident]['xsec'] = xsec
-        d[ident]['xsec_rel'] = xsec / seclen
-        d[ident]['dist'] = dist
-        d[ident]['degree'] = node.degree()
-        d[ident]['order'] = order
-        d[ident]['breadth'] = 1
-        d[ident]['totlen'] = 0.0
-
-
-def _calculate_downstream_data(m, d, center):
-    """Calculates path-dependent data for all nodes downstream of the soma."""
     for stem in m.stems():
         for sec in stem.sections():
-            _process_section_nodes(sec, m, d, center)
+            order = 1
+            xsec = 0.0
+            seclen = m.length(sec)
+            for node in sec:
+                ident = node.ident()
+                length = node.length()
+                xsec += length
+                if node.parent.is_fork() and node.parent != m.root:
+                    order = d[node.parent.ident()]['order'] + 1
+                dist = np.linalg.norm(center - node.coord())
+                path = d[node.parent.ident()]['path']
+                path += length
+                d[ident]['length'] = length
+                d[ident]['path'] = path
+                d[ident]['xsec'] = xsec
+                d[ident]['xsec_rel'] = xsec / seclen
+                d[ident]['dist'] = dist
+                d[ident]['degree'] = node.degree()
+                d[ident]['order'] = order
+                d[ident]['breadth'] = 1
+                d[ident]['totlen'] = 0.0
 
-
-def _calculate_upstream_data(m, d):
-    """Calculates upstream-dependent data (breadth, totlen) for all nodes."""
     for term in m.root.leaves():
         for node in term.walk(reverse=True):
             if not node.is_leaf():
@@ -406,27 +405,12 @@ def _calculate_upstream_data(m, d):
                 d[ident]['breadth'] = breadth
                 d[ident]['totlen'] = totlen
 
-
-def _format_segdata_output(d):
-    """Formats the segment data dictionary into a NumPy array."""
     return np.array([[i, d[i]['t'], d[i]['x'], d[i]['y'], d[i]['z'],
                       d[i]['r'], d[i]['p'],
                       d[i]['length'], d[i]['path'], d[i]['xsec'], d[i]['xsec_rel'],
                       d[i]['dist'], d[i]['degree'], d[i]['order'], d[i]['breadth'],
                       d[i]['totlen']]
                      for i in sorted(d)])
-
-
-def get_segdata(morph):
-    """Collects extended segment data."""
-    # pylint: disable=invalid-name
-    m = morph
-    d = _init_segdata_dict(m)
-    _init_soma_data(m, d)
-    center = m.root.coord()
-    _calculate_downstream_data(m, d, center)
-    _calculate_upstream_data(m, d)
-    return _format_segdata_output(d)
 
 
 class SEG():  # pylint: disable=too-few-public-methods
@@ -440,6 +424,8 @@ class DGram(Morph):
     def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES,
                  zorder=0.0, ystep=0.0, zstep=0.0):
         # pylint: disable=too-many-arguments
+        # pylint: disable=too-many-locals
+        # pylint: disable=too-many-branches
         if not morph:
             morph = Morph(source=source, data=data)
         else:
@@ -447,62 +433,42 @@ class DGram(Morph):
         if morph is None:
             super().__init__()
         else:
-            self._prune_and_init_graph(morph, types)
-            self._calculate_dgram_steps(morph, zorder, ystep, zstep)
-            self._translate_to_parent_origin()
-            self._set_y_coordinates()
-            super().__init__(data=self.graph.data)
-
-    def _prune_and_init_graph(self, morph, types):
-        """Prunes unwanted stems and initializes the graph structure and segdata."""
-        for stem in morph.stems():
-            if stem.type() not in types:
-                morph.prune(stem)
-        self.graph = Morph(data=morph.data)
-        segdata = get_segdata(self.graph)
-        for sec in self.graph.root.sections():
-            for node in sec:
-                ident = node.ident()
-                data = self.graph.data[ident - 1]
-                segd = segdata[ident - 1]
-                data[SWC.X] = segd[SEG.PATH]
-        self.morph = morph # storing for later use in calculating steps
-
-    def _calculate_dgram_steps(self, morph, zorder, ystep, zstep):
-        """Calculates default dgram steps if not provided and initializes YZ plane."""
-        dgram_step = 0.0
-        if math.isclose(ystep, 0.0) or math.isclose(zstep, 0.0):
-            maxdist = max(node.dist() for node in morph.root.leaves())
-            ntips = sum(1 for _ in morph.root.leaves())
-            dgram_step = maxdist / ntips if ntips > 0 else 1.0
-        if math.isclose(ystep, 0.0): 
-            self.ystep = dgram_step
-        else:
-            self.ystep = ystep
-        if math.isclose(zstep, 0.0): 
-            self.zstep = dgram_step
-        else:
-            self.zstep = zstep
-        self.graph.data[:, SWC.YZ] = [0.0, zorder * self.zstep]
-    
-    def _translate_to_parent_origin(self):
-        """Translates each section so its starting node is at its parent's position."""
-        for stem in self.graph.stems():
-            for sec in stem.sections():
+            for stem in morph.stems():
+                if stem.type() not in types:
+                    morph.prune(stem)
+            graph = Morph(data=morph.data)
+            segdata = get_segdata(graph)
+            for sec in graph.root.sections():
                 start_node = sec[0]
-                parent = start_node.parent
-                shift = start_node.coord() - parent.coord()
-                self.graph.translate(-shift, start_node)
-
-    def _set_y_coordinates(self):
-        """Sets the Y-coordinate for all nodes based on leaf position and fork averaging."""
-        for index, term in enumerate(self.graph.root.leaves(), start=1):
-            pos = index * self.ystep
-            for node in term.walk(reverse=True):
-                ident = node.ident()
-                value = self.graph.data[ident - 1]
-                # check if it's a fork or the root
-                if node.is_fork() or node.is_root():
-                    # average the Y coordinates of its children (siblings in the ascending walk)
-                    pos = np.mean([x.coord()[1] for x in node.siblings])
-                value[SWC.Y] = pos
+                # seclink = start_node.length()
+                # secrad = graph.radii(sec).mean()
+                for node in sec:
+                    ident = node.ident()
+                    data = graph.data[ident - 1]
+                    segd = segdata[ident - 1]
+                    data[SWC.X] = segd[SEG.PATH]
+                    # data[SWC.R] = secrad
+            if ystep == 0.0 or zstep == 0.0:
+                # maxdist = max([node.dist() for node in morph.root.leaves()])
+                # ntips = sum([1 for node in morph.root.leaves()])
+                maxdist = max(node.dist() for node in morph.root.leaves())
+                ntips = sum(1 for node in morph.root.leaves())
+                dgram_step = maxdist / ntips
+            ystep = ystep if ystep != 0.0 else dgram_step
+            zstep = zstep if zstep != 0.0 else dgram_step
+            graph.data[:, SWC.YZ] = [0.0, zorder * zstep]
+            for stem in graph.stems():
+                for sec in stem.sections():
+                    start_node = sec[0]
+                    parent = start_node.parent
+                    shift = start_node.coord() - parent.coord()
+                    graph.translate(-shift, start_node)
+            for index, term in enumerate(graph.root.leaves(), start=1):
+                pos = index * ystep
+                for node in term.walk(reverse=True):
+                    ident = node.ident()
+                    value = graph.data[ident - 1]
+                    if node.is_fork() or node.is_root():
+                        pos = np.mean([x.coord()[1] for x in node.siblings])
+                    value[SWC.Y] = pos
+            super().__init__(data=graph.data)

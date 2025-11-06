@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+
 from cycler import cycler
 
 from treem.morph import Morph
@@ -18,24 +19,33 @@ _colors = ('crimson', 'dodgerblue', 'darkgrey', 'royalblue', 'limegreen',
            'orchid', 'red', 'purple', 'orange', 'darkturquoise')
 _NCOLORS = len(_colors)
 
+# mpl.rcParams['lines.linewidth'] = 1.0
+# mpl.rcParams.update({'font.size': 8})
 mpl.rcParams['axes.prop_cycle'] = cycler(color=_colors)
 
 
-def _setup_matplotlib_and_axes(args):
-    """Setup Matplotlib figure, 3D axes, and initial parameters."""
+def view(args):
+    """Display neuron morphology structure."""
+    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-branches
+    # pylint: disable=too-many-statements
+    # pylint: disable=expression-not-assigned
     plt.rc('font', size=args.font)
     fig = plt.figure(figsize=(8, 8))
-    ax = fig.add_subplot(projection='3d')
-    # clean up 3D pane appearance
-    for pane in (ax.xaxis.pane, ax.yaxis.pane, ax.zaxis.pane):
-        pane.set_edgecolor('w')
-        pane.fill = False
+    ax = fig.add_subplot(projection='3d')  # pylint: disable=invalid-name
+    ax.xaxis.pane.set_edgecolor('w')
+    ax.yaxis.pane.set_edgecolor('w')
+    ax.zaxis.pane.set_edgecolor('w')
+    ax.xaxis.pane.fill = False
+    ax.yaxis.pane.fill = False
+    ax.zaxis.pane.fill = False
     ax.set_proj_type('ortho')
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
     ax.grid(False)
 
+    types = args.type if args.type else SWC.TYPES
     if args.title:
         fig.suptitle(args.title, fontsize=args.title_font)
     if args.no_axes:
@@ -43,93 +53,105 @@ def _setup_matplotlib_and_axes(args):
 
     if args.cycler_color:
         colors = list(_colors)
-        for x in args.cycler_color:
+        for x in args.cycler_color:  # pylint: disable=invalid-name
             i, colorname = x.split(':')
             i = int(i)
             if 0 <= i < _NCOLORS:
                 colors[i] = colorname
         mpl.rcParams['axes.prop_cycle'] = cycler(color=colors)
 
-    return fig, ax
-
-
-def _load_and_plot_morphology(ax, args, types):
-    """Load and plot morphology data based on the selected mode."""
-    morph = None
-
-    for count, file_name in enumerate(reversed(args.file)):
-        if not args.dgram:
-            current_morph = Morph(file_name)
-        else:
-            current_morph = DGram(source=file_name, zorder=count,
-                                  ystep=args.dgram_ystep, zstep=args.dgram_zstep, types=types)
-        if args.mode == 'neurites':
-            plot_neuron(ax, current_morph, types, linewidth=args.linewidth)
-        elif args.mode == 'cells':
+    if args.mode == 'neurites':
+        for count, file_name in enumerate(reversed(args.file)):
+            if not args.dgram:
+                morph = Morph(file_name)
+            else:
+                morph = DGram(source=file_name, zorder=count, ystep=args.dgram_ystep,
+                              zstep=args.dgram_zstep, types=types)
+            plot_neuron(ax, morph, types, linewidth=args.linewidth)
+    elif args.mode == 'cells':
+        for count, file_name in enumerate(reversed(args.file)):
+            if not args.dgram:
+                morph = Morph(file_name)
+            else:
+                morph = DGram(source=file_name, zorder=count, ystep=args.dgram_ystep,
+                              zstep=args.dgram_zstep, types=types)
             colors = {k: f'C{count % _NCOLORS}' for k in types}
-            plot_neuron(ax, current_morph, types, colors=colors, linewidth=args.linewidth)
-        elif args.mode == 'shadow':
-            if count > 0:  # shadow for all but the first (non-reversed) file
-                colors = {k: args.shadow_color for k in types}
-                plot_neuron(ax, current_morph, types, colors=colors,
-                            linewidth=args.shadow_width)
-            else:  # the main neuron (first in original args.file)
-                plot_neuron(ax, current_morph, types, linewidth=args.linewidth)
-        # the last morph object to be used for branch/sec/mark operations
-        if count == 0:
-            morph = current_morph
-    return morph
+            plot_neuron(ax, morph, types, colors=colors, linewidth=args.linewidth)
+    elif args.mode == 'shadow':
+        for file_name in reversed(args.file[1:]):
+            colors = {k: args.shadow_color for k in types}
+            if not args.dgram:
+                morph = Morph(file_name)
+            else:
+                morph = DGram(source=file_name, ystep=args.dgram_ystep,
+                              zstep=args.dgram_zstep, types=types)
+            plot_neuron(ax, morph, types, colors=colors,
+                        linewidth=args.shadow_width)
+        if not args.dgram:
+            morph = Morph(args.file[0])
+        else:
+            morph = DGram(source=args.file[0], ystep=args.dgram_ystep,
+                          zstep=args.dgram_zstep, types=types)
+        plot_neuron(ax, morph, types, linewidth=args.linewidth)
 
-
-
-def _apply_group_plotting(ax, args, morph, types, groups, plot_func):
-    """Helper to handle the plotting logic for branches or sections."""
-    nodes_to_plot = []
-    for group in groups:
-        # filter nodes that match group ID and type
-        nodes = filter(lambda x, g=group: x.ident() in g, morph.root.walk())
-        nodes = filter(lambda x, t=types: x.type() in t, nodes)
-        nodes_to_plot.extend(list(nodes))
-    for node in nodes_to_plot:
-        plot_func(ax, node, morph.data,
-                  linewidth=1.5 * args.linewidth, color='C5')
-    if groups and args.show_id:
-        plot_points(ax, morph, groups[-1], types,
-                    show_id=args.show_id, markersize=6 * args.linewidth)
-
-
-def _plot_special_features(ax, args, morph, types):
-    """Plot branches, sections, and marks."""
-    if not morph:
-        return
     if args.branch:
-        _apply_group_plotting(ax, args, morph, types, args.branch, plot_tree)
-    elif args.sec:
-        _apply_group_plotting(ax, args, morph, types, args.sec, plot_section)
+        for group in args.branch:
+            # pylint: disable=cell-var-from-loop
+            # pylint: disable=undefined-loop-variable
+            nodes = filter(lambda x: x.ident() in group, morph.root.walk())
+            nodes = filter(lambda x: x.type() in types, nodes)
+            for branch in nodes:
+                plot_tree(ax, branch, morph.data,
+                          linewidth=1.5 * args.linewidth, color='C5')
+                if args.show_id:
+                    plot_points(ax, morph, group, types,
+                                show_id=args.show_id, markersize=6 * args.linewidth)
+
+    if args.sec:
+        for group in args.sec:
+            # pylint: disable=undefined-loop-variable
+            # pylint: disable=cell-var-from-loop
+            nodes = filter(lambda x: x.ident() in group, morph.root.walk())
+            nodes = filter(lambda x: x.type() in types, nodes)
+            for sec in nodes:
+                plot_section(ax, sec, morph.data,
+                             linewidth=1.5 * args.linewidth, color='C5')
+                if args.show_id:
+                    plot_points(ax, morph, group, types,
+                                show_id=args.show_id, markersize=6 * args.linewidth)
+
     if args.mark:
         for group in args.mark:
             plot_points(ax, morph, group, types,
                         show_id=args.show_id, markersize=6 * args.linewidth)
 
+    if args.angle:
+        ax.view_init(args.angle[0], args.angle[1])
 
-def _set_standard_projection(ax, proj):
-    """Helper to set standard 2D projections."""
-    if proj == 'xy':
-        ax.view_init(89.99, -90.01)
-        ax.set_zlabel(''); ax.set_zticks([])
-    elif proj == 'xz':
-        ax.view_init(0.00, -90.01)
-        ax.set_ylabel(''); ax.set_yticks([])
-    elif proj == 'yz':
-        ax.view_init(0.00, 0.01)
-        ax.set_xlabel(''); ax.set_xticks([])
+    if args.proj:
+        if args.proj.lower() == 'xy':
+            ax.view_init(89.99, -90.01)
+            ax.set_zlabel('')
+            ax.set_zticks([])
+        if args.proj.lower() == 'xz':
+            ax.view_init(0.00, -90.01)
+            ax.set_ylabel('')
+            ax.set_yticks([])
+        if args.proj.lower() == 'yz':
+            ax.view_init(0.00, 0.01)
+            ax.set_xlabel('')
+            ax.set_xticks([])
 
+    #if args.dist:
+    #    ax.dist = args.dist
 
-def _set_aspect_and_limits(ax, args, smax):
-    """Helper to set 1:1:1 aspect ratio and axis limits."""
-    xmin, xmax = ax.xy_dataLim.xmin, ax.xy_dataLim.xmax
-    ymin, ymax = ax.xy_dataLim.ymin, ax.xy_dataLim.ymax
-    zmin, zmax = ax.zz_dataLim.xmin, ax.zz_dataLim.xmax
+    xmin = ax.xy_dataLim.xmin
+    ymin = ax.xy_dataLim.ymin
+    zmin = ax.zz_dataLim.xmin
+    xmax = ax.xy_dataLim.xmax
+    ymax = ax.xy_dataLim.ymax
+    zmax = ax.zz_dataLim.xmax
+    smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))  # pylint: disable=W3301
     if args.xlim:
         ax.set_xlim(args.xlim[0], args.xlim[1])
     else:
@@ -144,43 +166,16 @@ def _set_aspect_and_limits(ax, args, smax):
         ax.set_zlim((zmin + zmax - smax) / 2, (zmin + zmax + smax) / 2)
     ax.set_box_aspect([1, 1, 1])
 
-
-def _draw_scale_bar(ax, args, xmax, ymin, zmin, smax):
-    """Helper to draw the appropriate scale bar (dgram or 3D)."""
-    if args.dgram:
-        # scale bar for DGram mode
-        ax.plot([xmax - args.scale, xmax], [ymin - smax / 10, ymin - smax / 10], [zmin, zmin],
-                color='k', linewidth=3)
-    else:
-        # standard 3D scale bar (X, Y, Z axes)
-        ax.plot([xmax - args.scale, xmax], [ymin, ymin], [zmin, zmin],
-                color='k', linewidth=3)
-        ax.plot([xmax, xmax], [ymin, ymin + args.scale], [zmin, zmin],
-                color='k', linewidth=3)
-        ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin + args.scale],
-                color='k', linewidth=3)
-
-
-def _set_view_and_limits(ax, args):
-    """Set view angle, projection, axis limits, aspect ratio, and scale bar."""
-    if args.angle:
-        ax.view_init(args.angle[0], args.angle[1])
-    if args.proj:
-        _set_standard_projection(ax, args.proj.lower())
-    smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
-    _set_aspect_and_limits(ax, args, smax)
     if args.scale and args.scale > 0:
-        ymin = ax.xy_dataLim.ymin
-        xmax = ax.xy_dataLim.xmax
-        zmin = ax.zz_dataLim.xmin
-        _draw_scale_bar(ax, args, xmax, ymin, zmin, smax)
+        if args.dgram:
+            ax.plot([xmax - args.scale, xmax], [ymin - smax / 10, ymin - smax / 10], [zmin, zmin],
+                    color='k', linewidth=3)
+        else:
+            ax.plot([xmax - args.scale, xmax], [ymin, ymin], [zmin, zmin],
+                    color='k', linewidth=3)
+            ax.plot([xmax, xmax], [ymin, ymin + args.scale], [zmin, zmin],
+                    color='k', linewidth=3)
+            ax.plot([xmax, xmax], [ymin, ymin], [zmin, zmin + args.scale],
+                    color='k', linewidth=3)
 
-
-def view(args):
-    """Display neuron morphology structure."""
-    types = args.type if args.type else SWC.TYPES
-    _, ax = _setup_matplotlib_and_axes(args)
-    morph = _load_and_plot_morphology(ax, args, types)
-    _plot_special_features(ax, args, morph, types)
-    _set_view_and_limits(ax, args)
     plt.show() if not args.out else plt.savefig(args.out, dpi=100)
