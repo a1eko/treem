@@ -11,7 +11,7 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
         <td>Release</td>
         <td>
             <a href="https://pypi.org/project/treem"><img src="https://img.shields.io/pypi/v/treem" alt="PyPI version"></a>
-            <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9%20%7C%203.12-blue.svg" alt="Python versions tested"></a>
+            <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.9%20%7C%203.14-blue.svg" alt="Python versions tested"></a>
             <a href="https://github.com/a1eko/treem/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License"></a>
         </td>
     </tr>
