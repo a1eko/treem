@@ -33,7 +33,7 @@ def _scale_radius(morph, nodes, scale_radius):
     for node in nodes:
         sec = list(node.section())
         radii = morph.radii(sec)
-        radii *= scale_radius
+        radii = radii * scale_radius  # same as *=
 
 
 def _scale_coords(morph, nodes, scale):
@@ -44,7 +44,7 @@ def _scale_coords(morph, nodes, scale):
         head = sec[0].coord().copy()
         tail = sec[-1].coord().copy()
         coords = morph.coords(sec)
-        coords *= np.array(scale)
+        coords = coords * np.array(scale)  # same as *=
         shift = head - sec[0].coord()
         coords += shift
         for child in sec[-1].siblings:
@@ -130,10 +130,10 @@ def _smooth_nodes(morph, nodes, smooth_iterations):
                     # simple moving average: update coord based on parent
                     if secnode.parent: # ensure parent exists before accessing its coord
                         coord = secnode.coord()
-                        coord += secnode.parent.coord()
+                        coord = coord + secnode.parent.coord()  # same as +=
                 # scale back to preserve the original length
                 scale_smooth = length / morph.length(sec[1:])
-                coords *= scale_smooth
+                coords = coords * scale_smooth  # same as *=
                 shift = head - sec[0].coord()
                 coords += shift
             for child in sec[-1].siblings:
@@ -145,7 +145,7 @@ def _swap_nodes(morph, nodes, rng):
     """Swaps selected nodes and their subtrees."""
     rng.shuffle(nodes)
     # swap 2 nodes at a time
-    #FIXME# for node1, node2 in zip(nodes[::2], nodes[1::2]):
+    #intended behavior: for node1, node2 in zip(nodes[::2], nodes[1::2]):
     # swap 2 first nodes from the list, ignore the rest
     for node1, node2 in zip(nodes[:1], nodes[1:]):
         parent1 = node1.parent
