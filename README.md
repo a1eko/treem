@@ -103,7 +103,7 @@ The ``treem`` module has minimal runtime dependencies:
 * ``PyOpenGL`` (optional, enables ``swc render`` command)
 
 For testing and documentation, ``treem`` requires additional development packages with
-third-party extensions:
+third-party support:
 
 * ``sphinx`` with ``napoleon`` and ``programoutput`` extensions
 * ``sphinx-rtd-theme``
