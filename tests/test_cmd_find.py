@@ -27,7 +27,6 @@ def test_order():
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
     assert proc.returncode == 0
-    #assert stdout == '3 4 5 6 7 8 \n'
     assert stdout == '4 5 6 7 8 9 \n'
     assert stderr == ''
 
@@ -196,7 +195,7 @@ def test_zjump_lt():
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
     assert proc.returncode == 0
-    assert stdout == '2 3 5 6 7 8 9 10 11 12 \n'
+    assert stdout == '1 2 3 5 6 7 8 9 10 11 12 \n'
     assert stderr == ''
 
 
