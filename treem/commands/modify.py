@@ -44,7 +44,7 @@ def modify(args):
             head = sec[0].coord().copy()
             tail = sec[-1].coord().copy()
             coords = morph.coords(sec)
-            coords *= np.array(args.scale)
+            coords *= np.array(scale)
             shift = head - sec[0].coord()
             coords += shift
             for child in sec[-1].siblings:
@@ -115,7 +115,7 @@ def modify(args):
                 tail = sec[-1].coord().copy()
                 length = morph.length(sec[1:])
                 coords = morph.coords(sec)
-                for i in range(args.smooth):  # pylint: disable=unused-variable
+                for _ in range(args.smooth):
                     for secnode in sec[-1::-1]:
                         coord = secnode.coord()
                         coord += secnode.parent.coord()

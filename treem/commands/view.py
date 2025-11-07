@@ -19,8 +19,8 @@ _colors = ('crimson', 'dodgerblue', 'darkgrey', 'royalblue', 'limegreen',
            'orchid', 'red', 'purple', 'orange', 'darkturquoise')
 _NCOLORS = len(_colors)
 
-# mpl.rcParams['lines.linewidth'] = 1.0
-# mpl.rcParams.update({'font.size': 8})
+# set default linewidth: mpl.rcParams['lines.linewidth'] = 1.0
+# set default font size: mpl.rcParams.update({'font.size': 8})
 mpl.rcParams['axes.prop_cycle'] = cycler(color=_colors)
 
 
@@ -141,9 +141,6 @@ def view(args):
             ax.view_init(0.00, 0.01)
             ax.set_xlabel('')
             ax.set_xticks([])
-
-    #if args.dist:
-    #    ax.dist = args.dist
 
     xmin = ax.xy_dataLim.xmin
     ymin = ax.xy_dataLim.ymin
