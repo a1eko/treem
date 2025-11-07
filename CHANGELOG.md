@@ -11,12 +11,12 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Added
 
-- treem: Start v1.2.0.dev line.
+- Start v1.2.0.dev line.
 
 ### Fixed
 
-- Attention: swc-render: 'no valid context' error in Wayland; set "PYOPENGL_PLATFORM='glx'".
-- Attention: swc-view: Run gdk-pixbuf-register to enable Matplotlib backends.
+- **Attention** Error 'no valid context' in swc-render on Wayland. Set "PYOPENGL_PLATFORM='glx'".
+- **Attention** Run gdk-pixbuf-register to enable Matplotlib backends in swc-view.
 
 ### Changed
 
@@ -51,12 +51,12 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Fixed
 
-- Fixed TypeError in swc-render (W, write image to file).
-- Fixed wrong values of segment order (-a seg) limited to 1 and 2 in swc-measure.
+- TypeError in swc-render (W, write image to file).
+- Wrong values of segment order "-a seg", limited to 1 and 2 in swc-measure.
 
 ### Removed
 
-- Distance to object setting (-d) in swc-view (ignored since 'ortho' projection is used).
+- Distance to object setting "-d" in swc-view (ignored since 'ortho' projection is used).
 
 ### Changed
 
@@ -68,18 +68,18 @@ The following items are marked as pending tasks and will be part of the next maj
 ### Added
 
 - Add script scripts/swc2pts.py.
-- Add segment data option (-a seg) in swc-measure (morph.py: get_segdata()) and remove experimental swc-meter.
-- Make distance (-a dist) a standard feature in swc-measure.
-- Add optional features (-a {sholl,dist,path,sec}) in swc-measure.
+- Add segment data option "-a seg" in swc-measure (get_segdata in morph.py) and remove experimental swc-meter.
+- Make distance "-a dist" a standard feature in swc-measure.
+- Add optional features "-a {sholl,dist,path,sec}" in swc-measure.
 - Add dendrogram view, axes limits and color options in swc-view.
-- Add extended segment data extraction (two-pass parsing) in swc measure (get_segdata).
-- Add --seed for reproducible results in swc-repair.
+- Add extended segment data extraction in swc-measure (two-pass parsing by get_segdata).
+- Add "--seed" for reproducible results in swc-repair.
 - Add distance to origin in swc-find.
 
 ### Fixed
 
 - Detect soma nodes (type 1) separated by other nodes in swc-check.
-- Centering option (-n) was not applied after shrinkage correction in swc-repair.
+- Centering option "-n" was not applied after shrinkage correction in swc-repair.
 
 ### Changed
 
@@ -87,8 +87,8 @@ The following items are marked as pending tasks and will be part of the next maj
 - Change distance-to-origin to distance-to-root in swc-find.
 - Scaling with positive factors only in swc-modify.
 - Add flip option "-f {x,y,z}", flip around root, not origin in swc-repair.
-- Add neurite to root if id=1 is in the list of the cut points in swc-repair (i.e., "repair" root).
-- Return original root coordinates unless -n is explicitly applied in swc-repair.
+- Add neurite to root if id=1 is in the list of the cut points in swc-repair (i.e., *repair* root).
+- Return original root coordinates unless "-n" is explicitly applied in swc-repair.
 
 
 ## [1.0.0] - 2021-06-01
