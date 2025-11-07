@@ -43,15 +43,10 @@ class Node(Tree):
         """Returns True if node is a stem node."""
         return (not self.is_root() and self.parent.is_root() and self.type() is not SWC.SOMA)
 
-    #def order(self):
-    #    """Returns branch order (int). A primary neurite has order 1."""
-    #    return (sum(1 for node in self.forks(iterator=Tree.ascendorder)) + 1
-    #            if not self.is_root() else 0)
-
     def order(self):
         """Returns branch order (int). A primary neurite has order 1."""
         one = 1 if not self.is_fork() else 0
-        return (sum(1 for node in self.forks(iterator=Tree.ascendorder)) + one
+        return (sum(1 for _ in self.forks(iterator=Tree.ascendorder)) + one
                 if not self.is_root() else 0)
 
     def ident(self):
@@ -210,16 +205,13 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZ]
-        # return np.array([node.coord() for node in sec])
 
     def radii(self, sec):
         """Returns reference to section radii."""
         first = sec[0].ident() - 1
         last = sec[-1].ident()
         block = slice(first, last)
-        # possibly unsafe addressing, see repair_branch()
         return self.data[block, SWC.RADII]
-        # return np.array([node.radius() for node in sec])
 
     def points(self, sec):
         """Returns reference to section data."""
@@ -227,7 +219,6 @@ class Morph():
         last = sec[-1].ident()
         block = slice(first, last)
         return self.data[block, SWC.XYZR]
-        # return np.array([node.v[XYZR] for node in sec])
 
     def length(self, sec):
         """Returns section length (float)."""
@@ -440,19 +431,16 @@ class DGram(Morph):
             segdata = get_segdata(graph)
             for sec in graph.root.sections():
                 start_node = sec[0]
-                # seclink = start_node.length()
-                # secrad = graph.radii(sec).mean()
+                # mean section radius: secrad = graph.radii(sec).mean()
                 for node in sec:
                     ident = node.ident()
                     data = graph.data[ident - 1]
                     segd = segdata[ident - 1]
                     data[SWC.X] = segd[SEG.PATH]
-                    # data[SWC.R] = secrad
+                    # mean section radius: data[SWC.R] = secrad
             if np.isclose(ystep, 0.0) or np.isclose(zstep, 0.0):
-                # maxdist = max([node.dist() for node in morph.root.leaves()])
-                # ntips = sum([1 for node in morph.root.leaves()])
                 maxdist = max(node.dist() for node in morph.root.leaves())
-                ntips = sum(1 for node in morph.root.leaves())
+                ntips = sum(1 for _ in morph.root.leaves())
                 dgram_step = maxdist / ntips
             ystep = ystep if not np.isclose(ystep, 0.0) else dgram_step
             zstep = zstep if not np.isclose(zstep, 0.0) else dgram_step
