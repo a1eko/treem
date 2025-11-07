@@ -36,7 +36,7 @@ def repair(args):
         origin = morph.root.coord().copy()
         for node in morph.root.walk():
             coord = node.coord()
-            coord = coord * scale  # same as *=
+            coord *= scale
         shift = origin - morph.root.coord()
         morph.translate(shift)
 
@@ -178,7 +178,7 @@ def repair(args):
         return set(leaves).isdisjoint(cuts)
 
     if args.cut:  # pylint: disable=too-many-nested-blocks
-        cuts = set(x for x in args.cut if morph.node(x).type() != SWC.SOMA)
+        cuts = {x for x in args.cut if morph.node(x).type() != SWC.SOMA}
         keep_radii = args.keep_radii
         if args.del_branch:
             stems = []

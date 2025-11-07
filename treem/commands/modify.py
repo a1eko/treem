@@ -35,7 +35,7 @@ def modify(args):
         for node in nodes:
             sec = list(node.section())
             radii = morph.radii(sec)
-            radii = radii * scale  # same as *=
+            radii *= scale
 
     if args.scale:
         scale = np.abs(args.scale)
@@ -115,7 +115,7 @@ def modify(args):
                 tail = sec[-1].coord().copy()
                 length = morph.length(sec[1:])
                 coords = morph.coords(sec)
-                for _ in range(args.smooth):
+                for i in range(args.smooth):  # pylint: disable=unused-variable
                     for secnode in sec[-1::-1]:
                         coord = secnode.coord()
                         coord += secnode.parent.coord()
