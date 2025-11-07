@@ -51,7 +51,7 @@ class Node(Tree):
     def order(self):
         """Returns branch order (int). A primary neurite has order 1."""
         one = 1 if not self.is_fork() else 0
-        return (sum(1 for node in self.forks(iterator=Tree.ascendorder)) + one
+        return (sum(1 for _ in self.forks(iterator=Tree.ascendorder)) + one
                 if not self.is_root() else 0)
 
     def ident(self):
@@ -257,7 +257,7 @@ class Morph():
         node = node if node else self.root
         for sec in node.sections():
             points = self.coords(sec)
-            points += shift
+            points = points + shift  # same as +=
 
     def rotate(self, axis, angle, node=None):
         """Rotates branch at the node.
@@ -452,7 +452,7 @@ class DGram(Morph):
                 # maxdist = max([node.dist() for node in morph.root.leaves()])
                 # ntips = sum([1 for node in morph.root.leaves()])
                 maxdist = max(node.dist() for node in morph.root.leaves())
-                ntips = sum(1 for node in morph.root.leaves())
+                ntips = sum(1 for _ in morph.root.leaves())
                 dgram_step = maxdist / ntips
             ystep = ystep if not np.isclose(ystep, 0.0) else dgram_step
             zstep = zstep if not np.isclose(zstep, 0.0) else dgram_step

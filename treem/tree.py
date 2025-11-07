@@ -111,15 +111,15 @@ class Tree():
 
     def size(self):
         """Returns tree size."""
-        return sum(1 for node in self.preorder())
+        return sum(1 for _ in self.preorder())
 
     def breadth(self):
         """Returns tree breadth."""
-        return sum(1 for node in self.leaves())
+        return sum(1 for _ in self.leaves())
 
     def depth(self):
         """Returns node depth."""
-        return sum(1 for node in self.ascendorder()) - 1
+        return sum(1 for _ in self.ascendorder()) - 1
 
     level = depth
 
