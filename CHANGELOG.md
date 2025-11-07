@@ -15,15 +15,19 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Fixed
 
-- **Attention** Error 'no valid context' in swc-render on Wayland. Set "PYOPENGL_PLATFORM='glx'".
-- **Attention** Run gdk-pixbuf-register to enable Matplotlib backends in swc-view.
+- **[Persistent]** Error 'no valid context' in swc-render if executed on Wayland in X11 Linux environment. Set PYOPENGL_PLATFORM='glx'.
+- **[Persistent]** Run gdk-pixbuf-register to enable Matplotlib backends in swc-view.
+
+### Planned
+
+- Improve test coverage.
+- Re-enable flake8 lint testing.
+- Refactor code to address SonarQube findings.
+- Do not interpolate diameter if the parent is root (render, measure, repair, morph).
 
 ### Changed
 
-- Re-enable flake8 lint testing.
-- Improve coverage and add tests for new code.
-- Do not interpolate diameter if the parent is root (render, measure, repair, morph).
-- Refactor code to comply with SonarQube quality requirements.
+- Minor code refactoring.
 
 ### Removed
 
