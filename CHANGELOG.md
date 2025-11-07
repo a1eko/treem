@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased](#Unreleased)
 
 The following items are marked as pending tasks and will be part of the next major release.
 
@@ -30,7 +30,7 @@ The following items are marked as pending tasks and will be part of the next maj
 - Replace TODO file with CHANGELOG.md.
 
 
-## [1.1.2] - 2025-11-06
+## [1.1.2](#1.1.2) - 2025-11-06
 
 ### Added
 
@@ -47,7 +47,7 @@ The following items are marked as pending tasks and will be part of the next maj
 - Replace legacy setup.py bdist_wheel mechanism with pyproject.toml.
 
 
-## [1.1.1] - 2025-10-21
+## [1.1.1](#1.1.1) - 2025-10-21
 
 ### Fixed
 
@@ -63,7 +63,7 @@ The following items are marked as pending tasks and will be part of the next maj
 - Swap 2 nodes at a time in swc-modify.
 
 
-## [1.1.0] - 2023-08-19
+## [1.1.0](#1.1.0) - 2023-08-19
 
 ### Added
 
@@ -91,7 +91,7 @@ The following items are marked as pending tasks and will be part of the next maj
 - Return original root coordinates unless "-n" is explicitly applied in swc-repair.
 
 
-## [1.0.0] - 2021-06-01
+## [1.0.0](#1.0.0) - 2021-06-01
 
 ### Added
 
