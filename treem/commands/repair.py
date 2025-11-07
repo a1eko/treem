@@ -10,6 +10,9 @@ from treem import Morph, SWC
 from treem.utils.geom import repair_branch, sample, norm, rotation
 
 
+SKIP = 'not repaired'
+
+
 def repair(args):
     """Corrects morphology reconstruction at the given nodes."""
     # pylint: disable=invalid-name
@@ -118,7 +121,7 @@ def repair(args):
                 if r:
                     node.v[SWC.R] = np.mean(r)
                 else:
-                    vprint(f'diam in node {node.ident()} not repaired')
+                    vprint(f'diam in node {node.ident()} {SKIP}')
                     err += 1
         elif args.diam_mode == 'sec':
             for node in nodes:
@@ -138,8 +141,7 @@ def repair(args):
                         r = np.mean(radii)
                         node.v[SWC.R] = r
                     else:
-                        vprint(f'diam in node {node.ident()} (order {order}) '
-                               f'not repaired')
+                        vprint(f'diam in node {node.ident()} (order {order}) {SKIP}')
                         err += 1
                 else:
                     r = np.array([morph.radii(sec).mean()
@@ -158,8 +160,7 @@ def repair(args):
                         r = np.mean(radii)
                         node.v[SWC.R] = r
                     else:
-                        vprint(f'diam in node {node.ident()} '
-                               f'(breadth {breadth}) not repaired')
+                        vprint(f'diam in node {node.ident()} (breadth {breadth}) {SKIP}')
                         err += 1
                 else:
                     r = np.array([morph.radii(sec).mean()
@@ -235,7 +236,7 @@ def repair(args):
                                          force=args.force_repair,
                                          keep_radii=keep_radii)
                     err += 1 if not done else 0
-                    vprint('done') if done else vprint('not repaired')
+                    vprint('done') if done else vprint(SKIP)
                 elif order - 1 in intact_branches:
                     idx = np.random.choice(len(intact_branches[order - 1]))
                     rec, rep = intact_branches[order - 1][idx]
@@ -245,7 +246,7 @@ def repair(args):
                                          force=args.force_repair,
                                          keep_radii=keep_radii)
                     err += 1 if not done else 0
-                    vprint('done') if done else vprint('not repaired')
+                    vprint('done') if done else vprint(SKIP)
                 elif args.force_repair:
                     if intact_branches:
                         order = np.random.choice(list(intact_branches.keys()))
@@ -255,13 +256,13 @@ def repair(args):
                                end=' ')
                         done = repair_branch(morph, node, rec, rep, force=True)
                         err += 1 if not done else 0
-                        vprint('done') if done else vprint('not repaired')
+                        vprint('done') if done else vprint(SKIP)
                     else:
                         err += 1
-                        vprint('... no intact branches, not repaired')
+                        vprint(f'... no intact branches, {SKIP}')
                 else:
                     err += 1
-                    vprint('... not repaired')
+                    vprint(f'... {SKIP}')
 
     if args.cut and graft_points:
         point_type = args.graft_point_type
