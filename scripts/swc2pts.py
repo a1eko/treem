@@ -42,10 +42,10 @@ def get_lines(reconstruction):
     morph = Morph(reconstruction)
     name = os.path.splitext(os.path.basename(reconstruction))[0]
     ptmap = dict(zip(SWC.TYPES, ['soma', 'axon', 'dend', 'apic']))
-    lines = dict()
-    lines[name] = dict()
+    lines = {}
+    lines[name] = {}
     for point_type in SWC.TYPES:
-        points = list()
+        points = []
         for sec in filter(lambda x: x[0].type() == point_type,
                           morph.root.sections()):
             points.append(morph.coords(sec))
@@ -68,7 +68,7 @@ def get_lines(reconstruction):
 
 
 def main(args):
-    pts = dict()
+    pts = {}
     with mp.Pool() as pool:
         for lines in pool.map(get_lines, args.file):
             pts.update(lines)

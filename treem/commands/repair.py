@@ -36,7 +36,7 @@ def repair(args):
         origin = morph.root.coord().copy()
         for node in morph.root.walk():
             coord = node.coord()
-            coord *= scale
+            coord = coord * scale  # same as *=
         shift = origin - morph.root.coord()
         morph.translate(shift)
 
