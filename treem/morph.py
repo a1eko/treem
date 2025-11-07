@@ -430,7 +430,6 @@ class DGram(Morph):
             graph = Morph(data=morph.data)
             segdata = get_segdata(graph)
             for sec in graph.root.sections():
-                start_node = sec[0]
                 # mean section radius: secrad = graph.radii(sec).mean()
                 for node in sec:
                     ident = node.ident()
