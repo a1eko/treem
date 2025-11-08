@@ -30,23 +30,19 @@ def _setup_figure(args):
     fig = plt.figure(figsize=(8, 8))
     # pylint: disable=invalid-name
     ax = fig.add_subplot(projection='3d')
-
-    # Basic axis style cleanup
+    # basic axis style cleanup
     for pane in [ax.xaxis.pane, ax.yaxis.pane, ax.zaxis.pane]:
         pane.set_edgecolor('w')
         pane.fill = False
-    
     ax.set_proj_type('ortho')
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
     ax.grid(False)
-
     if args.title:
         fig.suptitle(args.title, fontsize=args.title_font)
     if args.no_axes:
         ax.set_axis_off()
-
     return fig, ax
 
 
@@ -65,8 +61,8 @@ def _apply_color_cycler(args):
 def _load_and_plot_morphology(args, ax, types):
     """Loads morphology data and plots the main structure based on mode."""
     morph = None
-    
-    # Helper to load Morph or DGram
+
+    # helper to load Morph or DGram
     def _get_morph(file_name, count=None):
         if not args.dgram:
             return Morph(file_name)
@@ -77,56 +73,46 @@ def _load_and_plot_morphology(args, ax, types):
         for count, file_name in enumerate(reversed(args.file)):
             morph = _get_morph(file_name, count)
             plot_neuron(ax, morph, types, linewidth=args.linewidth)
-            
     elif args.mode == 'cells':
         for count, file_name in enumerate(reversed(args.file)):
             morph = _get_morph(file_name, count)
             colors = {k: f'C{count % _NCOLORS}' for k in types}
             plot_neuron(ax, morph, types, colors=colors, linewidth=args.linewidth)
-            
     elif args.mode == 'shadow':
-        # Plot shadow files first
+        # plot shadow files first
         for file_name in reversed(args.file[1:]):
             shadow_morph = _get_morph(file_name)
             colors = {k: args.shadow_color for k in types}
             plot_neuron(ax, shadow_morph, types, colors=colors,
                         linewidth=args.shadow_width)
-        # Plot main file last
+        # plot main file last
         if args.file:
             morph = _get_morph(args.file[0])
             plot_neuron(ax, morph, types, linewidth=args.linewidth)
-
-    # Return the last plotted morphology object for subsequent overlays
+    # return the last plotted morphology object for subsequent overlays
     return morph
 
 
 def _plot_overlays(args, ax, morph, types):
     """Plots optional overlays like branches, sections, and marked points."""
     if morph is None:
-        return # Skip if no morphology was loaded
+        return
 
-    # Common logic for branch and section plotting
+    # common logic for branch and section plotting
     def _plot_overlay_nodes(groups, plotter_func):
         if not groups:
             return
         for group in groups:
-            # FIX: Use default argument g=group to capture its value for the lambda
-            # pylint: disable=cell-var-from-loop
-            # pylint: disable=undefined-loop-variable
             nodes = filter(lambda x, g=group: x.ident() in g, morph.root.walk())
             nodes = filter(lambda x: x.type() in types, nodes)
-            
             for node in nodes:
                 plotter_func(ax, node, morph.data,
                              linewidth=1.5 * args.linewidth, color='C5')
-                
                 if args.show_id:
                     plot_points(ax, morph, group, types,
                                 show_id=args.show_id, markersize=6 * args.linewidth)
-
     _plot_overlay_nodes(args.branch, plot_tree)
     _plot_overlay_nodes(args.sec, plot_section)
-
     if args.mark:
         for group in args.mark:
             plot_points(ax, morph, group, types,
@@ -137,22 +123,19 @@ def _configure_view_limits(args, ax):
     """Sets the camera angle, projection, and axis limits/aspect ratio."""
     if args.angle:
         ax.view_init(args.angle[0], args.angle[1])
-
     if args.proj:
         proj_map = {
             'xy': (89.99, -90.01, ax.set_zlabel, ax.set_zticks, []),
             'xz': (0.00, -90.01, ax.set_ylabel, ax.set_yticks, []),
             'yz': (0.00, 0.01, ax.set_xlabel, ax.set_xticks, []),
         }
-        
         proj_key = args.proj.lower()
         if proj_key in proj_map:
             angle_a, angle_b, set_label_func, set_ticks_func, tick_list = proj_map[proj_key]
             ax.view_init(angle_a, angle_b)
             set_label_func('')
             set_ticks_func(tick_list)
-
-    # Calculate initial data limits
+    # calculate initial data limits
     xmin = ax.xy_dataLim.xmin
     ymin = ax.xy_dataLim.ymin
     zmin = ax.zz_dataLim.xmin
@@ -161,20 +144,17 @@ def _configure_view_limits(args, ax):
     zmax = ax.zz_dataLim.xmax
     # pylint: disable=W3301
     smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
-
-    # Set X/Y/Z limits
+    # set X/Y/Z limits
     lims = {
         'x': (args.xlim, ax.set_xlim, xmin, xmax),
         'y': (args.ylim, ax.set_ylim, ymin, ymax),
         'z': (args.zlim, ax.set_zlim, zmin, zmax),
     }
-
     for axis, (arg_lim, set_lim_func, min_val, max_val) in lims.items():
         if arg_lim:
             set_lim_func(arg_lim[0], arg_lim[1])
         else:
             set_lim_func((min_val + max_val - smax) / 2, (min_val + max_val + smax) / 2)
-            
     ax.set_box_aspect([1, 1, 1])
 
 
@@ -202,21 +182,14 @@ def view(args):
     # pylint: disable=too-many-statements
     # pylint: disable=expression-not-assigned
 
-    # 1. Setup and Style
     fig, ax = _setup_figure(args)
     _apply_color_cycler(args)
     types = args.type if args.type else SWC.TYPES
 
-    # 2. Main Plotting Logic
     morph = _load_and_plot_morphology(args, ax, types)
-
-    # 3. Overlay Plotting
     _plot_overlays(args, ax, morph, types)
-
-    # 4. View Configuration and Limits
     _configure_view_limits(args, ax)
     
-    # Recalculate limits for the scale bar after setting view limits
     xmin = ax.xy_dataLim.xmin
     ymin = ax.xy_dataLim.ymin
     zmin = ax.zz_dataLim.xmin
@@ -224,9 +197,6 @@ def view(args):
     ymax = ax.xy_dataLim.ymax
     zmax = ax.zz_dataLim.xmax
     smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
-
-    # 5. Scale Bar
     _plot_scale_bar(args, ax, xmax, ymin, zmin, smax)
 
-    # 6. Final Output
     plt.show() if not args.out else plt.savefig(args.out, dpi=100)
