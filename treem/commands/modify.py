@@ -52,7 +52,9 @@ def modify(args):
                 morph.translate(shift, child)
 
     if args.seed:
-        np.random.seed(args.seed)
+        rng = np.random.default_rng(seed=args.seed)
+    else:
+        rng = np.random.default_rng(0)
 
     if args.jitter:
         for node in nodes:
@@ -63,11 +65,11 @@ def modify(args):
                 length = morph.length(sec[1:])
                 coords = morph.coords(sec)
                 if not args.sec:
-                    rnd = np.random.uniform(-1, 1, np.shape(coords))
+                    rnd = rng.uniform(-1, 1, np.shape(coords))
                     coords += args.jitter * rnd
                 else:
                     xlen = 0
-                    rnd = np.random.uniform(-1, 1, 3)
+                    rnd = rng.uniform(-1, 1, 3)
                     for node in sec:
                         xlen += node.length()
                         vec = args.jitter * rnd * xlen / length
@@ -83,7 +85,7 @@ def modify(args):
     if args.twist:
         for node in nodes:
             axis = node.coord() - node.parent.coord()
-            angle = args.twist * np.random.uniform(-1, 1) * math.pi / 180
+            angle = args.twist * rng.uniform(-1, 1) * math.pi / 180
             morph.rotate(axis, angle, node)
 
     if args.stretch:
@@ -128,7 +130,7 @@ def modify(args):
                     morph.translate(shift, child)
 
     if args.swap:
-        np.random.shuffle(nodes)
+        rng.shuffle(nodes)
         #for node1, node2 in zip(nodes[:-1:2], nodes[1::2]):
         # swap 2 nodes at a time
         for node1, node2 in zip(nodes[:1], nodes[1:]):
