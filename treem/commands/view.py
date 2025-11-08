@@ -182,7 +182,7 @@ def view(args):
     # pylint: disable=too-many-statements
     # pylint: disable=expression-not-assigned
 
-    fig, ax = _setup_figure(args)
+    _, ax = _setup_figure(args)
     _apply_color_cycler(args)
     types = args.type if args.type else SWC.TYPES
 
@@ -190,12 +190,9 @@ def view(args):
     _plot_overlays(args, ax, morph, types)
     _configure_view_limits(args, ax)
     
-    xmin = ax.xy_dataLim.xmin
     ymin = ax.xy_dataLim.ymin
     zmin = ax.zz_dataLim.xmin
     xmax = ax.xy_dataLim.xmax
-    ymax = ax.xy_dataLim.ymax
-    zmax = ax.zz_dataLim.xmax
     smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
     _plot_scale_bar(args, ax, xmax, ymin, zmin, smax)
 
