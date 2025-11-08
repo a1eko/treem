@@ -70,7 +70,7 @@ def plot_neuron(ax, morph, types=SWC.TYPES, colors=None, linewidth=1):
             plot_tree(ax, stem, morph.data, c=colors[stem.type()],
                       lw=linewidth)
     if SWC.SOMA in types:
-        soma_points = morph.data[np.where(morph.data[:, SWC.T] == SWC.SOMA)]
+        soma_points = morph.data[np.nonzero(morph.data[:, SWC.T] == SWC.SOMA)]
         x, y, z = soma_points[:, SWC.XYZ].T
         ax.plot(x, y, z, linestyle='', marker='o', markersize=10,
                 c=colors[SWC.SOMA], alpha=0.25)
