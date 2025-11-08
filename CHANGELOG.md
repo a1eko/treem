@@ -15,7 +15,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Fixed
 
-- **[Persistent]** Set PYOPENGL_PLATFORM='glx' if executing swc-render on Wayland in X11 Linux environment to avoid 'no valid context' error.
+- **[Persistent]** Set 'PYOPENGL_PLATFORM=glx' if executing swc-render on Wayland in X11 Linux environment to avoid 'no valid context' error.
 - **[Persistent]** Run gdk-pixbuf-register to enable Matplotlib backends in swc-view.
 
 ### Planned
@@ -28,6 +28,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Changed
 
+- Major code refactoring (view).
 - Medium code refactoring.
 - Minor code refactoring.
 
