@@ -172,7 +172,9 @@ def repair(args):
                 node.v[SWC.R] = args.diam_value / 2
 
     if args.seed:
-        np.random.seed(args.seed)
+        rng = np.random.default_rng(seed=args.seed)
+    else:
+        rng = np.random.default_rng(0)
 
     def is_intact(tree, cuts):
         leaves = [x.ident() for x in tree.leaves()]
@@ -229,7 +231,7 @@ def repair(args):
                 vprint(f'repairing node {node.ident()} (order {order})',
                        end=' ')
                 if order in intact_branches:
-                    idx = np.random.choice(len(intact_branches[order]))
+                    idx = rng.choice(len(intact_branches[order]))
                     rec, rep = intact_branches[order][idx]
                     vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
                     done = repair_branch(morph, node, rec, rep,
@@ -238,7 +240,7 @@ def repair(args):
                     err += 1 if not done else 0
                     vprint('done') if done else vprint(SKIP)
                 elif order - 1 in intact_branches:
-                    idx = np.random.choice(len(intact_branches[order - 1]))
+                    idx = rng.choice(len(intact_branches[order - 1]))
                     rec, rep = intact_branches[order - 1][idx]
                     vprint(f'using {rep.ident()} (order {order-1}) ...',
                            end=' ')
@@ -249,8 +251,8 @@ def repair(args):
                     vprint('done') if done else vprint(SKIP)
                 elif args.force_repair:
                     if intact_branches:
-                        order = np.random.choice(list(intact_branches.keys()))
-                        idx = np.random.choice(len(intact_branches[order]))
+                        order = rng.choice(list(intact_branches.keys()))
+                        idx = rng.choice(len(intact_branches[order]))
                         rec, rep = intact_branches[order][idx]
                         vprint(f'using {rep.ident()} (order {order}) ...',
                                end=' ')
@@ -287,7 +289,7 @@ def repair(args):
         for node in nodes:
             vprint(f'{node.ident()}', end=' ')
             if intact_branches:
-                idx = np.random.choice(len(intact_branches))
+                idx = rng.choice(len(intact_branches))
                 rec, rep = intact_branches[idx]
                 morph.graft(rec.copy(rep), node)
                 vprint('done')
