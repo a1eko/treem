@@ -205,8 +205,7 @@ def repair(args):
             intact_branches = {}
             if args.pool:
                 for rec in pool:
-                    sections = filter(lambda x: x[0].type() == point_type,
-                                      rec.root.sections())
+                    sections = filter(lambda x, t=point_type: x[0].type() == t, rec.root.sections())
                     nodes = chain(x[0] for x in sections)
                     for node in nodes:
                         order = node.order()
