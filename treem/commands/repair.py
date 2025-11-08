@@ -213,8 +213,7 @@ def repair(args):
                             intact_branches[order] = []
                         intact_branches[order].append((rec, node))
             else:
-                sections = filter(lambda x: x[0].type() == point_type,
-                                  morig.root.sections())
+                sections = filter(lambda x, t=point_type: x[0].type() == t, morig.root.sections())
                 nodes = chain(x[0] for x in sections)
 
                 nodes = filter(lambda x: is_intact(x, args.cut), nodes)
