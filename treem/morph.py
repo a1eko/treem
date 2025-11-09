@@ -465,53 +465,6 @@ class SEG():  # pylint: disable=too-few-public-methods
 
 class DGram(Morph):
     """Neuron dendrogram representation."""
-    """
-    def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES,
-                 zorder=0.0, ystep=0.0, zstep=0.0):
-        if not morph:
-            morph = Morph(source=source, data=data)
-        else:
-            morph = Morph(data=morph.data)
-        if morph is None:
-            super().__init__()
-        else:
-            for stem in morph.stems():
-                if stem.type() not in types:
-                    morph.prune(stem)
-            graph = Morph(data=morph.data)
-            segdata = get_segdata(graph)
-            for sec in graph.root.sections():
-                # mean section radius: secrad = graph.radii(sec).mean()
-                for node in sec:
-                    ident = node.ident()
-                    data = graph.data[ident - 1]
-                    segd = segdata[ident - 1]
-                    data[SWC.X] = segd[SEG.PATH]
-                    # mean section radius: data[SWC.R] = secrad
-            if np.isclose(ystep, 0.0) or np.isclose(zstep, 0.0):
-                maxdist = max(node.dist() for node in morph.root.leaves())
-                ntips = sum(1 for _ in morph.root.leaves())
-                dgram_step = maxdist / ntips
-            ystep = ystep if not np.isclose(ystep, 0.0) else dgram_step
-            zstep = zstep if not np.isclose(zstep, 0.0) else dgram_step
-            graph.data[:, SWC.YZ] = [0.0, zorder * zstep]
-            for stem in graph.stems():
-                for sec in stem.sections():
-                    start_node = sec[0]
-                    parent = start_node.parent
-                    shift = start_node.coord() - parent.coord()
-                    graph.translate(-shift, start_node)
-            for index, term in enumerate(graph.root.leaves(), start=1):
-                pos = index * ystep
-                for node in term.walk(reverse=True):
-                    ident = node.ident()
-                    value = graph.data[ident - 1]
-                    if node.is_fork() or node.is_root():
-                        pos = np.mean([x.coord()[1] for x in node.siblings])
-                    value[SWC.Y] = pos
-            super().__init__(data=graph.data)
-            """
-
     def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES,
                  zorder=0.0, ystep=0.0, zstep=0.0):
         if morph is None:
@@ -522,38 +475,12 @@ class DGram(Morph):
             super().__init__()
             return
 
-        """
-        for stem in morph.stems():
-            if stem.type() not in types:
-                morph.prune(stem)
-        """
         self._prune_neurites(morph, types)
-
         graph = Morph(data=morph.data)
-        segdata = get_segdata(graph)
-        """
-        for sec in graph.root.sections():
-            # mean section radius: secrad = graph.radii(sec).mean()
-            for node in sec:
-                ident = node.ident()
-                data = graph.data[ident - 1]
-                segd = segdata[ident - 1]
-                data[SWC.X] = segd[SEG.PATH]
-                # mean section radius: data[SWC.R] = secrad
-        """
         self._position_x(graph)
-
-        """
-        if np.isclose(ystep, 0.0) or np.isclose(zstep, 0.0):
-            maxdist = max(node.dist() for node in morph.root.leaves())
-            ntips = sum(1 for _ in morph.root.leaves())
-            dgram_step = maxdist / ntips
-        ystep = ystep if not np.isclose(ystep, 0.0) else dgram_step
-        zstep = zstep if not np.isclose(zstep, 0.0) else dgram_step
-        graph.data[:, SWC.YZ] = [0.0, zorder * zstep]
-        """
         ystep, zstep = self._position_z(graph, morph, ystep, zstep, zorder)
 
+        """
         for stem in graph.stems():
             for sec in stem.sections():
                 start_node = sec[0]
@@ -568,6 +495,9 @@ class DGram(Morph):
                 if node.is_fork() or node.is_root():
                     pos = np.mean([x.coord()[1] for x in node.siblings])
                 value[SWC.Y] = pos
+        """
+        self._position_y(graph, ystep)
+
         super().__init__(data=graph.data)
 
 
@@ -580,6 +510,7 @@ class DGram(Morph):
 
     def _position_x(self, graph):
         """Set X coordinate to path length."""
+        segdata = get_segdata(graph)
         for sec in graph.root.sections():
             for node in sec:
                 ident = node.ident()
@@ -600,4 +531,19 @@ class DGram(Morph):
         return ystep, zstep
 
 
-
+    def _position_y(self, graph, ystep):
+        """"Set Y coordinate to branch order."""
+        for stem in graph.stems():
+            for sec in stem.sections():
+                start_node = sec[0]
+                parent = start_node.parent
+                shift = start_node.coord() - parent.coord()
+                graph.translate(-shift, start_node)
+        for index, term in enumerate(graph.root.leaves(), start=1):
+            pos = index * ystep
+            for node in term.walk(reverse=True):
+                ident = node.ident()
+                value = graph.data[ident - 1]
+                if node.is_fork() or node.is_root():
+                    pos = np.mean([x.coord()[1] for x in node.siblings])
+                value[SWC.Y] = pos
