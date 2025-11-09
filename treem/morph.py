@@ -346,7 +346,7 @@ def get_segdata(morph):
         d[i] = {'t': t, 'x': x, 'y': y, 'z': z, 'r': r, 'p': p}
     center = m.root.coord()
 
-"""
+    """
     for node in m.root.walk():
         if node.type() == SWC.SOMA:
             ident = node.ident()
@@ -359,7 +359,7 @@ def get_segdata(morph):
             d[ident]['order'] = 0
             d[ident]['breadth'] = 0
             d[ident]['totlen'] = 0.0
-"""
+    """
     soma_nodes = [node for node in m.root.walk() if node.type() == SWC.SOMA]
     for node in soma_nodes:
         ident = node.ident()
