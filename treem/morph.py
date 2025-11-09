@@ -335,9 +335,8 @@ class Morph():
         self.__renumber()
 
 
-    def _measure_forward(morph, d, center):
+    def _measure_forward(m, d, center):
         """Calculates metrics in forward traversal."""
-        m = morph
         for stem in m.stems():
             for sec in stem.sections():
                 order = 1
@@ -361,6 +360,22 @@ class Morph():
                     d[ident]['order'] = order
                     d[ident]['breadth'] = 1
                     d[ident]['totlen'] = 0.0
+
+
+    def _measure_backward(m, d):
+        """Calculates metrics in backward traversal."""
+        for term in m.root.leaves():
+            for node in term.walk(reverse=True):
+                if not node.is_leaf():
+                    ident = node.ident()
+                    descent_ident = [x.ident() for x in node.siblings]
+                    descent_length = [x.length() for x in node.siblings]
+                    descent_breadth = [d[i]['breadth'] for i in descent_ident]
+                    descent_totlen = [d[i]['totlen'] for i in descent_ident]
+                    breadth = sum(descent_breadth)
+                    totlen = sum(descent_totlen) + sum(descent_length)
+                    d[ident]['breadth'] = breadth
+                    d[ident]['totlen'] = totlen
 
 
 def get_segdata(morph):
@@ -414,6 +429,8 @@ def get_segdata(morph):
     """
     _measure_forward(m, d, center)
 
+
+    """
     # backward traversal
     for term in m.root.leaves():
         for node in term.walk(reverse=True):
@@ -427,6 +444,8 @@ def get_segdata(morph):
                 totlen = sum(descent_totlen) + sum(descent_length)
                 d[ident]['breadth'] = breadth
                 d[ident]['totlen'] = totlen
+    """
+    _measure_backward(m, d)
 
     return np.array([[i, d[i]['t'], d[i]['x'], d[i]['y'], d[i]['z'],
                       d[i]['r'], d[i]['p'],
