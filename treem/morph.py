@@ -344,8 +344,9 @@ def get_segdata(morph):
     for i, t, x, y, z, r, p in m.data:
         i, t, x, y, z, r, p = int(i), int(t), float(x), float(y), float(z), float(r), int(p)
         d[i] = {'t': t, 'x': x, 'y': y, 'z': z, 'r': r, 'p': p}
-
     center = m.root.coord()
+
+"""
     for node in m.root.walk():
         if node.type() == SWC.SOMA:
             ident = node.ident()
@@ -358,7 +359,21 @@ def get_segdata(morph):
             d[ident]['order'] = 0
             d[ident]['breadth'] = 0
             d[ident]['totlen'] = 0.0
+"""
+    soma_nodes = [node for node in m.root.walk() if node.type() == SWC.SOMA]
+    for node in soma_nodes:
+        ident = node.ident()
+        d[ident]['length'] = 0.0
+        d[ident]['path'] = 0.0
+        d[ident]['xsec'] = 0.0
+        d[ident]['xsec_rel'] = 0.0
+        d[ident]['dist'] = 0.0
+        d[ident]['degree'] = 0
+        d[ident]['order'] = 0
+        d[ident]['breadth'] = 0
+        d[ident]['totlen'] = 0.0
 
+    # forward traversal
     for stem in m.stems():
         for sec in stem.sections():
             order = 1
@@ -383,6 +398,7 @@ def get_segdata(morph):
                 d[ident]['breadth'] = 1
                 d[ident]['totlen'] = 0.0
 
+    # backward traversal
     for term in m.root.leaves():
         for node in term.walk(reverse=True):
             if not node.is_leaf():
