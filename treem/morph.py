@@ -335,47 +335,49 @@ class Morph():
         self.__renumber()
 
 
-    def _measure_forward(m, d, center):
-        """Calculates metrics in forward traversal."""
-        for stem in m.stems():
-            for sec in stem.sections():
-                order = 1
-                xsec = 0.0
-                seclen = m.length(sec)
-                for node in sec:
-                    ident = node.ident()
-                    length = node.length()
-                    xsec += length
-                    if node.parent.is_fork() and node.parent != m.root:
-                        order = d[node.parent.ident()]['order'] + 1
-                    dist = np.linalg.norm(center - node.coord())
-                    path = d[node.parent.ident()]['path']
-                    path += length
-                    d[ident]['length'] = length
-                    d[ident]['path'] = path
-                    d[ident]['xsec'] = xsec
-                    d[ident]['xsec_rel'] = xsec / seclen
-                    d[ident]['dist'] = dist
-                    d[ident]['degree'] = node.degree()
-                    d[ident]['order'] = order
-                    d[ident]['breadth'] = 1
-                    d[ident]['totlen'] = 0.0
+def _measure_forward(morph, d, center):
+    """Calculates metrics in forward traversal."""
+    m = morph
+    for stem in m.stems():
+        for sec in stem.sections():
+            order = 1
+            xsec = 0.0
+            seclen = m.length(sec)
+            for node in sec:
+                ident = node.ident()
+                length = node.length()
+                xsec += length
+                if node.parent.is_fork() and node.parent != m.root:
+                    order = d[node.parent.ident()]['order'] + 1
+                dist = np.linalg.norm(center - node.coord())
+                path = d[node.parent.ident()]['path']
+                path += length
+                d[ident]['length'] = length
+                d[ident]['path'] = path
+                d[ident]['xsec'] = xsec
+                d[ident]['xsec_rel'] = xsec / seclen
+                d[ident]['dist'] = dist
+                d[ident]['degree'] = node.degree()
+                d[ident]['order'] = order
+                d[ident]['breadth'] = 1
+                d[ident]['totlen'] = 0.0
 
 
-    def _measure_backward(m, d):
-        """Calculates metrics in backward traversal."""
-        for term in m.root.leaves():
-            for node in term.walk(reverse=True):
-                if not node.is_leaf():
-                    ident = node.ident()
-                    descent_ident = [x.ident() for x in node.siblings]
-                    descent_length = [x.length() for x in node.siblings]
-                    descent_breadth = [d[i]['breadth'] for i in descent_ident]
-                    descent_totlen = [d[i]['totlen'] for i in descent_ident]
-                    breadth = sum(descent_breadth)
-                    totlen = sum(descent_totlen) + sum(descent_length)
-                    d[ident]['breadth'] = breadth
-                    d[ident]['totlen'] = totlen
+def _measure_backward(morph, d):
+    """Calculates metrics in backward traversal."""
+    m = morph
+    for term in m.root.leaves():
+        for node in term.walk(reverse=True):
+            if not node.is_leaf():
+                ident = node.ident()
+                descent_ident = [x.ident() for x in node.siblings]
+                descent_length = [x.length() for x in node.siblings]
+                descent_breadth = [d[i]['breadth'] for i in descent_ident]
+                descent_totlen = [d[i]['totlen'] for i in descent_ident]
+                breadth = sum(descent_breadth)
+                totlen = sum(descent_totlen) + sum(descent_length)
+                d[ident]['breadth'] = breadth
+                d[ident]['totlen'] = totlen
 
 
 def get_segdata(morph):
