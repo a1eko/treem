@@ -588,7 +588,7 @@ class DGram(Morph):
                 data[SWC.X] = segd[SEG.PATH]
 
 
-    def self._position_z(self, graph, morph, ystep, zstep, zorder):
+    def _position_z(self, graph, morph, ystep, zstep, zorder):
         """Set Z coordinate to zorder, Y to 0 and adjust steps."""
         if np.isclose(ystep, 0.0) or np.isclose(zstep, 0.0):
             maxdist = max(node.dist() for node in morph.root.leaves())
