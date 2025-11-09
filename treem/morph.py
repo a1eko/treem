@@ -362,7 +362,6 @@ def get_segdata(morph):
     """
     soma_idents = [node.ident() for node in m.root.walk() if node.type() == SWC.SOMA]
     for ident in soma_idents:
-        ident = node.ident()
         d[ident].update({
                 'length': 0.0,
                 'path': 0.0,
