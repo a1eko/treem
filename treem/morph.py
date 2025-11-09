@@ -478,24 +478,7 @@ class DGram(Morph):
         self._prune_neurites(morph, types)
         graph = Morph(data=morph.data)
         self._position_x(graph)
-        ystep, zstep = self._position_z(graph, morph, ystep, zstep, zorder)
-
-        """
-        for stem in graph.stems():
-            for sec in stem.sections():
-                start_node = sec[0]
-                parent = start_node.parent
-                shift = start_node.coord() - parent.coord()
-                graph.translate(-shift, start_node)
-        for index, term in enumerate(graph.root.leaves(), start=1):
-            pos = index * ystep
-            for node in term.walk(reverse=True):
-                ident = node.ident()
-                value = graph.data[ident - 1]
-                if node.is_fork() or node.is_root():
-                    pos = np.mean([x.coord()[1] for x in node.siblings])
-                value[SWC.Y] = pos
-        """
+        ystep = self._position_z(graph, morph, ystep, zstep, zorder)
         self._position_y(graph, ystep)
 
         super().__init__(data=graph.data)
@@ -528,7 +511,7 @@ class DGram(Morph):
         ystep = ystep if not np.isclose(ystep, 0.0) else dgram_step
         zstep = zstep if not np.isclose(zstep, 0.0) else dgram_step
         graph.data[:, SWC.YZ] = [0.0, zorder * zstep]
-        return ystep, zstep
+        return ystep
 
 
     def _position_y(self, graph, ystep):
