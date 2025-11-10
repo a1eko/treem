@@ -101,30 +101,36 @@ def _measure_path(morph, morphometry, name, types, ptmap):
         d['path'] = max(path[point_type])
 
 
+def _get_sholl_center(morph, sholl_proj):
+    """Finds center of reconstruction for given projection."""
+    if sholl_proj == 'xy':
+        center = morph.root.v[SWC.XY]
+    elif sholl_proj == 'xz':
+        center = morph.root.v[SWC.XZ]
+    elif sholl_proj == 'yz':
+        center = morph.root.v[SWC.YZ]
+    else:
+        center = morph.root.coord()
+    return center
+
 
 def _collect_sholl_data(morph, types, sholl_res, sholl_proj):
     """Collects data needed to calcuate Sholl intersections."""
-    if sholl_proj == 'xy':
-        c0 = morph.root.v[SWC.XY]
-    elif sholl_proj == 'xz':
-        c0 = morph.root.v[SWC.XZ]
-    elif sholl_proj == 'yz':
-        c0 = morph.root.v[SWC.YZ]
-    else:
-        c0 = morph.root.coord()
+    c0 = _get_sholl_center(morph, sholl_proj)
+    selected_types = set(types).difference((SWC.SOMA,))
     sholl_data = {}
     for node in morph.root.walk():
         point_type = node.type()
         if point_type in set(types).difference((SWC.SOMA,)):
             if point_type not in sholl_data:
                 sholl_data[point_type] = {}
-            if sholl_proj and sholl_proj == 'xy':
+            if sholl_proj == 'xy':
                 c1 = node.parent.v[SWC.XY]
                 c2 = node.v[SWC.XY]
-            elif sholl_proj and sholl_proj == 'xz':
+            elif sholl_proj == 'xz':
                 c1 = node.parent.v[SWC.XZ]
                 c2 = node.v[SWC.XZ]
-            elif sholl_proj and sholl_proj == 'yz':
+            elif sholl_proj == 'yz':
                 c1 = node.parent.v[SWC.YZ]
                 c2 = node.v[SWC.YZ]
             else:
