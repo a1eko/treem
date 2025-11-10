@@ -183,6 +183,21 @@ def get_morphometry(reconstruction, args):
     return morphometry
 
 
+def _print_metrics(metric):
+    """Handles console printing."""
+    for name in metric:
+        print(name)
+        for point_type in sorted(metric[name]):
+            for feature in sorted(metric[name][point_type]):
+                if feature not in ('sholl', '_sec', '_seg'):
+                    print(f'{point_type} {feature:10s} '
+                          f'{metric[name][point_type][feature]:>8g}')
+                elif feature == 'sholl':
+                    print(f'{point_type} {feature:10s} '
+                          f'{sum(metric[name][point_type][feature]["crossings"]):>8g}')
+        print()
+
+
 def measure(args):
     """Computes morphometric features of multiple reconstructions."""
     metric = {}
@@ -191,19 +206,8 @@ def measure(args):
     with mp.Pool() as pool:
         for morphometry in pool.starmap(get_morphometry, items):
             metric.update(morphometry)
-
-    if not args.out:
-        for name in metric:
-            print(name)
-            for point_type in sorted(metric[name]):
-                for feature in sorted(metric[name][point_type]):
-                    if feature not in ('sholl', '_sec', '_seg'):
-                        print(f'{point_type} {feature:10s} '
-                              f'{metric[name][point_type][feature]:>8g}')
-                    elif feature == 'sholl':
-                        print(f'{point_type} {feature:10s} '
-                              f'{sum(metric[name][point_type][feature]["crossings"]):>8g}')
-            print()
-    else:
+    if args.out:
         with open(args.out, 'w', encoding='utf-8') as file:
             json.dump(metric, file, indent=4, sort_keys=True, cls=TreemEncoder)
+    else:
+        _print_metrics(metric)
