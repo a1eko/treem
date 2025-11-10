@@ -15,7 +15,7 @@ from treem.morph import get_segdata, SEG
 
 
 def _measure_neurites(morph, morphometry, name, types, ptmap, opt=[]):
-    """Collect morphometry of non-soma nodes."""
+    """Computes morphometry of non-soma nodes."""
     center = morph.root.coord()
     if 'seg' in opt:
         segdata = get_segdata(morph)
@@ -65,7 +65,7 @@ def _measure_neurites(morph, morphometry, name, types, ptmap, opt=[]):
 
 
 def _measure_soma(morph, morphometry, name, types, ptmap):
-    """Collect morphometry of soma nodes."""
+    """Computes morphometry of soma nodes."""
     for point_type in set(types).intersection((SWC.SOMA,)):
         mdata = []
         for sec in filter(lambda x: x[0].type() == point_type,
@@ -86,6 +86,21 @@ def _measure_soma(morph, morphometry, name, types, ptmap):
             d['xroot'], d['yroot'], d['zroot'] = morph.root.coord()
 
 
+def _measure_path(morph, morphometry, name, types, ptmap):
+    """Computes path distance for non-soma nodes."""
+    path = {}
+    for node in morph.root.leaves():
+        point_type = node.type()
+        if point_type in set(types).difference((SWC.SOMA,)):
+            if point_type not in path:
+                path[point_type] = []
+            path_length = sum(x.length() for x in node.walk(reverse=True))
+            path[point_type].append(path_length)
+    for point_type in path:
+        d = morphometry[name][ptmap[point_type]]
+        d['path'] = max(path[point_type])
+
+
 def get_morphometry(reconstruction, args):
     """Computes morphometric features of a reconstruction."""
     types = args.type if args.type else SWC.TYPES
@@ -99,19 +114,8 @@ def get_morphometry(reconstruction, args):
     opt = args.opt if args.opt else []
     _measure_neurites(morph, morphometry, name, types, ptmap, opt=opt)
     _measure_soma(morph, morphometry, name, types, ptmap)
-
-    if args.opt and 'path' in args.opt:
-        path = {}
-        for node in morph.root.leaves():
-            point_type = node.type()
-            if point_type in set(types).difference((SWC.SOMA,)):
-                if point_type not in path:
-                    path[point_type] = []
-                path_length = sum(x.length() for x in node.walk(reverse=True))
-                path[point_type].append(path_length)
-        for point_type in path:
-            d = morphometry[name][ptmap[point_type]]
-            d['path'] = max(path[point_type])
+    if 'path' in opt:
+        _measure_path(morph, morphometry, name, types, ptmap)
 
     if args.opt and 'sholl' in args.opt:
         if args.sholl_proj and args.sholl_proj == 'xy':
