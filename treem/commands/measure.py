@@ -114,6 +114,23 @@ def _get_sholl_center(morph, sholl_proj):
     return center
 
 
+def _get_sholl_segment(node, sholl_proj):
+    """Locates Sholl segment."""
+    if sholl_proj == 'xy':
+        c1 = node.parent.v[SWC.XY]
+        c2 = node.v[SWC.XY]
+    elif sholl_proj == 'xz':
+        c1 = node.parent.v[SWC.XZ]
+        c2 = node.v[SWC.XZ]
+    elif sholl_proj == 'yz':
+        c1 = node.parent.v[SWC.YZ]
+        c2 = node.v[SWC.YZ]
+    else:
+        c1 = node.parent.coord()
+        c2 = node.coord()
+    return c1, c2
+
+
 def _collect_sholl_data(morph, types, sholl_res, sholl_proj):
     """Collects data needed to calcuate Sholl intersections."""
     c0 = _get_sholl_center(morph, sholl_proj)
@@ -124,18 +141,7 @@ def _collect_sholl_data(morph, types, sholl_res, sholl_proj):
         if point_type in set(types).difference((SWC.SOMA,)):
             if point_type not in sholl_data:
                 sholl_data[point_type] = {}
-            if sholl_proj == 'xy':
-                c1 = node.parent.v[SWC.XY]
-                c2 = node.v[SWC.XY]
-            elif sholl_proj == 'xz':
-                c1 = node.parent.v[SWC.XZ]
-                c2 = node.v[SWC.XZ]
-            elif sholl_proj == 'yz':
-                c1 = node.parent.v[SWC.YZ]
-                c2 = node.v[SWC.YZ]
-            else:
-                c1 = node.parent.coord()
-                c2 = node.coord()
+            c1, c2 = _get_sholl_segment(node, sholl_proj)
             n1 = math.ceil(np.linalg.norm(c1 - c0) / sholl_res)
             n2 = math.ceil(np.linalg.norm(c2 - c0) / sholl_res)
             for circle in range(n1, n2):
