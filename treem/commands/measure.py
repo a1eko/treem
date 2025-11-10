@@ -101,6 +101,47 @@ def _measure_path(morph, morphometry, name, types, ptmap):
         d['path'] = max(path[point_type])
 
 
+def _measure_sholl(morph, morphometry, name, types, ptmap, sholl_res, sholl_proj):
+    """Computes Sholl intersections."""
+    if sholl_proj and sholl_proj == 'xy':
+        c0 = morph.root.v[SWC.XY]
+    elif sholl_proj and sholl_proj == 'xz':
+        c0 = morph.root.v[SWC.XZ]
+    elif sholl_proj and sholl_proj == 'yz':
+        c0 = morph.root.v[SWC.YZ]
+    else:
+        c0 = morph.root.coord()
+    sholl_data = {}
+    for node in morph.root.walk():
+        point_type = node.type()
+        if point_type in set(types).difference((SWC.SOMA,)):
+            if point_type not in sholl_data:
+                sholl_data[point_type] = {}
+            if sholl_proj and sholl_proj == 'xy':
+                c1 = node.parent.v[SWC.XY]
+                c2 = node.v[SWC.XY]
+            elif sholl_proj and sholl_proj == 'xz':
+                c1 = node.parent.v[SWC.XZ]
+                c2 = node.v[SWC.XZ]
+            elif sholl_proj and sholl_proj == 'yz':
+                c1 = node.parent.v[SWC.YZ]
+                c2 = node.v[SWC.YZ]
+            else:
+                c1 = node.parent.coord()
+                c2 = node.coord()
+            n1 = math.ceil(np.linalg.norm(c1 - c0) / sholl_res)
+            n2 = math.ceil(np.linalg.norm(c2 - c0) / sholl_res)
+            for circle in range(n1, n2):
+                if circle not in sholl_data[point_type]:
+                    sholl_data[point_type][circle] = 0
+                sholl_data[point_type][circle] += 1
+    for point_type in sholl_data:
+        radii = [x * sholl_res for x in sholl_data[point_type]]
+        cross = [sholl_data[point_type][x] for x in sholl_data[point_type]]
+        d = morphometry[name][ptmap[point_type]]
+        d['sholl'] = {'radii': radii, 'crossings': cross}
+
+
 def get_morphometry(reconstruction, args):
     """Computes morphometric features of a reconstruction."""
     types = args.type if args.type else SWC.TYPES
@@ -114,47 +155,11 @@ def get_morphometry(reconstruction, args):
     opt = args.opt if args.opt else []
     _measure_neurites(morph, morphometry, name, types, ptmap, opt=opt)
     _measure_soma(morph, morphometry, name, types, ptmap)
+
     if 'path' in opt:
         _measure_path(morph, morphometry, name, types, ptmap)
-
-    if args.opt and 'sholl' in args.opt:
-        if args.sholl_proj and args.sholl_proj == 'xy':
-            c0 = morph.root.v[SWC.XY]
-        elif args.sholl_proj and args.sholl_proj == 'xz':
-            c0 = morph.root.v[SWC.XZ]
-        elif args.sholl_proj and args.sholl_proj == 'yz':
-            c0 = morph.root.v[SWC.YZ]
-        else:
-            c0 = morph.root.coord()
-        sholl_data = {}
-        for node in morph.root.walk():
-            point_type = node.type()
-            if point_type in set(types).difference((SWC.SOMA,)):
-                if point_type not in sholl_data:
-                    sholl_data[point_type] = {}
-                if args.sholl_proj and args.sholl_proj == 'xy':
-                    c1 = node.parent.v[SWC.XY]
-                    c2 = node.v[SWC.XY]
-                elif args.sholl_proj and args.sholl_proj == 'xz':
-                    c1 = node.parent.v[SWC.XZ]
-                    c2 = node.v[SWC.XZ]
-                elif args.sholl_proj and args.sholl_proj == 'yz':
-                    c1 = node.parent.v[SWC.YZ]
-                    c2 = node.v[SWC.YZ]
-                else:
-                    c1 = node.parent.coord()
-                    c2 = node.coord()
-                n1 = math.ceil(np.linalg.norm(c1 - c0) / args.sholl_res)
-                n2 = math.ceil(np.linalg.norm(c2 - c0) / args.sholl_res)
-                for circle in range(n1, n2):
-                    if circle not in sholl_data[point_type]:
-                        sholl_data[point_type][circle] = 0
-                    sholl_data[point_type][circle] += 1
-        for point_type in sholl_data:
-            radii = [x * args.sholl_res for x in sholl_data[point_type]]
-            cross = [sholl_data[point_type][x] for x in sholl_data[point_type]]
-            d = morphometry[name][ptmap[point_type]]
-            d['sholl'] = {'radii': radii, 'crossings': cross}
+    if 'sholl' in opt:
+        _measure_sholl(morph, morphometry, name, types, ptmap, sholl_res=args.sholl_res, sholl_proj=args.sholl_proj)
 
     return morphometry
 
