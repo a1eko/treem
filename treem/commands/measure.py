@@ -138,7 +138,7 @@ def _collect_sholl_data(morph, types, sholl_res, sholl_proj):
     sholl_data = {}
     for node in morph.root.walk():
         point_type = node.type()
-        if point_type in set(types).difference((SWC.SOMA,)):
+        if point_type in selected_types:
             if point_type not in sholl_data:
                 sholl_data[point_type] = {}
             c1, c2 = _get_sholl_segment(node, sholl_proj)
