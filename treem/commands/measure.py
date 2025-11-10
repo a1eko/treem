@@ -101,13 +101,14 @@ def _measure_path(morph, morphometry, name, types, ptmap):
         d['path'] = max(path[point_type])
 
 
-def _measure_sholl(morph, morphometry, name, types, ptmap, sholl_res, sholl_proj):
-    """Computes Sholl intersections."""
-    if sholl_proj and sholl_proj == 'xy':
+
+def _collect_sholl_data(morph, types, sholl_res, sholl_proj):
+    """Collects data needed to calcuate Sholl intersections."""
+    if sholl_proj == 'xy':
         c0 = morph.root.v[SWC.XY]
-    elif sholl_proj and sholl_proj == 'xz':
+    elif sholl_proj == 'xz':
         c0 = morph.root.v[SWC.XZ]
-    elif sholl_proj and sholl_proj == 'yz':
+    elif sholl_proj == 'yz':
         c0 = morph.root.v[SWC.YZ]
     else:
         c0 = morph.root.coord()
@@ -135,6 +136,12 @@ def _measure_sholl(morph, morphometry, name, types, ptmap, sholl_res, sholl_proj
                 if circle not in sholl_data[point_type]:
                     sholl_data[point_type][circle] = 0
                 sholl_data[point_type][circle] += 1
+    return sholl_data
+
+
+def _measure_sholl(morph, morphometry, name, types, ptmap, sholl_res, sholl_proj):
+    """Computes Sholl intersections."""
+    sholl_data = _collect_sholl_data(morph, types, sholl_res, sholl_proj)
     for point_type in sholl_data:
         radii = [x * sholl_res for x in sholl_data[point_type]]
         cross = [sholl_data[point_type][x] for x in sholl_data[point_type]]
