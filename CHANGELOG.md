@@ -28,7 +28,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Changed
 
-- Major code refactoring (view, morph, check, measure).
+- Major code refactoring (view, morph, check, measure, find).
 - Medium code refactoring.
 - Minor code refactoring.
 
