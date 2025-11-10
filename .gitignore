@@ -3,6 +3,7 @@ build/
 /treem.egg-info
 __pycache__/
 .pytest_cache/
+.ruff_cache/
 .coverage
 htmlcov/
 *.pyc
