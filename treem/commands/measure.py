@@ -64,19 +64,8 @@ def _measure_neurites(morph, morphometry, name, types, ptmap, opt=[]):
                 d['_seg'] = segdata[sel]
 
 
-def get_morphometry(reconstruction, args):
-    """Computes morphometric features of a reconstruction."""
-    types = args.type if args.type else SWC.TYPES
-    ptmap = dict(zip(SWC.TYPES, ['soma', 'axon', 'dend', 'apic']))
-    morphometry = {}
-
-    morph = Morph(reconstruction)
-    name = os.path.splitext(os.path.basename(reconstruction))[0]
-    morphometry[name] = {}
-
-    opt = args.opt if args.opt else []
-    _measure_neurites(morph, morphometry, name, types, ptmap, opt=opt)
-
+def _measure_soma(morph, morphometry, name, types, ptmap):
+    """Collect morphometry of soma nodes."""
     for point_type in set(types).intersection((SWC.SOMA,)):
         mdata = []
         for sec in filter(lambda x: x[0].type() == point_type,
@@ -95,6 +84,21 @@ def get_morphometry(reconstruction, args):
             d['volume'] = np.sum(ndata[:, 1], axis=0)
             d['diam'] = np.mean(ndata[:, 2], axis=0)
             d['xroot'], d['yroot'], d['zroot'] = morph.root.coord()
+
+
+def get_morphometry(reconstruction, args):
+    """Computes morphometric features of a reconstruction."""
+    types = args.type if args.type else SWC.TYPES
+    ptmap = dict(zip(SWC.TYPES, ['soma', 'axon', 'dend', 'apic']))
+    morphometry = {}
+
+    morph = Morph(reconstruction)
+    name = os.path.splitext(os.path.basename(reconstruction))[0]
+    morphometry[name] = {}
+
+    opt = args.opt if args.opt else []
+    _measure_neurites(morph, morphometry, name, types, ptmap, opt=opt)
+    _measure_soma(morph, morphometry, name, types, ptmap)
 
     if args.opt and 'path' in args.opt:
         path = {}
