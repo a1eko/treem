@@ -139,25 +139,36 @@ def _swap_branches(morph, node1, node2):
     morph.prune(node2)
 
 
-def modify(args):
-    """Modifies selected parts of morphology reconstruction."""
-    morph = Morph(args.file)
-
-    # collect nodes by given ids, default to section start nodes
+def _collect_nodes(morph, args):
+    """Collects nodes by given ids, default to section start nodes."""
     if args.ids:
         nodes = filter(lambda x: x.ident() in args.ids, morph.root.walk())
     else:
         sections = chain.from_iterable(x.sections() for x in morph.stems())
         nodes = chain(sec[0] for sec in sections)
+    return nodes
 
-    # filter nodes by attributes
+
+def _filter_attr(nodes, args):
+    """Selects nodes by given attributes."""
     types = args.type if args.type else SWC.TYPES
     nodes = filter(lambda x: x.type() in types, nodes)
     if args.order:
         nodes = filter(lambda x: x.order() in args.order, nodes)
     if args.breadth:
         nodes = filter(lambda x: x.breadth() in args.breadth, nodes)
-    nodes = list(nodes)
+    return list(nodes)
+
+
+
+
+def modify(args):
+    """Modifies selected parts of morphology reconstruction."""
+    morph = Morph(args.file)
+
+    # collect nodes to operate on
+    nodes = _collect_nodes(morph, args)
+    nodes = _filter_attr(nodes, args)
 
     # manipulate morphology at specified nodes
     if args.scale_radius:
