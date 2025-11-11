@@ -36,7 +36,7 @@ def _scale_coords(morph, nodes, scale_coords):
             morph.translate(shift, child)
 
 
-def _jitter_coords(morph, nodes, jitter, rng, per_section=False):
+def _jitter_coords(morph, nodes, jitter, rng, args):
     """Adds random jitter to X,Y,Z coordinates."""
     for node in nodes:
         sec = list(node.section())
@@ -45,7 +45,7 @@ def _jitter_coords(morph, nodes, jitter, rng, per_section=False):
             tail = sec[-1].coord().copy()
             length = morph.length(sec[1:])
             coords = morph.coords(sec)
-            if not per_section:
+            if not args.sec:
                 rnd = rng.uniform(-1, 1, np.shape(coords))
                 coords += jitter * rnd
             else:
@@ -139,6 +139,14 @@ def _swap_branches(morph, node1, node2):
     morph.prune(node2)
 
 
+
+def _prune_branches(morph, nodes, args):
+    """Prune branches if structure is not changed."""
+    if not args.swap:
+        for node in nodes:
+            morph.prune(node)
+
+
 def _collect_nodes(morph, args):
     """Collects nodes by given ids, default to section start nodes."""
     if args.ids:
@@ -183,8 +191,7 @@ def modify(args):
         rng = np.random.default_rng(0)
 
     if args.jitter:
-        per_section = args.sec if args.sec else False
-        _jitter_coords(morph, nodes, args.jitter, rng, per_section=per_section)
+        _jitter_coords(morph, nodes, args.jitter, rng, args)
 
     if args.twist:
         _twist_branches(morph, nodes, args.twist, rng)
@@ -200,9 +207,8 @@ def modify(args):
         node1, node2 = nodes[:2]
         _swap_branches(morph, node1, node2)
 
-    if args.prune and not args.swap:
-        for node in nodes:
-            morph.prune(node)
+    if args.prune:
+        _prune_branches(morph, nodes, args)
 
     # renumber nodes in restructured morphology
     if args.prune or args.swap:
