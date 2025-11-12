@@ -168,11 +168,19 @@ def _filter_attr(nodes, args):
     return list(nodes)
 
 
+def _set_random_generator(args):
+    """Initialize random generator."""
+    if args.seed:
+        rng = np.random.default_rng(seed=args.seed)
+    else:
+        rng = np.random.default_rng(0)
+    return rng
 
 
 def modify(args):
     """Modifies selected parts of morphology reconstruction."""
     morph = Morph(args.file)
+    rng = _set_random_generator(args)
 
     # collect nodes to operate on
     nodes = _collect_nodes(morph, args)
@@ -184,11 +192,6 @@ def modify(args):
 
     if args.scale:
         _scale_coords(morph, nodes, args.scale)
-
-    if args.seed:
-        rng = np.random.default_rng(seed=args.seed)
-    else:
-        rng = np.random.default_rng(0)
 
     if args.jitter:
         _jitter_coords(morph, nodes, args.jitter, rng, args)
