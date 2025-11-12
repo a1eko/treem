@@ -88,74 +88,103 @@ def _correct_zjumps(morph, nodes, args):
             morph.rotate(axis, angle, node)
 
 
+def _fix_by_joint(nodes, vprint):
+    """Set diameter to mean value of neighbour nodes."""
+    err = 0
+    for node in nodes:
+        r = []
+        if node.parent.type() != SWC.SOMA:
+            r.append(node.parent.radius())
+        if not node.is_fork() and not node.is_leaf():
+            r.append(node.siblings[0].radius())
+        if r:
+            node.v[SWC.R] = np.mean(r)
+        else:
+            vprint(f'diam in node {node.ident()} {SKIP}')
+            err += 1
+    return err
+
+
+def _fix_by_sec(morph, nodes):
+    """Set diameter to mean value of the section."""
+    for node in nodes:
+        sec = list(node.section(reverse=True))
+        sec = list(sec[-1].section())
+        r = morph.radii(sec).mean()
+        node.v[SWC.R] = r
+
+
+def _fix_by_order(morph, nodes, pool, types, vprint, args):
+    """Set diameter to mean value of sections with the same topological order."""
+    err = 0
+    for node in nodes:
+        point_type = node.type()
+        order = node.order()
+        if args.pool:
+            radii = [m.radii(sec).mean() for m in pool
+                     for sec in m.root.sections()
+                     if sec[0].type() in types and sec[0].order() == order]
+            if radii:
+                r = np.mean(radii)
+                node.v[SWC.R] = r
+            else:
+                vprint(f'diam in node {node.ident()} (order {order}) {SKIP}')
+                err += 1
+        else:
+            r = np.array([morph.radii(sec).mean()
+                          for sec in morph.root.sections()
+                          if sec[0].type() == point_type and sec[0].order() == order]).mean()
+            node.v[SWC.R] = r
+    return err
+
+
+def _fix_by_breadth(morph, nodes, pool, types, vprint, args):
+    """Set diameter to mean value of sections with the same topological breadth."""
+    err = 0
+    for node in nodes:
+        point_type = node.type()
+        breadth = node.breadth()
+        if args.pool:
+            radii = [m.radii(sec).mean() for m in pool
+                     for sec in m.root.sections()
+                     if sec[0].type() in types and sec[0].breadth() == breadth]
+            if radii:
+                r = np.mean(radii)
+                node.v[SWC.R] = r
+            else:
+                vprint(f'diam in node {node.ident()} (breadth {breadth}) {SKIP}')
+                err += 1
+        else:
+            r = np.array([morph.radii(sec).mean()
+                          for sec in morph.root.sections()
+                          if sec[0].type() == point_type and sec[0].breadth() == breadth]).mean()
+            node.v[SWC.R] = r
+    return err
+
+
+def _fix_by_value(nodes, args):
+    """Set diameter to specified value."""
+    for node in nodes:
+        node.v[SWC.R] = args.diam_value / 2
+
+
 def _correct_diameters(morph, nodes, pool, vprint, args):
     """Corrects diameters in given nodes."""
+    types = None
     err = 0
     if args.pool:
         types = {x.type() for x in nodes}
     if args.diam_mode == 'joint':
-        for node in nodes:
-            r = []
-            if node.parent.type() != SWC.SOMA:
-                r.append(node.parent.radius())
-            if not node.is_fork() and not node.is_leaf():
-                r.append(node.siblings[0].radius())
-            if r:
-                node.v[SWC.R] = np.mean(r)
-            else:
-                vprint(f'diam in node {node.ident()} {SKIP}')
-                err += 1
+        err += _fix_by_joint(nodes, vprint)
     elif args.diam_mode == 'sec':
-        for node in nodes:
-            sec = list(node.section(reverse=True))
-            sec = list(sec[-1].section())
-            r = morph.radii(sec).mean()
-            node.v[SWC.R] = r
+        _fix_by_sec(morph, nodes)
     elif args.diam_mode == 'order':
-        for node in nodes:
-            point_type = node.type()
-            order = node.order()
-            if args.pool:
-                radii = [m.radii(sec).mean() for m in pool
-                         for sec in m.root.sections()
-                         if sec[0].type() in types and sec[0].order() == order]
-                if radii:
-                    r = np.mean(radii)
-                    node.v[SWC.R] = r
-                else:
-                    vprint(f'diam in node {node.ident()} (order {order}) {SKIP}')
-                    err += 1
-            else:
-                r = np.array([morph.radii(sec).mean()
-                              for sec in morph.root.sections()
-                              if sec[0].type() == point_type and sec[0].order() == order]).mean()
-                node.v[SWC.R] = r
+        err += _fix_by_order(morph, nodes, pool, types, vprint, args)
     elif args.diam_mode == 'breadth':
-        for node in nodes:
-            point_type = node.type()
-            breadth = node.breadth()
-            if args.pool:
-                radii = [m.radii(sec).mean() for m in pool
-                         for sec in m.root.sections()
-                         if sec[0].type() in types and sec[0].breadth() == breadth]
-                if radii:
-                    r = np.mean(radii)
-                    node.v[SWC.R] = r
-                else:
-                    vprint(f'diam in node {node.ident()} (breadth {breadth}) {SKIP}')
-                    err += 1
-            else:
-                r = np.array([morph.radii(sec).mean()
-                              for sec in morph.root.sections()
-                              if sec[0].type() == point_type and sec[0].breadth() == breadth]).mean()
-                node.v[SWC.R] = r
+        err += _fix_by_breadth(morph, nodes, pool, types, vprint, args)
     if args.diam_mode == 'value':
-        for node in nodes:
-            node.v[SWC.R] = args.diam_value / 2
+        _fix_by_value(nodes, args)
     return err
-
-
-
 
 
 def repair(args):
