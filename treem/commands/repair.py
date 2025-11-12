@@ -13,7 +13,7 @@ from treem.utils.geom import repair_branch, sample, norm, rotation
 SKIP = 'not repaired'
 
 
-def _shrink_xy(morph, args):
+def _correct_shrink_xy(morph, args):
     """Corrects for shrinkage in X,Y plane."""
     scale = np.array([args.shrink_xy, args.shrink_xy, 1])
     origin = morph.root.coord().copy()
@@ -24,7 +24,7 @@ def _shrink_xy(morph, args):
     morph.translate(shift)
 
 
-def _shrink_z(morph, args):
+def _correct_shrink_z(morph, args):
     """Corrects for shrinkage in Z axis."""
     if args.bottom_up:
         bottom = max(x.coord()[2] for x in morph.root.walk())
@@ -187,11 +187,21 @@ def _correct_diameters(morph, nodes, pool, vprint, args):
     return err
 
 
+def _set_random_generator(args):
+    """Initialize random generator."""
+    if args.seed:
+        rng = np.random.default_rng(seed=args.seed)
+    else:
+        rng = np.random.default_rng(0)
+    return rng
+
+
 def repair(args):
     """Corrects morphology reconstruction at the given nodes."""
     vprint = print if args.verbose else lambda *a, **k: None
     morph = Morph(args.file)
     morig = morph.copy() if args.rotate and args.cut else morph
+    rng = _set_random_generator(args)
     pool = None
     err = 0
 
@@ -204,10 +214,10 @@ def repair(args):
         morph.rotate([0, 0, 1], args.rotate[2] / 180 * math.pi)
 
     if args.shrink_xy:
-        _shrink_xy(morph, args)
+        _correct_shrink_xy(morph, args)
 
     if args.shrink:
-        _shrink_z(morph, args)
+        _correct_shrink_z(morph, args)
 
     if args.zjump:
         nodes = [x for x in morph.root.walk() if x.ident() in args.zjump]
@@ -219,11 +229,6 @@ def repair(args):
     if args.diam:
         nodes = [x for x in morph.root.walk() if x.ident() in args.diam]
         err += _correct_diameters(morph, nodes, pool, vprint, args)
-
-    if args.seed:
-        rng = np.random.default_rng(seed=args.seed)
-    else:
-        rng = np.random.default_rng(0)
 
     def is_intact(tree, cuts):
         leaves = [x.ident() for x in tree.leaves()]
