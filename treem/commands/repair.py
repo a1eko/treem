@@ -320,10 +320,11 @@ def _repair_neurites(morph, cuts, pool, vprint, rng, args):
 
 
 def _delete_branches(morph, idents):
-    """Prunes branches."""
+    """Prunes branches and returns new morphology."""
     nodes = [x for x in morph.root.walk() if x.ident() in idents]
     for node in nodes:
         morph.delete(node)
+    return Morph(data=morph.data)
 
 
 def _resample(morph, res):
@@ -413,12 +414,10 @@ def repair(args):
     if args.cut:
         cuts = {x for x in args.cut if morph.node(x).type() != SWC.SOMA}
         err += _repair_neurites(morph, cuts, pool, vprint, rng, args)
+        morph = Morph(data=morph.data)
 
     if args.delete and not args.cut:
-        _delete_branches(morph, args.delete)
-
-    if args.delete or args.cut:
-        morph = Morph(data=morph.data)
+        morph = _delete_branches(morph, args.delete)
 
     if args.res:
         morph = _resample(morph, args.res)
