@@ -196,11 +196,191 @@ def _set_random_generator(args):
     return rng
 
 
+def _is_intact(tree, cuts):
+    leaves = [x.ident() for x in tree.leaves()]
+    return set(leaves).isdisjoint(cuts)
+
+
+def _repair_neurites(morph, cuts, pool, vprint, rng, args):
+    """Repairs cut neurites."""
+    morig = morph.copy() if args.rotate and args.cut else morph
+    keep_radii = args.keep_radii
+    err = 0
+    if args.del_branch:
+        stems = []
+        for cut in cuts:
+            stems.extend(x for x in filter(lambda x: x.is_stem() and x.type() != SWC.SOMA,
+                                           morph.node(cut).walk(reverse=True))
+                         if x not in stems)
+        for node in stems:
+            for child in node.siblings:
+                morph.prune(child)
+        vprint('renumbering nodes, old node ids are lost')
+        morph = Morph(data=morph.data)
+        cuts = [x.ident() for x in morph.root.siblings if x.is_leaf()]
+        vprint(f'reassigning cut points to {cuts}')
+        graft_points = set()
+        keep_radii = True
+    else:
+        graft_points = set(args.cut).difference(cuts)
+    types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
+    for point_type in types:
+        intact_branches = {}
+        if args.pool:
+            for rec in pool:
+                sections = filter(lambda x, t=point_type: x[0].type() == t, rec.root.sections())
+                nodes = chain(x[0] for x in sections)
+                for node in nodes:
+                    order = node.order()
+                    if order not in intact_branches:
+                        intact_branches[order] = []
+                    intact_branches[order].append((rec, node))
+        else:
+            sections = filter(lambda x, t=point_type: x[0].type() == t, morig.root.sections())
+            nodes = chain(x[0] for x in sections)
+            nodes = filter(lambda x: _is_intact(x, args.cut), nodes)
+            for node in nodes:
+                order = node.order()
+                if order not in intact_branches:
+                    intact_branches[order] = []
+                intact_branches[order].append((morig, node))
+        nodes = [x for x in morph.root.walk() if x.type() == point_type and x.ident() in cuts]
+        for node in nodes:
+            order = node.order()
+            vprint(f'repairing node {node.ident()} (order {order})',
+                   end=' ')
+            if order in intact_branches:
+                idx = rng.choice(len(intact_branches[order]))
+                rec, rep = intact_branches[order][idx]
+                vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
+                done = repair_branch(morph, node, rec, rep,
+                                     force=args.force_repair,
+                                     keep_radii=keep_radii)
+                err += 1 if not done else 0
+                vprint('done') if done else vprint(SKIP)
+            elif order - 1 in intact_branches:
+                idx = rng.choice(len(intact_branches[order - 1]))
+                rec, rep = intact_branches[order - 1][idx]
+                vprint(f'using {rep.ident()} (order {order-1}) ...',
+                       end=' ')
+                done = repair_branch(morph, node, rec, rep,
+                                     force=args.force_repair,
+                                     keep_radii=keep_radii)
+                err += 1 if not done else 0
+                vprint('done') if done else vprint(SKIP)
+            elif args.force_repair:
+                if intact_branches:
+                    order = rng.choice(list(intact_branches.keys()))
+                    idx = rng.choice(len(intact_branches[order]))
+                    rec, rep = intact_branches[order][idx]
+                    vprint(f'using {rep.ident()} (order {order}) ...',
+                           end=' ')
+                    done = repair_branch(morph, node, rec, rep, force=True)
+                    err += 1 if not done else 0
+                    vprint('done') if done else vprint(SKIP)
+                else:
+                    err += 1
+                    vprint(f'... no intact branches, {SKIP}')
+            else:
+                err += 1
+                vprint(f'... {SKIP}')
+
+    if graft_points:
+        point_type = args.graft_point_type
+        intact_branches = []
+        if args.pool:
+            for rec in pool:
+                sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1, rec.root.sections())
+                nodes = chain(x[0] for x in sections)
+                for node in nodes:
+                    intact_branches.append((rec, node))
+        else:
+            sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1,
+                              morig.root.sections())
+            nodes = chain(x[0] for x in sections)
+
+            nodes = filter(lambda x: _is_intact(x, args.cut), nodes)
+            for node in nodes:
+                intact_branches.append((morig, node))
+
+        vprint('grafting branch on to a soma node', end=' ')
+        nodes = [x for x in morph.root.walk() if x.ident() in graft_points]
+        for node in nodes:
+            vprint(f'{node.ident()}', end=' ')
+            if intact_branches:
+                idx = rng.choice(len(intact_branches))
+                rec, rep = intact_branches[idx]
+                morph.graft(rec.copy(rep), node)
+                vprint('done')
+            else:
+                err += 1
+                vprint('... no intact branches, not grafted')
+
+    return err
+
+
+def _delete_branches(morph, idents):
+    """Prunes branches."""
+    nodes = [x for x in morph.root.walk() if x.ident() in idents]
+    for node in nodes:
+        morph.delete(node)
+
+
+def _resample(morph, res):
+    """Samples neurites with new spatial resolution and returns new morphology."""
+    ident = 1
+    data = []
+    idmap = {-1: -1}
+    for sec in filter(lambda x: x[0].type() == SWC.SOMA,
+                      morph.root.sections()):
+        for node in sec:
+            v = node.v.copy()
+            i, p = v[SWC.I].astype(int), v[SWC.P].astype(int)
+            v[SWC.I], v[SWC.P] = ident, idmap[p]
+            idmap[i] = ident
+            data.append(v)
+            ident += 1
+    for sec in filter(lambda x: x[0].type() in
+                      set(SWC.TYPES).difference((SWC.SOMA,)),
+                      morph.root.sections()):
+        length = morph.length(sec)
+        points = morph.points(sec)
+        parent_point = sec[0].parent.v[SWC.XYZR]
+        # parent root: if sec[0].parent.is_root():
+        # parent root:     parent_point[3] = sec[0].v[SWC.R]
+        points = np.insert(points, 0, parent_point, axis=0)
+        points = sample(points, np.ceil(length / res).astype(int))
+        points = points[1:]
+        start = True
+        for ident, point in enumerate(points, ident):
+            x, y, z, r = point
+            pid = idmap[sec[0].parent_ident()] if start else ident - 1
+            v = np.array([ident, sec[0].type(), x, y, z, r, pid])
+            start = False if start else start
+            data.append(v)
+        idmap[sec[-1].v[SWC.I]] = ident
+        ident += 1
+    return Morph(data=np.array(data))
+
+
+
+def _flip(morph, flip):
+    """Flips morphology around root along specified axes."""
+    center = morph.root.coord().copy()
+    if 'x' in flip:
+        morph.data[:, SWC.X] *= -1
+    if 'y' in flip:
+        morph.data[:, SWC.Y] *= -1
+    if 'z' in flip:
+        morph.data[:, SWC.Z] *= -1
+    shift = morph.root.coord() - center
+    morph.data[:, SWC.XYZ] -= shift
+
+
 def repair(args):
     """Corrects morphology reconstruction at the given nodes."""
     vprint = print if args.verbose else lambda *a, **k: None
     morph = Morph(args.file)
-    morig = morph.copy() if args.rotate and args.cut else morph
     rng = _set_random_generator(args)
     pool = None
     err = 0
@@ -230,182 +410,24 @@ def repair(args):
         nodes = [x for x in morph.root.walk() if x.ident() in args.diam]
         err += _correct_diameters(morph, nodes, pool, vprint, args)
 
-    def is_intact(tree, cuts):
-        leaves = [x.ident() for x in tree.leaves()]
-        return set(leaves).isdisjoint(cuts)
-
     if args.cut:
         cuts = {x for x in args.cut if morph.node(x).type() != SWC.SOMA}
-        keep_radii = args.keep_radii
-        if args.del_branch:
-            stems = []
-            for cut in cuts:
-                stems.extend(x for x in filter(lambda x: x.is_stem() and x.type() != SWC.SOMA,
-                                               morph.node(cut).walk(reverse=True))
-                             if x not in stems)
-            for node in stems:
-                for child in node.siblings:
-                    morph.prune(child)
-            vprint('renumbering nodes, old node ids are lost')
-            morph = Morph(data=morph.data)
-            cuts = [x.ident() for x in morph.root.siblings if x.is_leaf()]
-            vprint(f'reassigning cut points to {cuts}')
-            graft_points = set()
-            keep_radii = True
-        else:
-            graft_points = set(args.cut).difference(cuts)
-        types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
-        for point_type in types:
-            intact_branches = {}
-            if args.pool:
-                for rec in pool:
-                    sections = filter(lambda x, t=point_type: x[0].type() == t, rec.root.sections())
-                    nodes = chain(x[0] for x in sections)
-                    for node in nodes:
-                        order = node.order()
-                        if order not in intact_branches:
-                            intact_branches[order] = []
-                        intact_branches[order].append((rec, node))
-            else:
-                sections = filter(lambda x, t=point_type: x[0].type() == t, morig.root.sections())
-                nodes = chain(x[0] for x in sections)
-
-                nodes = filter(lambda x: is_intact(x, args.cut), nodes)
-                for node in nodes:
-                    order = node.order()
-                    if order not in intact_branches:
-                        intact_branches[order] = []
-                    intact_branches[order].append((morig, node))
-
-            nodes = [x for x in morph.root.walk() if x.type() == point_type and x.ident() in cuts]
-            for node in nodes:
-                order = node.order()
-                vprint(f'repairing node {node.ident()} (order {order})',
-                       end=' ')
-                if order in intact_branches:
-                    idx = rng.choice(len(intact_branches[order]))
-                    rec, rep = intact_branches[order][idx]
-                    vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
-                    done = repair_branch(morph, node, rec, rep,
-                                         force=args.force_repair,
-                                         keep_radii=keep_radii)
-                    err += 1 if not done else 0
-                    vprint('done') if done else vprint(SKIP)
-                elif order - 1 in intact_branches:
-                    idx = rng.choice(len(intact_branches[order - 1]))
-                    rec, rep = intact_branches[order - 1][idx]
-                    vprint(f'using {rep.ident()} (order {order-1}) ...',
-                           end=' ')
-                    done = repair_branch(morph, node, rec, rep,
-                                         force=args.force_repair,
-                                         keep_radii=keep_radii)
-                    err += 1 if not done else 0
-                    vprint('done') if done else vprint(SKIP)
-                elif args.force_repair:
-                    if intact_branches:
-                        order = rng.choice(list(intact_branches.keys()))
-                        idx = rng.choice(len(intact_branches[order]))
-                        rec, rep = intact_branches[order][idx]
-                        vprint(f'using {rep.ident()} (order {order}) ...',
-                               end=' ')
-                        done = repair_branch(morph, node, rec, rep, force=True)
-                        err += 1 if not done else 0
-                        vprint('done') if done else vprint(SKIP)
-                    else:
-                        err += 1
-                        vprint(f'... no intact branches, {SKIP}')
-                else:
-                    err += 1
-                    vprint(f'... {SKIP}')
-
-    if args.cut and graft_points:
-        point_type = args.graft_point_type
-        intact_branches = []
-        if args.pool:
-            for rec in pool:
-                sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1, rec.root.sections())
-                nodes = chain(x[0] for x in sections)
-                for node in nodes:
-                    intact_branches.append((rec, node))
-        else:
-            sections = filter(lambda x: x[0].type() == point_type and x[0].order() == 1,
-                              morig.root.sections())
-            nodes = chain(x[0] for x in sections)
-
-            nodes = filter(lambda x: is_intact(x, args.cut), nodes)
-            for node in nodes:
-                intact_branches.append((morig, node))
-
-        vprint('grafting branch on to a soma node', end=' ')
-        nodes = [x for x in morph.root.walk() if x.ident() in graft_points]
-        for node in nodes:
-            vprint(f'{node.ident()}', end=' ')
-            if intact_branches:
-                idx = rng.choice(len(intact_branches))
-                rec, rep = intact_branches[idx]
-                morph.graft(rec.copy(rep), node)
-                vprint('done')
-            else:
-                err += 1
-                vprint('... no intact branches, not grafted')
+        err += _repair_neurites(morph, cuts, pool, vprint, rng, args)
 
     if args.delete and not args.cut:
-        nodes = [x for x in morph.root.walk() if x.ident() in args.delete]
-        for node in nodes:
-            morph.delete(node)
+        _delete_branches(morph, args.delete)
 
     if args.delete or args.cut:
         morph = Morph(data=morph.data)
 
     if args.res:
-        ident = 1
-        data = []
-        idmap = {-1: -1}
-        for sec in filter(lambda x: x[0].type() == SWC.SOMA,
-                          morph.root.sections()):
-            for node in sec:
-                v = node.v.copy()
-                i, p = v[SWC.I].astype(int), v[SWC.P].astype(int)
-                v[SWC.I], v[SWC.P] = ident, idmap[p]
-                idmap[i] = ident
-                data.append(v)
-                ident += 1
-        for sec in filter(lambda x: x[0].type() in
-                          set(SWC.TYPES).difference((SWC.SOMA,)),
-                          morph.root.sections()):
-            length = morph.length(sec)
-            points = morph.points(sec)
-            parent_point = sec[0].parent.v[SWC.XYZR]
-            # parent root: if sec[0].parent.is_root():
-            # parent root:     parent_point[3] = sec[0].v[SWC.R]
-            points = np.insert(points, 0, parent_point, axis=0)
-            points = sample(points, np.ceil(length / args.res).astype(int))
-            points = points[1:]
-            start = True
-            for ident, point in enumerate(points, ident):
-                x, y, z, r = point
-                pid = idmap[sec[0].parent_ident()] if start else ident - 1
-                v = np.array([ident, sec[0].type(), x, y, z, r, pid])
-                start = False if start else start
-                data.append(v)
-            idmap[sec[-1].v[SWC.I]] = ident
-            ident += 1
-        morph = Morph(data=np.array(data))
+        morph = _resample(morph, args.res)
 
     if args.flip:
-        center = morph.root.coord().copy()
-        if 'x' in args.flip:
-            morph.data[:, SWC.X] *= -1
-        if 'y' in args.flip:
-            morph.data[:, SWC.Y] *= -1
-        if 'z' in args.flip:
-            morph.data[:, SWC.Z] *= -1
-        shift = morph.root.coord() - center
-        morph.data[:, SWC.XYZ] -= shift
+        _flip(morph, args.flip)
 
     if args.center:
         morph.data[:, SWC.XYZ] -= morph.root.coord()
 
     morph.save(args.out)
     return err
-
