@@ -203,6 +203,7 @@ def _is_intact(tree, cuts):
 
 def _delete_cut_branches(morph, cuts, vprint):
     """Deletes cut branches, resets cuts to corresponding stems. Returns updated morphology."""
+    types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
     stems = []
     for cut in cuts:
         stems.extend(x for x in filter(lambda x: x.is_stem() and x.type() != SWC.SOMA,
@@ -213,14 +214,13 @@ def _delete_cut_branches(morph, cuts, vprint):
             morph.prune(child)
     vprint('renumbering nodes, old node ids are lost')
     morph = Morph(data=morph.data)
-    cuts = [x.ident() for x in morph.root.siblings if x.is_leaf()]
+    cuts = {x.ident() for x in morph.root.siblings if x.is_leaf() and x.type() in types}
     vprint(f'reassigning cut points to {cuts}')
-    return morph
+    return morph, cuts
 
 
-def _graft_branches(morph, graft_points, pool, vprint, rng, args):
+def _graft_branches(morph, morig, graft_points, pool, vprint, rng, args):
         """Grafts branches onto soma."""
-        morig = morph.copy()
         point_type = args.graft_point_type
         intact_branches = []
         err = 0
@@ -254,24 +254,10 @@ def _graft_branches(morph, graft_points, pool, vprint, rng, args):
         return err
 
 
-
-
-
-def _repair_neurites(morph, cuts, pool, vprint, rng, args):
-    """Repairs cut neurites."""
-    morig = morph.copy() if args.rotate and args.cut else morph
-    keep_radii = args.keep_radii
+def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
+    """Repairs cut branches."""
+    #morig = morph.copy() if args.rotate and args.cut else morph
     err = 0
-
-    if args.del_branch:
-        # delete cut branches
-        morph = _delete_cut_branches(morph, cuts, vprint)
-        graft_points = set()
-        keep_radii = True
-    else:
-        graft_points = set(args.cut).difference(cuts)
-
-    # repair cut branches, separately for each neurite type
     types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
     for point_type in types:
         intact_branches = {}
@@ -304,7 +290,7 @@ def _repair_neurites(morph, cuts, pool, vprint, rng, args):
                 vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
                 done = repair_branch(morph, node, rec, rep,
                                      force=args.force_repair,
-                                     keep_radii=keep_radii)
+                                     keep_radii=args.keep_radii)
                 err += 1 if not done else 0
                 vprint('done') if done else vprint(SKIP)
             elif order - 1 in intact_branches:
@@ -314,7 +300,7 @@ def _repair_neurites(morph, cuts, pool, vprint, rng, args):
                        end=' ')
                 done = repair_branch(morph, node, rec, rep,
                                      force=args.force_repair,
-                                     keep_radii=keep_radii)
+                                     keep_radii=args.keep_radii)
                 err += 1 if not done else 0
                 vprint('done') if done else vprint(SKIP)
             elif args.force_repair:
@@ -333,11 +319,92 @@ def _repair_neurites(morph, cuts, pool, vprint, rng, args):
             else:
                 err += 1
                 vprint(f'... {SKIP}')
+    return err
+
+
+
+def _repair_neurites(morph, cuts, pool, vprint, rng, args):
+    """Repairs cut neurites."""
+    morig = morph.copy() if args.rotate and args.cut else morph
+    #keep_radii = args.keep_radii
+    err = 0
+
+    if args.del_branch:
+        morph, cuts = _delete_cut_branches(morph, cuts, vprint)
+        graft_points = set()
+        args.keep_radii = True
+    else:
+        graft_points = set(args.cut).difference(cuts)
+
+    """
+    types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
+    for point_type in types:
+        intact_branches = {}
+        if args.pool:
+            for rec in pool:
+                sections = filter(lambda x, t=point_type: x[0].type() == t, rec.root.sections())
+                nodes = chain(x[0] for x in sections)
+                for node in nodes:
+                    order = node.order()
+                    if order not in intact_branches:
+                        intact_branches[order] = []
+                    intact_branches[order].append((rec, node))
+        else:
+            sections = filter(lambda x, t=point_type: x[0].type() == t, morig.root.sections())
+            nodes = chain(x[0] for x in sections)
+            nodes = filter(lambda x: _is_intact(x, args.cut), nodes)
+            for node in nodes:
+                order = node.order()
+                if order not in intact_branches:
+                    intact_branches[order] = []
+                intact_branches[order].append((morig, node))
+        nodes = [x for x in morph.root.walk() if x.type() == point_type and x.ident() in cuts]
+        for node in nodes:
+            order = node.order()
+            vprint(f'repairing node {node.ident()} (order {order})',
+                   end=' ')
+            if order in intact_branches:
+                idx = rng.choice(len(intact_branches[order]))
+                rec, rep = intact_branches[order][idx]
+                vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
+                done = repair_branch(morph, node, rec, rep,
+                                     force=args.force_repair,
+                                     keep_radii=args.keep_radii)
+                err += 1 if not done else 0
+                vprint('done') if done else vprint(SKIP)
+            elif order - 1 in intact_branches:
+                idx = rng.choice(len(intact_branches[order - 1]))
+                rec, rep = intact_branches[order - 1][idx]
+                vprint(f'using {rep.ident()} (order {order-1}) ...',
+                       end=' ')
+                done = repair_branch(morph, node, rec, rep,
+                                     force=args.force_repair,
+                                     keep_radii=args.keep_radii)
+                err += 1 if not done else 0
+                vprint('done') if done else vprint(SKIP)
+            elif args.force_repair:
+                if intact_branches:
+                    order = rng.choice(list(intact_branches.keys()))
+                    idx = rng.choice(len(intact_branches[order]))
+                    rec, rep = intact_branches[order][idx]
+                    vprint(f'using {rep.ident()} (order {order}) ...',
+                           end=' ')
+                    done = repair_branch(morph, node, rec, rep, force=True)
+                    err += 1 if not done else 0
+                    vprint('done') if done else vprint(SKIP)
+                else:
+                    err += 1
+                    vprint(f'... no intact branches, {SKIP}')
+            else:
+                err += 1
+                vprint(f'... {SKIP}')
+    """
+    err += _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args)
 
     if graft_points:
-        err += _graft_branches(morph, graft_points, pool, vprint, rng, args)
+        err += _graft_branches(morph, morig, graft_points, pool, vprint, rng, args)
 
-    return err
+    return err, morph
 
 
 def _delete_branches(morph, idents):
@@ -434,7 +501,8 @@ def repair(args):
 
     if args.cut:
         cuts = {x for x in args.cut if morph.node(x).type() != SWC.SOMA}
-        err += _repair_neurites(morph, cuts, pool, vprint, rng, args)
+        nerr, morph = _repair_neurites(morph, cuts, pool, vprint, rng, args)
+        err += nerr
         morph = Morph(data=morph.data)
 
     if args.delete and not args.cut:
