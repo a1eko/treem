@@ -247,7 +247,7 @@ class Morph():
         """
         node = node if node else self.root
         for sec in node.sections():
-            points = self.coords(sec)
+            points = self.coords(sec)  # NOSONAR (S1481) "Necessary for in-place NumPy modification"
             points += shift
 
     def rotate(self, axis, angle, node=None):

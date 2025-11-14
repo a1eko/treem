@@ -18,7 +18,7 @@ def _correct_shrink_xy(morph, args):
     scale = np.array([args.shrink_xy, args.shrink_xy, 1])
     origin = morph.root.coord().copy()
     for node in morph.root.walk():
-        coord = node.coord()
+        coord = node.coord()  # NOSONAR (S1481) "Necessary for in-place NumPy modification"
         coord *= scale
     shift = origin - morph.root.coord()
     morph.translate(shift)
