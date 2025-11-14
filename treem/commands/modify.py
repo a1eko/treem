@@ -27,7 +27,7 @@ def _scale_coords(morph, nodes, scale_coords):
         sec = list(node.section())
         head = sec[0].coord().copy()
         tail = sec[-1].coord().copy()
-        coords = morph.coords(sec)
+        coords = morph.coords(sec)  # NOSONAR (S1481) "Necessary for in-place NumPy modification"
         coords *= np.array(scale)
         shift = head - sec[0].coord()
         coords += shift
