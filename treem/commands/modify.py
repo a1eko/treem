@@ -103,10 +103,10 @@ def _smooth_sections(morph, nodes, smooth):
             head = sec[0].coord().copy()
             tail = sec[-1].coord().copy()
             length = morph.length(sec[1:])
-            coords = morph.coords(sec)
+            coords = morph.coords(sec)  # NOSONAR (S1481) "Necessary for in-place NumPy modification"
             for _ in range(smooth):
                 for secnode in sec[-1::-1]:
-                    coord = secnode.coord()
+                    coord = secnode.coord()  # NOSONAR (S1481) "Necessary for in-place NumPy modification"
                     coord += secnode.parent.coord()
                 scale = length / morph.length(sec[1:])
                 coords *= scale
