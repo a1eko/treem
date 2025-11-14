@@ -17,7 +17,7 @@ def _scale_radii(morph, nodes, scale_radius):
     for node in nodes:
         sec = list(node.section())
         radii = morph.radii(sec)
-        radii *= scale
+        radii *= scale  # NOSONAR
 
 
 def _scale_coords(morph, nodes, scale_coords):
