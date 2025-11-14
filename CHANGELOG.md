@@ -30,14 +30,11 @@ The following items are marked as pending tasks and will be part of the next maj
 - Improve test coverage.
 - Re-enable flake8 lint testing.
 - Revise documentation for consitency.
-- Refactor code to address SonarQube findings.
 - Do not interpolate diameter if the parent is root (render, measure, repair, morph).
 
 ### Changed
 
-- Major code refactoring (view, morph, check, measure, find, modify, repair).
-- Medium code refactoring.
-- Minor code refactoring.
+- Code refactoring to address SonarQube findings (check, find, measure, modify, repair, view and morph).
 
 ### Removed
 
