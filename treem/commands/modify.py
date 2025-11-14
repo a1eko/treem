@@ -16,8 +16,8 @@ def _scale_radii(morph, nodes, scale_radius):
     scale = np.abs(scale_radius)
     for node in nodes:
         sec = list(node.section())
-        radii = morph.radii(sec)
-        radii *= scale  # NOSONAR
+        radii = morph.radii(sec)  # NOSONAR (S1481) "Necessary for in-place NumPy modification"
+        radii *= scale
 
 
 def _scale_coords(morph, nodes, scale_coords):
