@@ -254,11 +254,8 @@ def _graft_branches(morph, morig, graft_points, pool, vprint, rng, args):
         return err
 
 
-def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
-    """Repairs cut branches."""
-    err = 0
-    types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
-    for point_type in types:
+def _collect_intact_branches(morph, morig, pool, point_type, args):
+        """Collects branches not containing cut points."""
         intact_branches = {}
         if args.pool:
             for rec in pool:
@@ -278,6 +275,16 @@ def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
                 if order not in intact_branches:
                     intact_branches[order] = []
                 intact_branches[order].append((morig, node))
+        return intact_branches
+
+
+def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
+    """Repairs cut branches."""
+    err = 0
+    types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
+    for point_type in types:
+        intact_branches = _collect_intact_branches(morph, morig, pool, point_type, args)
+
         nodes = [x for x in morph.root.walk() if x.type() == point_type and x.ident() in cuts]
         for node in nodes:
             order = node.order()
@@ -319,7 +326,6 @@ def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
                 err += 1
                 vprint(f'... {SKIP}')
     return err
-
 
 
 def _repair_neurites(morph, cuts, pool, vprint, rng, args):
