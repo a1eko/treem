@@ -13,13 +13,17 @@ The following items are marked as pending tasks and will be part of the next maj
 
 - Start v1.2.0.dev line.
 
-### Fixed
+### Persistent Issues
 
-- **[Persistent issue]** OpenGL error 'no valid context' when executing swc-render on Wayland in X11 Linux environment.
-  * **[Workaround]** Set environment variable 'PYOPENGL_PLATFORM=glx'.
+1. OpenGL Context Error on Wayland/X11
 
-- **[Persistent issue]** Not available Matplotlib backend in swc-view after fresh installation.
-  * **[Workaround]** Run gdk-pixbuf-register to enable Matplotlib backends.
+  - **Issue:** OpenGL error 'no valid context' when executing `swc-render` on Wayland in X11 Linux environment.
+  - **Workaround:** Set the environment variable `PYOPENGL_PLATFORM=glx`.
+
+2. Matplotlib Backend Missing After Installation
+
+  - **Issue:** Not available Matplotlib backend in `swc-view` after fresh installation.
+  - **Workaround:** Run `gdk-pixbuf-register` to enable Matplotlib backends.
 
 ### Planned
 
