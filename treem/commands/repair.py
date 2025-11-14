@@ -254,27 +254,32 @@ def _graft_branches(morph, morig, graft_points, pool, vprint, rng, args):
         return err
 
 
-def _collect_intact_branches(morph, morig, pool, point_type, args):
+def _make_intact_dict(morph, nodes):
+    """Creates dictionary of non-damaged branches."""
+    intact_branches = {}
+    for node in nodes:
+        order = node.order()
+        if order not in intact_branches:
+            intact_branches[order] = []
+        intact_branches[order].append((morph, node))
+    return intact_branches
+
+
+def _collect_intact_branches(morig, pool, point_type, args):
         """Collects branches not containing cut points."""
         intact_branches = {}
         if args.pool:
             for rec in pool:
                 sections = filter(lambda x, t=point_type: x[0].type() == t, rec.root.sections())
                 nodes = chain(x[0] for x in sections)
-                for node in nodes:
-                    order = node.order()
-                    if order not in intact_branches:
-                        intact_branches[order] = []
-                    intact_branches[order].append((rec, node))
+                rec_branches = _make_intact_dict(rec, nodes)
+                intact_branches.update(rec_branches)
         else:
             sections = filter(lambda x, t=point_type: x[0].type() == t, morig.root.sections())
             nodes = chain(x[0] for x in sections)
             nodes = filter(lambda x: _is_intact(x, args.cut), nodes)
-            for node in nodes:
-                order = node.order()
-                if order not in intact_branches:
-                    intact_branches[order] = []
-                intact_branches[order].append((morig, node))
+            intact_branches = _make_intact_dict(morig, nodes)
+
         return intact_branches
 
 
@@ -283,7 +288,7 @@ def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
     err = 0
     types = {x.type() for x in morph.root.walk() if x.ident() in cuts}
     for point_type in types:
-        intact_branches = _collect_intact_branches(morph, morig, pool, point_type, args)
+        intact_branches = _collect_intact_branches(morig, pool, point_type, args)
 
         nodes = [x for x in morph.root.walk() if x.type() == point_type and x.ident() in cuts]
         for node in nodes:
