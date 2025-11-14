@@ -47,7 +47,6 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Security
 
----
 
 ## 1.1.2 - 2025-11-06
 
@@ -65,7 +64,6 @@ The following items are marked as pending tasks and will be part of the next maj
 
 - Replace legacy setup.py bdist_wheel mechanism with pyproject.toml.
 
----
 
 ## 1.1.1 - 2025-10-21
 
@@ -82,7 +80,6 @@ The following items are marked as pending tasks and will be part of the next maj
 
 - Swap 2 nodes at a time in swc-modify.
 
----
 
 ## 1.1.0 - 2023-08-19
 
@@ -111,7 +108,6 @@ The following items are marked as pending tasks and will be part of the next maj
 - Add neurite to root if id=1 is in the list of the cut points in swc-repair (i.e., *repair* root).
 - Return original root coordinates unless "-n" is explicitly applied in swc-repair.
 
----
 
 ## 1.0.0 - 2021-06-01
 
