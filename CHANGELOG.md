@@ -9,11 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The following items are marked as pending tasks and will be part of the next major release.
 
+### Planned
+
+- Improve test coverage.
+- Re-enable flake8 lint testing.
+- Revise documentation for consitency.
+- Do not interpolate diameter if the parent is root (render, measure, repair, morph).
+
 ### Added
 
 - Start v1.2.0.dev line.
 
-### Persistent Issues
+### Changed
+
+- Code refactoring to address SonarQube findings (check, find, measure, modify, repair, view and morph).
+- Apply minor code adjustments for SonarQube compliance.
+
+### Deprecated
+
+### Removed
+
+- Replace TODO file with CHANGELOG.md.
+
+### Fixed
+
+#### Persistent Issues
 
 1. OpenGL Context Error on Wayland/X11
 
@@ -25,22 +45,9 @@ The following items are marked as pending tasks and will be part of the next maj
   - **Issue:** Not available Matplotlib backend in swc-view after fresh installation.
   - **Workaround:** Run gdk-pixbuf-register to enable Matplotlib backends.
 
-### Planned
+### Security
 
-- Improve test coverage.
-- Re-enable flake8 lint testing.
-- Revise documentation for consitency.
-- Do not interpolate diameter if the parent is root (render, measure, repair, morph).
-
-### Changed
-
-- Code refactoring to address SonarQube findings (check, find, measure, modify, repair, view and morph).
-- Apply minor code adjustments for SonarQube compliance.
-
-### Removed
-
-- Replace TODO file with CHANGELOG.md.
-
+---
 
 ## 1.1.2 - 2025-11-06
 
@@ -58,6 +65,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 - Replace legacy setup.py bdist_wheel mechanism with pyproject.toml.
 
+---
 
 ## 1.1.1 - 2025-10-21
 
@@ -74,6 +82,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 - Swap 2 nodes at a time in swc-modify.
 
+---
 
 ## 1.1.0 - 2023-08-19
 
@@ -102,6 +111,7 @@ The following items are marked as pending tasks and will be part of the next maj
 - Add neurite to root if id=1 is in the list of the cut points in swc-repair (i.e., *repair* root).
 - Return original root coordinates unless "-n" is explicitly applied in swc-repair.
 
+---
 
 ## 1.0.0 - 2021-06-01
 
