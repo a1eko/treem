@@ -35,6 +35,7 @@ The following items are marked as pending tasks and will be part of the next maj
 ### Changed
 
 - Code refactoring to address SonarQube findings (check, find, measure, modify, repair, view and morph).
+- Apply minor code adjustments for SonarQube compliance.
 
 ### Removed
 
