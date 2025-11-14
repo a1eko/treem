@@ -283,6 +283,20 @@ def _collect_intact_branches(morig, pool, point_type, args):
         return intact_branches
 
 
+def _repair_by_order(morph, intact_branches, node, order, vprint, rng, args):
+        """Repair using branches of given topological order."""
+        err = 0
+        idx = rng.choice(len(intact_branches[order]))
+        rec, rep = intact_branches[order][idx]
+        vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
+        done = repair_branch(morph, node, rec, rep,
+                             force=args.force_repair,
+                             keep_radii=args.keep_radii)
+        err += 1 if not done else 0
+        vprint('done') if done else vprint(SKIP)
+        return err
+
+
 def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
     """Repairs cut branches."""
     err = 0
@@ -296,34 +310,15 @@ def _repair_cut_branches(morph, morig, cuts, pool, vprint, rng, args):
             vprint(f'repairing node {node.ident()} (order {order})',
                    end=' ')
             if order in intact_branches:
-                idx = rng.choice(len(intact_branches[order]))
-                rec, rep = intact_branches[order][idx]
-                vprint(f'using {rep.ident()} (order {order}) ...', end=' ')
-                done = repair_branch(morph, node, rec, rep,
-                                     force=args.force_repair,
-                                     keep_radii=args.keep_radii)
-                err += 1 if not done else 0
-                vprint('done') if done else vprint(SKIP)
+                err += _repair_by_order(morph, intact_branches, node, order, vprint, rng, args)
+
             elif order - 1 in intact_branches:
-                idx = rng.choice(len(intact_branches[order - 1]))
-                rec, rep = intact_branches[order - 1][idx]
-                vprint(f'using {rep.ident()} (order {order-1}) ...',
-                       end=' ')
-                done = repair_branch(morph, node, rec, rep,
-                                     force=args.force_repair,
-                                     keep_radii=args.keep_radii)
-                err += 1 if not done else 0
-                vprint('done') if done else vprint(SKIP)
+                err += _repair_by_order(morph, intact_branches, node, order - 1, vprint, rng, args)
+
             elif args.force_repair:
                 if intact_branches:
                     order = rng.choice(list(intact_branches.keys()))
-                    idx = rng.choice(len(intact_branches[order]))
-                    rec, rep = intact_branches[order][idx]
-                    vprint(f'using {rep.ident()} (order {order}) ...',
-                           end=' ')
-                    done = repair_branch(morph, node, rec, rep, force=True)
-                    err += 1 if not done else 0
-                    vprint('done') if done else vprint(SKIP)
+                    err += _repair_by_order(morph, intact_branches, node, order, vprint, rng, args)
                 else:
                     err += 1
                     vprint(f'... no intact branches, {SKIP}')
