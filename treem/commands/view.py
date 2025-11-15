@@ -1,19 +1,12 @@
 """Implementation of CLI view command."""
 
-import matplotlib.pyplot as plt
 import matplotlib as mpl
-
+import matplotlib.pyplot as plt
 from cycler import cycler
 
-from treem.morph import Morph
-from treem.morph import DGram
 from treem.io import SWC
-
-from treem.utils.plot import plot_neuron
-from treem.utils.plot import plot_section
-from treem.utils.plot import plot_tree
-from treem.utils.plot import plot_points
-
+from treem.morph import DGram, Morph
+from treem.utils.plot import plot_neuron, plot_points, plot_section, plot_tree
 
 _colors = ('crimson', 'dodgerblue', 'darkgrey', 'royalblue', 'limegreen',
            'orchid', 'red', 'purple', 'orange', 'darkturquoise')
@@ -189,7 +182,7 @@ def view(args):
     morph = _load_and_plot_morphology(args, ax, types)
     _plot_overlays(args, ax, morph, types)
     _configure_view_limits(args, ax)
-    
+
     ymin = ax.xy_dataLim.ymin
     zmin = ax.zz_dataLim.xmin
     xmax = ax.xy_dataLim.xmax

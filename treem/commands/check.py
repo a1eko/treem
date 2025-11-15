@@ -1,7 +1,7 @@
 """Implementation of CLI check command."""
 
-import os
 import json
+import os
 import warnings
 
 import numpy as np

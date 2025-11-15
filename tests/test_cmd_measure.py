@@ -1,7 +1,7 @@
 """Testing CLI command measure."""
 
-import subprocess
 import os
+import subprocess
 
 
 def test_measure():

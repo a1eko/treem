@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from treem import Node, SWC, Morph
+from treem import SWC, Morph, Node
 
 
 def convert(args):

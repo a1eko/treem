@@ -1,14 +1,12 @@
 """Implementation of CLI repair command."""
 
 import math
-
 from itertools import chain
 
 import numpy as np
 
-from treem import Morph, SWC
-from treem.utils.geom import repair_branch, sample, norm, rotation
-
+from treem import SWC, Morph
+from treem.utils.geom import norm, repair_branch, rotation, sample
 
 SKIP = 'not repaired'
 

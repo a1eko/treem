@@ -2,11 +2,9 @@
 
 import numpy as np
 
-from treem.morph import Morph
 from treem.io import SWC
-from treem.utils.geom import fibonacci_sphere
-from treem.utils.geom import rotation_matrix
-from treem.utils.geom import rotation
+from treem.morph import Morph
+from treem.utils.geom import fibonacci_sphere, rotation, rotation_matrix
 
 
 def _filter_by_comparison(nodes, getter_func, target_val, compare_op):
@@ -82,10 +80,10 @@ def find(args):
     root_coord = morph.root.coord()
     nodes = _filter_by_comparison(nodes, lambda x: x.dist(root_coord), args.dist, args.compare)
     nodes = _filter_by_comparison(nodes, lambda x: x.coord()[2], args.slice, args.compare)
-    
+
     def jump_getter(x):
         return abs((x.parent.coord() - x.coord())[2]) if not x.is_root() else -1
-        
+
     nodes = _filter_by_comparison(nodes, jump_getter, args.jump, args.compare)
 
     # filter cut points

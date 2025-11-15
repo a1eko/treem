@@ -1,7 +1,7 @@
 """Testing CLI command repair."""
 
-import subprocess
 import os
+import subprocess
 
 
 def test_transpose(tmp_path):

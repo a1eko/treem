@@ -1,13 +1,12 @@
 """Implementation of CLI modify command."""
 
 import math
-
 from itertools import chain
 
 import numpy as np
 
-from treem.morph import Morph
 from treem.io import SWC
+from treem.morph import Morph
 from treem.utils.geom import rotation
 
 

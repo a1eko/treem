@@ -1,6 +1,7 @@
 """Utilities for manipulating geometry of morphology reconstructions."""
 
 import math
+
 import numpy as np
 
 from treem.io import SWC

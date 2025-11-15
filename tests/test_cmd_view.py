@@ -1,7 +1,7 @@
 """Testing CLI command view."""
 
-import subprocess
 import os
+import subprocess
 
 
 def test_png(tmp_path):
