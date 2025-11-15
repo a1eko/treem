@@ -12,7 +12,6 @@ The following items are marked as pending tasks and will be part of the next maj
 ### Planned
 
 - Improve test coverage.
-- Re-enable flake8 lint testing.
 - Revise documentation for consitency.
 - Do not interpolate diameter if the parent is root (render, measure, repair, morph).
 
@@ -22,6 +21,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Changed
 
+- Enabled lint testing using Ruff.
 - Code refactoring to address SonarQube findings (check, find, measure, modify, repair, view and morph).
 - Apply minor code adjustments for SonarQube compliance.
 
