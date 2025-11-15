@@ -36,6 +36,24 @@ def _correct_shrink_z(morph, args):
         node.v[SWC.Z] = z
 
 
+def _fix_by_tilt(morph, node, jump):
+    """Corrects z-jump by tilting the section."""
+    parent = node.parent
+    dist = max(norm(parent.coord() - jump_node.coord())
+               for jump_node in node.leaves())
+    leng = max(norm(node.coord() - jump_node.coord())
+               for jump_node in node.leaves())
+    leaf = [jump_node for jump_node in node.leaves()
+            if norm(node.coord() - jump_node.coord()) == leng][0]
+    vdir = leaf.coord() - node.parent.coord()
+    shift = [0, 0, jump * leng / dist]
+    morph.translate(shift, node)
+    udir = leaf.coord() - node.coord()
+    axis, angle = rotation(udir, vdir)
+    morph.rotate(axis, angle, node)
+    return leaf
+
+
 def _correct_zjumps(morph, nodes, args):
     """Corrects for discontinuties along Z axis in given nodes."""
     for node in nodes:
@@ -49,33 +67,9 @@ def _correct_zjumps(morph, nodes, args):
             for split_node in jump_sec[:int(len(jump_sec) / 2)]:
                 morph.move(shift, split_node)
         elif args.zjump_mode == 'tilt':
-            parent = node.parent
-            dist = max(norm(parent.coord() - jump_node.coord())
-                       for jump_node in node.leaves())
-            leng = max(norm(node.coord() - jump_node.coord())
-                       for jump_node in node.leaves())
-            leaf = [jump_node for jump_node in node.leaves()
-                    if norm(node.coord() - jump_node.coord()) == leng][0]
-            vdir = leaf.coord() - node.parent.coord()
-            shift = [0, 0, jump * leng / dist]
-            morph.translate(shift, node)
-            udir = leaf.coord() - node.coord()
-            axis, angle = rotation(udir, vdir)
-            morph.rotate(axis, angle, node)
+            _ = _fix_by_tilt(morph, node, jump)
         elif args.zjump_mode == 'join':
-            parent = node.parent
-            dist = max(norm(parent.coord() - jump_node.coord())
-                       for jump_node in node.leaves())
-            leng = max(norm(node.coord() - jump_node.coord())
-                       for jump_node in node.leaves())
-            leaf = [jump_node for jump_node in node.leaves()
-                    if norm(node.coord() - jump_node.coord()) == leng][0]
-            vdir = leaf.coord() - node.parent.coord()
-            shift = [0, 0, jump * leng / dist]
-            morph.translate(shift, node)
-            udir = leaf.coord() - node.coord()
-            axis, angle = rotation(udir, vdir)
-            morph.rotate(axis, angle, node)
+            leaf = _fix_by_tilt(morph, node, jump)
             start = list(node.section(reverse=True))[-1].parent
             dist = max(norm(start.coord() - jump_node.coord())
                        for jump_node in node.leaves())
