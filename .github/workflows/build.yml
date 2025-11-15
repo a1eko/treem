@@ -37,7 +37,7 @@ jobs:
       - name: Run Tox Tests
         run: tox -e py${{ matrix.python-version == '3.9' && '39' || '314' }}
 
-      - name: Run Tox Lint (Ruff Check)
+      - name: Run Tox Lint (Run Once on Python 3.9)
         run: tox -e lint
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == '3.9' }}
 
