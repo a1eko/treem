@@ -21,15 +21,17 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Changed
 
-- Enabled lint testing using Ruff.
+- Lint testing using Ruff.
 - Code refactoring to address SonarQube findings (check, find, measure, modify, repair, view and morph).
-- Apply minor code adjustments for SonarQube compliance.
+- Minor code adjustments for SonarQube compliance.
 
 ### Deprecated
 
+- None
+
 ### Removed
 
-- Replace TODO file with CHANGELOG.md.
+- TODO file replaced with CHANGELOG.md.
 
 ### Fixed
 
@@ -42,10 +44,12 @@ The following items are marked as pending tasks and will be part of the next maj
 
 2. Matplotlib Backend Missing After Installation
 
-  - **Issue:** Not available Matplotlib backend in swc-view after fresh installation.
-  - **Workaround:** Run gdk-pixbuf-register to enable Matplotlib backends.
+  - **Issue:** Matplotlib backend is not available in swc-view after fresh installation.
+  - **Workaround:** Run gdk-pixbuf-register to enable backends.
 
 ### Security
+
+- None
 
 
 ## 1.1.2 - 2025-11-06
