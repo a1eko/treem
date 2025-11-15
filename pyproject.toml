@@ -43,7 +43,7 @@ Homepage = "https://github.com/a1eko/treem"
 test = [
     "pytest",
     "pytest-cov",
-    "flake8",
+    "ruff",
     "numpy",
     "matplotlib",
 ]
@@ -55,3 +55,11 @@ dependencies = [
     "-e",
     ".[test]",
 ]
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I"] # basic Error, Flake8, Warning, and Isort rules
+target-version = "py37"
+
+[tool.ruff.lint]
+ignore = []
