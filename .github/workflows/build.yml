@@ -37,6 +37,10 @@ jobs:
       - name: Run Tox Tests
         run: tox -e py${{ matrix.python-version == '3.9' && '39' || '314' }}
 
+      - name: Run Tox Lint (Ruff Check)
+        run: tox -e lint
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == '3.9' }}
+
       - name: Build package (Run Once on Python 3.14)
         run: hatch build
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == '3.14' }}
