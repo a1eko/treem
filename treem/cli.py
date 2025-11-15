@@ -1,25 +1,21 @@
 """Command-line interface to package treem."""
 
-# pylint: disable=too-many-statements
-# pylint: disable=ungrouped-imports
-# pylint: disable=unused-import
-
 import argparse
 import sys
 
-from treem.io import SWC
-
 from treem.commands.check import check
-from treem.commands.view import view
+from treem.commands.convert import convert
 from treem.commands.find import find
+from treem.commands.measure import measure
 from treem.commands.modify import modify
 from treem.commands.repair import repair
-from treem.commands.measure import measure
-from treem.commands.convert import convert
+from treem.commands.view import view
+from treem.io import SWC
 
 try:
-    import OpenGL
-    from treem.commands.render import render, _HELP
+    import OpenGL  # noqa: F401
+
+    from treem.commands.render import _HELP, render
 except ImportError:
     pass
 

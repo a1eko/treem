@@ -8,7 +8,7 @@ import numpy as np
 class SWC():  # pylint: disable=too-few-public-methods
     """Definitions of the data format."""
     TYPES = (SOMA, AXON, DEND, APIC) = range(1, 5)
-    COLS = (I, T, X, Y, Z, R, P) = range(7)
+    COLS = (I, T, X, Y, Z, R, P) = range(7)  # noqa: E741
     XY = slice(2, 4)
     XZ = slice(2, 5, 2)
     YZ = slice(3, 5)
@@ -19,7 +19,7 @@ class SWC():  # pylint: disable=too-few-public-methods
 
 class TreemEncoder(json.JSONEncoder):
     """Extended JSONEncoder to serialize treem objects."""
-    def default(self, obj):  # pylint: disable=arguments-renamed
+    def default(self, obj):
         if hasattr(obj, 'tolist'):
             return obj.tolist()
         if isinstance(obj, set):

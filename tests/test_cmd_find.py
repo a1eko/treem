@@ -1,7 +1,7 @@
 """Testing CLI command find."""
 
-import subprocess
 import os
+import subprocess
 
 
 def test_all_nodes():

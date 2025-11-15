@@ -1,14 +1,13 @@
 """Morphology reconstruction data structure."""
 
 import math
-
 from collections import deque
 
 import numpy as np
 
-from treem.tree import Tree
 from treem.io import SWC, load_swc, save_swc
-from treem.utils.geom import rotation_matrix, norm
+from treem.tree import Tree
+from treem.utils.geom import norm, rotation_matrix
 
 
 class Node(Tree):
@@ -459,7 +458,7 @@ def get_segdata(morph):
 
 class SEG():  # pylint: disable=too-few-public-methods
     """Definitions of the extended segment data format."""
-    (I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL,
+    (I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL,  # noqa: E741
      DIST, DEGREE, ORDER, BREADTH, TOTLEN) = range(16)
 
 

@@ -57,9 +57,7 @@ dependencies = [
 ]
 
 [tool.ruff]
-line-length = 88
+line-length = 79
 select = ["E", "F", "W", "I"] # basic Error, Flake8, Warning, and Isort rules
 target-version = "py37"
-
-[tool.ruff.lint]
-ignore = []
+ignore = ["E501"]

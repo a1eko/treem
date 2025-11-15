@@ -1,7 +1,7 @@
 """Testing CLI command check."""
 
-import subprocess
 import os
+import subprocess
 
 
 def test_no_file():

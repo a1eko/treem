@@ -1,17 +1,16 @@
 """Implementation of CLI measure command."""
 
-import os
 import json
 import math
-
 import multiprocessing as mp
+import os
+
 import numpy as np
 
-from treem import Morph, SWC
-
+from treem import SWC, Morph
 from treem.io import TreemEncoder
+from treem.morph import SEG, get_segdata
 from treem.utils.geom import norm
-from treem.morph import get_segdata, SEG
 
 
 def _measure_neurites(morph, morphometry, name, types, ptmap, opt=[]):

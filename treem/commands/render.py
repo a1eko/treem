@@ -2,16 +2,14 @@
 
 import numpy as np
 
-from treem import Morph, SWC
-from treem.utils.geom import rotation
-
 # pylint: disable=redefined-builtin
-
 import OpenGL.GL as GL
 import OpenGL.GLU as GLU
 import OpenGL.GLUT as GLUT
-
 from PIL import Image, ImageOps
+
+from treem import SWC, Morph
+from treem.utils.geom import rotation
 
 _HELP = """
 interactive commands:

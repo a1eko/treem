@@ -1,7 +1,7 @@
 """Testing CLI command modify."""
 
-import subprocess
 import os
+import subprocess
 
 
 def test_scale(tmp_path):

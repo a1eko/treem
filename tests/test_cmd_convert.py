@@ -1,7 +1,7 @@
 """Testing CLI command convert."""
 
-import subprocess
 import os
+import subprocess
 
 
 def test_unordered(tmp_path):

@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from treem import Node, Morph
+from treem import Morph, Node
 
 
 def test_node_str():
