@@ -90,6 +90,7 @@ class Node(Tree):
         """Returns segment area at the node (float)."""
         h = self.length()
         a = self.radius()
+        # same base radius if parent is root
         b = self.parent.radius() if not self.is_root() and not self.parent.is_root() else a
         return math.pi * (a + b) * math.sqrt((a - b) * (a - b) + h * h)
 
@@ -97,6 +98,7 @@ class Node(Tree):
         """Returns segment volume at the node (float)."""
         h = self.length()
         a = self.radius()
+        # same base radius if parent is root
         b = self.parent.radius() if not self.is_root() and not self.parent.is_root() else a
         return math.pi / 3.0 * (a * a + a * b + b * b) * h
 

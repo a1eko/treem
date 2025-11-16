@@ -13,6 +13,7 @@ def test_measure():
                             universal_newlines=True)
     stdout, stderr = proc.communicate()
     assert proc.returncode == 0
+    # same base radius if parent is root
     assert stdout == """pass_simple_branch
 dend area        19.7422
 dend breadth           3
