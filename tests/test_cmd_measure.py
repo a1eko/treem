@@ -14,7 +14,7 @@ def test_measure():
     stdout, stderr = proc.communicate()
     assert proc.returncode == 0
     assert stdout == """pass_simple_branch
-dend area        24.0904
+dend area        19.7422
 dend breadth           3
 dend contrac           1
 dend degree            2
@@ -26,7 +26,7 @@ dend nstem             1
 dend nterm             3
 dend order             3
 dend seclen      3.39411
-dend volume      3.56734
+dend volume      1.90866
 dend xdim              8
 dend ydim              5
 dend zdim              0

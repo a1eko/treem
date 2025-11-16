@@ -363,20 +363,22 @@ def _resample(morph, res):
                       morph.root.sections()):
         length = morph.length(sec)
         points = morph.points(sec)
-        parent_point = sec[0].parent.v[SWC.XYZR]
-        # parent root: if sec[0].parent.is_root():
-        # parent root:     parent_point[3] = sec[0].v[SWC.R]
+        head = sec[0]
+        tail = sec[-1]
+        parent_point = head.parent.v[SWC.XYZR]
+        if head.parent.is_root():
+             parent_point[3] = head.v[SWC.R]
         points = np.insert(points, 0, parent_point, axis=0)
         points = sample(points, np.ceil(length / res).astype(int))
         points = points[1:]
         start = True
         for ident, point in enumerate(points, ident):
             x, y, z, r = point
-            pid = idmap[sec[0].parent_ident()] if start else ident - 1
-            v = np.array([ident, sec[0].type(), x, y, z, r, pid])
+            pid = idmap[head.parent_ident()] if start else ident - 1
+            v = np.array([ident, head.type(), x, y, z, r, pid])
             start = False if start else start
             data.append(v)
-        idmap[sec[-1].v[SWC.I]] = ident
+        idmap[tail.v[SWC.I]] = ident
         ident += 1
     return Morph(data=np.array(data))
 
