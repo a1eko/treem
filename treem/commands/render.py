@@ -1,8 +1,6 @@
 """Implementation of CLI render command."""
 
 import numpy as np
-
-# pylint: disable=redefined-builtin
 import OpenGL.GL as GL
 import OpenGL.GLU as GLU
 import OpenGL.GLUT as GLUT
@@ -32,7 +30,6 @@ interactive commands:
 
 class InteractionMatrix():
     """Class for object rotation and translation."""
-    # pylint: disable=invalid-name
     def __init__(self):
         self.current_matrix = None
         self.reset()
@@ -69,7 +66,6 @@ class InteractionMatrix():
 
 class MouseInteractor():
     """Class for mouse control."""
-    # pylint: disable=invalid-name
     def __init__(self, translation_scale=0.1, rotation_scale=0.2):
         self.scaling_factor_rotation = rotation_scale
         self.scaling_factor_translation = translation_scale
@@ -116,8 +112,6 @@ class MouseInteractor():
 
 class App:
     """Interactive application."""
-    # pylint: disable=invalid-name
-    # pylint: disable=too-many-instance-attributes
     def __init__(self, morph, title='render'):
         GLUT.glutInit()
         GLUT.glutInitDisplayMode(GLUT.GLUT_SINGLE | GLUT.GLUT_RGB | GLUT.GLUT_DEPTH)
@@ -314,7 +308,6 @@ class App:
 
     def write_img(self):
         """Save image buffer to file."""
-        # pylint: disable=no-value-for-parameter
         GL.glPixelStorei(GL.GL_PACK_ALIGNMENT, 1)
         width, height = GL.glGetFloatv(GL.GL_VIEWPORT).astype(int)[2:4]
         data = GL.glReadPixels(0, 0, width, height, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE)
@@ -323,7 +316,7 @@ class App:
         self.img_count += 1
         image.save(f'render_{self.img_count}.png', 'PNG')
 
-    def keyboard(self, key, x, y):  # pylint: disable=unused-argument
+    def keyboard(self, key, x, y):
         """Keyboard callback function."""
         key = key.decode('UTF-8')
         if key == 'z':

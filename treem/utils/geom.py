@@ -6,9 +6,6 @@ import numpy as np
 
 from treem.io import SWC
 
-# pylint: disable=invalid-name
-# pylint: disable=too-many-locals
-
 
 def rotation_matrix(axis, angle):
     """Computes rotation matrix for 3D manipulations.
@@ -75,7 +72,6 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
     Returns:
         True if repaired.
     """
-    # pylint: disable=too-many-arguments
     done = 0
     cutsec = list(reversed(list(cut.section(reverse=True))))
     repsec = list(rep.section())
@@ -86,7 +82,7 @@ def repair_branch(cmorph, cut, rmorph, rep, force=False, keep_radii=False):
         for node in repsec[-1::-1]:
             if rmorph.length(node.section()) > replen - cutlen:
                 break
-        source = node  # pylint: disable=undefined-loop-variable
+        source = node
     elif rep.breadth() > 1 or force:
         source = rep
     else:

@@ -21,7 +21,6 @@ def _setup_figure(args):
     """Sets up the Matplotlib figure, axes, and initial styles."""
     plt.rc('font', size=args.font)
     fig = plt.figure(figsize=(8, 8))
-    # pylint: disable=invalid-name
     ax = fig.add_subplot(projection='3d')
     # basic axis style cleanup
     for pane in [ax.xaxis.pane, ax.yaxis.pane, ax.zaxis.pane]:
@@ -43,7 +42,7 @@ def _apply_color_cycler(args):
     """Applies custom colors to the plot cycle."""
     if args.cycler_color:
         colors = list(_colors)
-        for x in args.cycler_color:  # pylint: disable=invalid-name
+        for x in args.cycler_color:
             i, colorname = x.split(':')
             i = int(i)
             if 0 <= i < _NCOLORS:
@@ -135,7 +134,6 @@ def _configure_view_limits(args, ax):
     xmax = ax.xy_dataLim.xmax
     ymax = ax.xy_dataLim.ymax
     zmax = ax.zz_dataLim.xmax
-    # pylint: disable=W3301
     smax = max(max(ax.xy_dataLim.size), max(ax.zz_dataLim.size))
     # set X/Y/Z limits
     lims = {
@@ -170,10 +168,6 @@ def _plot_scale_bar(args, ax, xmax, ymin, zmin, smax):
 
 def view(args):
     """Display neuron morphology structure."""
-    # pylint: disable=too-many-locals
-    # pylint: disable=too-many-branches
-    # pylint: disable=too-many-statements
-    # pylint: disable=expression-not-assigned
 
     _, ax = _setup_figure(args)
     _apply_color_cycler(args)

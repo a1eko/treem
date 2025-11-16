@@ -4,8 +4,6 @@ import numpy as np
 
 from treem.io import SWC
 
-# pylint: disable=invalid-name
-
 
 def plot_tree(ax, tree, data, **kwargs):
     """Plots entire branch.
@@ -16,7 +14,6 @@ def plot_tree(ax, tree, data, **kwargs):
         data (NumPy ndarray): raw data of morphology Morph.
         kwargs: arguments for matplotlib plot().
     """
-    # pylint: disable=too-many-locals
     for sec in tree.sections():
         first = sec[0].ident() - 1
         last = sec[-1].ident()
@@ -28,7 +25,7 @@ def plot_tree(ax, tree, data, **kwargs):
         for child in bif.siblings:
             c = child.coord()
             a = np.array([b, c])
-            x, y, z = a.T  # pylint: disable=unpacking-non-sequence
+            x, y, z = a.T
             ax.plot(x, y, z, **kwargs)
 
 
@@ -60,7 +57,6 @@ def plot_neuron(ax, morph, types=SWC.TYPES, colors=None, linewidth=1):
         colors (dict): colors for point types ({pt: colspec}).
         linewidth (int): line width.
     """
-    # pylint: disable=unpacking-non-sequence
     colors = colors if colors else {t: f'C{t}' for t in types}
     r = morph.root.coord()
     for stem in morph.stems():
@@ -88,7 +84,6 @@ def plot_points(ax, morph, ids, types=SWC.TYPES, show_id=False, markersize=6):
         ids (int iterable): list of node IDs.
         types (int iterable): point types to display.
     """
-    # pylint: disable=too-many-arguments
     points = np.array([morph.data[x - 1] for x in ids
                        if morph.data[x - 1][SWC.T] in types])
     x, y, z = points[:, SWC.XYZ].T
