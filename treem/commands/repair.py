@@ -366,6 +366,7 @@ def _resample(morph, res):
         head = sec[0]
         tail = sec[-1]
         parent_point = head.parent.v[SWC.XYZR]
+        # same base radius if parent is root
         if head.parent.is_root():
              parent_point[3] = head.v[SWC.R]
         points = np.insert(points, 0, parent_point, axis=0)
