@@ -13,7 +13,6 @@ The following items are marked as pending tasks and will be part of the next maj
 
 - Improve test coverage.
 - Revise documentation for consitency.
-- Do not interpolate diameter if the parent is root (render, measure, repair, morph).
 
 ### Added
 
@@ -22,6 +21,10 @@ The following items are marked as pending tasks and will be part of the next maj
 ### Changed
 
 - Lint testing using Ruff.
+- Node radius interpretaion has been changed (see render, measure, repair and
+  morph). If parent of a node is root, then the parent's radius is ignored
+  and the node's radius is used instead. This affects calculation of
+  area and volume as well as radius interpolation of the stem segments.
 - Code refactoring to address SonarQube findings (check, find, measure, modify, repair, view and morph).
 - Minor code adjustments for SonarQube compliance.
 
