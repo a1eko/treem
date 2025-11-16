@@ -16,7 +16,7 @@ class Node(Tree):
     def __init__(self, value=None):
         """Inits Node with value."""
         super().__init__()
-        self.v = value  # pylint: disable=invalid-name
+        self.v = value
 
     def __str__(self):
         """String representation of Node value."""
@@ -68,7 +68,7 @@ class Node(Tree):
         """Returns coordinates of the node (x,y,z) (NumPy ndarray[3])."""
         return self.v[SWC.XYZ]
 
-    def dist(self, origin=[0.0, 0.0, 0.0]):  # pylint: disable=dangerous-default-value
+    def dist(self, origin=[0.0, 0.0, 0.0]):
         """Returns Euclidean distance of the node to origin (float)."""
         return np.linalg.norm(self.v[SWC.XYZ] - origin)
 
@@ -82,14 +82,12 @@ class Node(Tree):
 
     def length(self):
         """Returns segment length at the node (float)."""
-        # pylint: disable=invalid-name
         a = self.coord()
         b = self.parent.coord() if not self.is_root() else a
         return norm(a - b)
 
     def area(self):
         """Returns segment area at the node (float)."""
-        # pylint: disable=invalid-name
         h = self.length()
         a = self.radius()
         b = self.parent.radius() if not self.is_root() else a
@@ -97,7 +95,6 @@ class Node(Tree):
 
     def volume(self):
         """Returns segment volume at the node (float)."""
-        # pylint: disable=invalid-name
         h = self.length()
         a = self.radius()
         b = self.parent.radius() if not self.is_root() else a
@@ -381,8 +378,6 @@ def _measure_backward(morph, d):
 
 def get_segdata(morph):
     """Collects extended segment data."""
-    # pylint: disable=invalid-name
-    # pylint: disable=too-many-locals
     m = morph
     d = {}
     for i, t, x, y, z, r, p in m.data:
@@ -456,7 +451,7 @@ def get_segdata(morph):
                      for i in sorted(d)])
 
 
-class SEG():  # pylint: disable=too-few-public-methods
+class SEG():
     """Definitions of the extended segment data format."""
     (I, T, X, Y, Z, R, P, LENGTH, PATH, XSEC, XSEC_REL,  # noqa: E741
      DIST, DEGREE, ORDER, BREADTH, TOTLEN) = range(16)

@@ -5,7 +5,7 @@ import json
 import numpy as np
 
 
-class SWC():  # pylint: disable=too-few-public-methods
+class SWC():
     """Definitions of the data format."""
     TYPES = (SOMA, AXON, DEND, APIC) = range(1, 5)
     COLS = (I, T, X, Y, Z, R, P) = range(7)  # noqa: E741
