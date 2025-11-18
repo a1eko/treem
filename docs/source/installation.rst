@@ -18,15 +18,14 @@ For alternative installation methods, refer to the official ``pip3`` documentati
 
 The ``treem`` module has minimal runtime dependencies:
 
-* Python >= 3.7
+* ``python`` >= 3.7
 * ``matplotlib``
 * ``numpy``
-* ``PyOpenGL`` (optional, required for the ``swc render`` command)
+* ``PyOpenGL`` (optional, enables ``swc render`` command)
 
-For testing and documentation purposes, ``treem`` requires the following
-development packages and third-party extensions:
+For testing and documentation purposes, ``treem`` requires additional development packages with third-party support:
 
-* ``sphinx`` with the ``napoleon`` and ``programoutput`` extensions
-* ``pytest`` with ``pytest-cov`` plugin
+* ``sphinx`` with ``napoleon`` and ``programoutput`` extensions
 * ``sphinx-rtd-theme``
+* ``pytest`` with optional ``pytest-cov`` plugin
 * ``coverage``
