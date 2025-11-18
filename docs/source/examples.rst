@@ -117,7 +117,7 @@ Verify that the output file is valid::
 
 .. rubric:: Displaying the morphology
 
-The `view` command displays the structure of the morphology reconstruction.
+The ``view`` command displays the structure of the morphology reconstruction.
 It renders only the centerline of the reconstructed segments, without showing
 their diameters::
 
@@ -135,7 +135,7 @@ cells::
 
 .. rubric:: Measuring morphometry of the reconstruction
 
-The `measure` command prints the basic morphometric features of the
+The ``measure`` command prints the basic morphometric features of the
 reconstruction::
 
     swc measure pass_nmo_1.swc
@@ -145,7 +145,7 @@ reconstruction::
 
 .. rubric:: Locating single nodes
 
-The `find` command locates individual nodes that satisfy multiple search
+The ``find`` command locates individual nodes that satisfy multiple search
 criteria. For example, to find a node within the dendrites (point type ``3``)
 with a diameter smaller than 0.1 µm, run the following::
 
@@ -165,7 +165,7 @@ The following command displays the terminal sections of the dendrites::
 
 .. rubric:: Repairing damaged reconstructions
 
-A common reconstruction error is the so-called `z-jump`, which occurs
+A common reconstruction error is the so-called *z-jump*, which occurs
 when a portion of a neurite is displaced along the z-axis by several
 micrometers.
 
@@ -175,14 +175,14 @@ micrometers.
 
    An illustration of z-jump in the morphology reconstruction.
 
-To locate z-jumps greater than 10 µm, run the `find` command::
+To locate z-jumps greater than 10 µm, run the ``find`` command::
 
     swc find pass_zjump.swc -z 10
 
 .. program-output:: swc find ../../tests/data/pass_zjump.swc -z 10
 
-Potential z-jumps can be corrected using the `repair` command with one
-of four methods: `align`, `split`, `tilt`, or `join` (default: `align`),
+Potential z-jumps can be corrected using the ``repair`` command with one
+of four methods: ``align``, ``split``, ``tilt``, or ``join`` (default: ``align``),
 as illustrated in the figure. To repair z-jumps, run::
 
 
@@ -196,16 +196,16 @@ as illustrated in the figure. To repair z-jumps, run::
 
 Experimental slice preparation protocols may result in tissue shrinkage.
 As a consequence, morphology reconstructions appear smaller, with increased
-neurite contraction compared to `in vivo` conditions. To compensate for
-this effect, various options of the `repair` and `modify` commands can
+neurite contraction compared to *in vivo* conditions. To compensate for
+this effect, various options of the ``repair`` and ``modify`` commands can
 be used.
 
 Refer to the following options for correction and adjustment:
 
-* ``-s``, ``-t``, and ``-m`` (`modify` command) - scaling, stretching,
+* ``-s``, ``-t``, and ``-m`` (``modify`` command) - scaling, stretching,
   and smoothing, respectively.
-* ``-k`` and ``-kxy`` (`repair` command) - shrinkage correction along
-  the `z` axis and within the `(x, y)` plane, respectively.
+* ``-k`` and ``-kxy`` (``repair`` command) - shrinkage correction along
+  the *z* axis and within the *(x, y)* plane, respectively.
 
 .. figure:: ../images/mod_stretch.png
    :width: 300px
@@ -225,7 +225,7 @@ Refer to the following options for correction and adjustment:
 Morphological reconstructions of neurons located near the surface of a
 slice are often incomplete, missing neurites that were cut during tissue
 sectioning. The cut points of dendrites can be identified using the
-`find` command::
+``find`` command::
 
     swc find pass_nmo_2_cut.swc -c 10 -p 3
 
@@ -246,10 +246,10 @@ procedure::
     swc repair pass_nmo_2_cut.swc -c `swc find pass_nmo_2_cut.swc -c 10 -p 3`
 
 Alternatively, specify selected node IDs using the ``-c`` option of the
-`repair` command.
+``repair`` command.
 
 The repaired reconstruction (``rep.swc``) can be compared with the original
-using the `view` command and the ``-c shadow`` option::
+using the ``view`` command and the ``-c shadow`` option::
 
     swc view pass_nmo_2_cut.swc rep.swc -p 3 -c shadow
 
@@ -262,8 +262,8 @@ using the `view` command and the ``-c shadow`` option::
 
 When the ``-c shadow`` option is used, the second and all subsequent
 morphologies are plotted as underlying structures, with the first
-morphology rendered on top. The default shadow color is `lightgray`,
-and the line width is 3.0. To produce a plot like the one shown
+morphology rendered on top. The default shadow color is ``lightgray``,
+and the line width is ``3.0``. To produce a plot like the one shown
 in the figure above, run the following command::
 
     swc view pass_nmo_2_cut.swc rep.swc -p 3 -c shadow --shadow-color red --shadow-width 0.5
@@ -277,7 +277,7 @@ example is cloning the completed reconstructions with random alterations
 of their neurites. This approach increases variability within the
 population of morphologies while preserving their topological structure
 and statistical characteristics, as illustrated in the figure. For details,
-see the corresponding options of the `modify` and `repair` commands.
+see the corresponding options of the ``modify`` and ``repair`` commands.
 
 .. figure:: ../images/mod_morph.png
    :width: 300px
@@ -287,7 +287,7 @@ see the corresponding options of the `modify` and `repair` commands.
 
 Morphological modifications are applied to clone existing reconstructions
 and increase morphological variability in simulations. As an example,
-consider the random morphology generated by the `repair` command,
+consider the random morphology generated by the ``repair`` command,
 as described in the section above::
 
     swc repair pass_nmo_2_cut.swc -c `swc find pass_nmo_2_cut.swc -c 10 -p 3` --seed 123
@@ -295,14 +295,14 @@ as described in the section above::
 The default name of the repaired morphology is ``rep.swc``. In this example,
 the repaired morphology (``rep.swc``) is modified by twisting its dendrites
 at the branching points by a random angle of up to ±180 degrees. The resulting
-morphology (``mod.swc``) is then scaled in the `x`, `y`, and `z` dimensions
-by a factor of 0.8. The final structure is saved as ``clone1.swc``::
+morphology (``mod.swc``) is then scaled in the *x*, *y*, and *z* dimensions
+by a factor of ``0.8``. The final structure is saved as ``clone1.swc``::
 
     swc modify rep.swc -p 3 -w 180
     swc modify mod.swc -s 0.8 0.8 0.8 -o clone1.swc
 
 Similarly, the dendrites of the reconstruction (``rep.swc``) are twisted
-and scaled by a factor of 1.2, producing the morphology ``clone2.swc``::
+and scaled by a factor of ``1.2``, producing the morphology ``clone2.swc``::
 
     swc modify rep.swc -p 3 -w 360
     swc modify mod.swc -s 1.2 1.2 1.2 -o clone2.swc

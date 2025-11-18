@@ -5,11 +5,10 @@ Introduction
 Digital reconstructions of neuron morphology can be stored in various
 binary or plain-text data formats, depending on the processing platform
 or data repository (e.g., ASC, SWC, JSON, or HDF5). Among these, the
-format developed by Stockley, Wheal, and Cannon - known as ``SWC``
-(`Cannon et al., 1998 <https://doi.org/10.1016/S0165-0270(98)00091-0>`_) -
+format developed by Stockley, Wheal, and Cannon—known as ``SWC``
+(`Cannon et al., 1998 <https://doi.org/10.1016/S0165-0270(98)00091-0>`_)—
 is one of the oldest and most widely recognized. The module ``treem``
 works exclusively with reconstructions in the SWC format.
-
 
 .. rubric:: SWC File Format
 
@@ -35,8 +34,8 @@ Field Column Description    Values
  P    6      Parent node ID ``int``: -1, 1, 2, ...
 ===== ====== ============== =========================
 
-The `Node ID` is a unique identifier of each reconstructed point.
-The `Point type` is a user-defined flag that denotes a specific part of
+The ``Node ID`` is a unique identifier for each reconstructed point.
+The ``Point type`` is a user-defined flag that denotes a specific part of
 the neuron’s structure. The original format specification does not
 define standard point-type values, but most developers follow these
 common conventions:
@@ -50,11 +49,10 @@ Point type Corresponding cell part
 4          Apical dendrite
 ========== ==================================
 
-One point in any file has a parent node ID of '-1', indicating it is the
-`root` point, which is generally part of the soma. All other points have
-one, and only one parent thus defining a topological `tree` structure
-of the neuron morphology reconstruction.
-
+One point in any SWC file has a parent node ID of ``-1``, indicating it is the
+``root`` point, which is generally part of the soma. All other points have
+one, and only one, parent, thus defining a topological ``tree`` structure
+for the neuron morphology reconstruction.
 
 .. rubric:: Tree Data Structure and Morphometry Terminology
 
@@ -87,11 +85,11 @@ Degree
     The total number of children that a given node has.
 
 Leaf, terminal, tip
-    A node which has no children. A leaf has a degree of 0.
+    A node which has no children. A leaf has a degree of ``0``.
 
 Fork, branching point
     A node which has more than one child. A fork has a degree greater than
-    1. Forks with a degree of 2 are also called `bifurcation points`.
+    ``1``. Forks with a degree of ``2`` are also called *bifurcation points*.
 
 Depth, level
     The depth of a node is the number of connections between the root of
@@ -122,7 +120,7 @@ Segment
 
 Section
     A portion of the tree located between two structural points
-    (root, fork, or leaf).
+    (*root*, *fork*, or *leaf*).
 
 Stem
     The first non-somatic node of a section descending from the root.
@@ -130,9 +128,9 @@ Stem
 Tree traversal
     A method for visiting all nodes of a tree. Traversal can be performed
     in either depth-first search (DFS) or breadth-first search (BFS)
-    order. The three forms of depth-first traversal are `in-order`,
-    `pre-order`, and `post-order`, while breadth-first traversal is
-    referred to as `level-order`. For recursive implementations of these
+    order. The three forms of depth-first traversal are ``in-order``,
+    ``pre-order``, and ``post-order``, while breadth-first traversal is
+    referred to as ``level-order``. For recursive implementations of these
     traversal algorithms, see the ``treem.Tree`` source code.
 
 

@@ -5,14 +5,15 @@ treem - Neuron Morphology Processing Tool
 
 .. rubric:: Module ``treem``
 
-The ``treem`` module (pronounced as "trim") provides data structures and
-command-line tools for accessing and manipulating digital reconstructions
-of neuron morphology in the Stockley-Wheal-Cannon (SWC) format.
-
+The ``treem`` module (pronounced “trim”) provides data structures and
+command-line tools for accessing and manipulating digital
+reconstructions of neuronal morphology in the Stockley-Wheal-Cannon
+(SWC) format.
 
 .. rubric:: Main classes
 
-Morphological data can be accessed from source code through the following classes:
+Access to morphological data from the source code is provided through
+the classes ``Tree``, ``Node``, ``Morph``, and ``SWC``:
 
 =========  =========================================================
 ``Tree``   Recursive tree data structure
@@ -27,11 +28,12 @@ reference`.
 
 .. rubric:: Commands
 
-Common operations with SWC files can be performed using the swc command-line tool::
+Common operations with SWC files can be performed using the ``swc``
+command-line tool::
 
     swc <command> [options] file
 
-or::
+Alternatively::
 
     swc <command> file [file ...] [options] 
 
@@ -59,4 +61,3 @@ For detailed description of all commands and their options, see the
    examples
    cli
    api
-
