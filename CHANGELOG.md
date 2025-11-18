@@ -12,7 +12,6 @@ The following items are marked as pending tasks and will be part of the next maj
 ### Planned
 
 - Improve test coverage.
-- Revise documentation for consitency.
 
 ### Added
 
@@ -20,6 +19,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Changed
 
+- Minor documentation text formatting.
 - Lint testing using Ruff.
 - Node radius interpretaion has been changed (see render, measure, repair and
   morph). If parent of a node is root, then the parent's radius is ignored
