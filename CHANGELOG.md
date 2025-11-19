@@ -11,7 +11,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Planned
 
-- Improve test coverage.
+- Revise unit testing, improve test coverage.
 
 ### Added
 
