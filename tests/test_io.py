@@ -1,9 +1,9 @@
 """Testing module io."""
 
 import json
-import pytest
 
 import numpy as np
+import pytest
 
 from treem.io import TreemEncoder, load_swc, save_swc
 
