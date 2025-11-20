@@ -7,7 +7,8 @@ import subprocess
 def test_measure():
     """Tests for morphometric mesurements."""
     os.chdir(os.path.dirname(__file__) + '/data')
-    proc = subprocess.Popen(['swc', 'measure', 'pass_simple_branch.swc'],
+    proc = subprocess.Popen(['swc', 'measure', 'pass_simple_branch.swc',
+                             '-a', 'path', 'sholl'],
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True)
@@ -26,7 +27,9 @@ dend nbranch           2
 dend nstem             1
 dend nterm             3
 dend order             3
+dend path        8.48528
 dend seclen      3.39411
+dend sholl             1
 dend volume      1.90866
 dend xdim              8
 dend ydim              5
