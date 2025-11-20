@@ -21,3 +21,5 @@ def test_tree_traversal():
     assert tree3.depth() == 2
     assert tree2.width() == 2
     assert tree0.height() == 2
+    assert [1, 2, 0, 0] == [t.degree() for t in [tree0, tree1, tree2, tree3]]
+    assert [2, 2, 1, 1] == [t.breadth() for t in [tree0, tree1, tree2, tree3]]
