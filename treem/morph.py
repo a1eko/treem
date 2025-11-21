@@ -417,11 +417,11 @@ class DGram(Morph):
     """Neuron dendrogram representation."""
     def __init__(self, morph=None, source=None, data=None, types=SWC.TYPES,
                  zorder=0.0, ystep=0.0, zstep=0.0):
-        if morph is None:
+        if morph is not None:
+            morph = Morph(data=morph.data)
+        elif source is not None or data is not None:
             morph = Morph(source=source, data=data)
         else:
-            morph = Morph(data=morph.data)
-        if morph is None:
             super().__init__()
             return
 
@@ -430,7 +430,6 @@ class DGram(Morph):
         self._position_x(graph)
         ystep = self._position_z(graph, morph, ystep, zstep, zorder)
         self._position_y(graph, ystep)
-
         super().__init__(data=graph.data)
 
 
