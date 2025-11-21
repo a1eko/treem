@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from treem import DGram, Morph, Node, get_segdata
+from treem import SWC, DGram, Morph, Node, get_segdata
 
 
 def test_node_str():
@@ -185,7 +185,7 @@ def test_dgram_init():
                                  [4, 3, 1, 2, 0, 1, 2]]))
     dgram = DGram()
     assert dgram.data is None
-    dgram = DGram(morph)
+    dgram = DGram(morph.copy())
     data =  [[1, 1, 0, 2, 0, 1, -1],
              [2, 3, 0, 2, 0, 1, 1],
              [3, 3, 0, 1, 0, 1, 2],
@@ -209,3 +209,16 @@ def test_dgram():
     assert np.allclose(dgram.data.tolist(), data)
 
 
+def test_dgram_prune():
+    """Tests for dendrogram of selected neurite types."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2],
+                                 [4, 3, 1, 2, 0, 1, 2],
+                                 [5, 2, 0, 1, 0, 1, 1]]))
+    dgram = DGram(morph, types=[SWC.SOMA, SWC.DEND])
+    data =  [[1, 1, 0, 1, 0, 1, -1],
+             [2, 3, 0, 1, 0, 1, 1],
+             [3, 3, 0, 1, 0, 1, 2],
+             [4, 3, 0, 2, 0, 1, 2]]
+    assert np.allclose(dgram.data.tolist(), data)

@@ -70,8 +70,8 @@ def test_sample():
 def test_repair_branch():
     """Tests repair_branch."""
     os.chdir(os.path.dirname(__file__) + '/data')
-    cmorph=Morph('pass_simple_branch.swc')
-    rmorph=Morph('pass_simple_branch_2.swc')
+    cmorph = Morph('pass_simple_branch.swc')
+    rmorph = Morph('pass_simple_branch_2.swc')
     cut = [node for node in cmorph.root.walk() if node.ident()==13][0]
     rep = [node for node in rmorph.root.walk() if node.ident()==12][0]
     res = repair_branch(cmorph, cut, rmorph, rep)
@@ -82,8 +82,8 @@ def test_repair_branch():
 def test_repair_branch_short():
     """Tests repair_branch, short section."""
     os.chdir(os.path.dirname(__file__) + '/data')
-    cmorph=Morph('pass_simple_branch.swc')
-    rmorph=Morph('pass_zjump.swc')
+    cmorph = Morph('pass_simple_branch.swc')
+    rmorph = Morph('pass_zjump.swc')
     cut = [node for node in cmorph.root.walk() if node.ident()==13][0]
     rep = [node for node in rmorph.root.walk() if node.ident()==10][0]
     res = repair_branch(cmorph, cut, rmorph, rep, keep_radii=True)
