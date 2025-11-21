@@ -9,10 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The following items are marked as pending tasks and will be part of the next major release.
 
-### Planned
-
-- Revise unit testing, improve test coverage.
-
 ### Added
 
 - Start v1.2.0.dev line.
