@@ -89,4 +89,3 @@ def test_repair_branch_short():
     res = repair_branch(cmorph, cut, rmorph, rep, keep_radii=True)
     assert res == 1
     assert [node.ident() for node in cmorph.root.walk()] == list(range(1, 17))
-
