@@ -162,3 +162,16 @@ def test_segdata():
             [2, 3, 1, 0, 0, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 1],
             [3, 3, 2, 0, 0, 1, 2, 1, 2, 2, 1, 2, 0, 1, 1, 0]]
     assert np.allclose(get_segdata(morph), data)
+
+
+def test_segdata2():
+    """Tests for extended segment morphometric data."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2],
+                                 [4, 3, 1, 2, 0, 1, 2]]))
+    data = [[1, 1, 0, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0, 0, 2, 4],
+            [2, 3, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 3],
+            [3, 3, 2, 0, 0, 1, 2, 1, 2, 1, 1, 2, 0, 2, 1, 0],
+            [4, 3, 1, 2, 0, 1, 2, 2, 3, 2, 1, 2.23606798, 0, 2, 1, 0]]
+    assert np.allclose(get_segdata(morph), data)
