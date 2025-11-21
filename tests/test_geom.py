@@ -1,9 +1,18 @@
 """Testing module geom."""
 
+import os
+
 import numpy as np
 from numpy.testing import assert_array_almost_equal
 
-from treem.utils.geom import fibonacci_sphere, rotation, rotation_matrix, sample
+from treem import Morph
+from treem.utils.geom import (
+    fibonacci_sphere,
+    repair_branch,
+    rotation,
+    rotation_matrix,
+    sample,
+)
 
 
 def test_fibonacci_sphere():
@@ -56,4 +65,16 @@ def test_sample():
                                 [3., 0., 0., 1.]])
     result_sample = sample(points, 4)
     assert np.allclose(result_sample, expected_sample)
+
+
+def test_repair_branch():
+    """Tests repair_branch."""
+    os.chdir(os.path.dirname(__file__) + '/data')
+    cmorph=Morph('pass_simple_branch.swc')
+    rmorph=Morph('pass_simple_branch_2.swc')
+    cut = [node for node in cmorph.root.walk() if node.ident()==13][0]
+    rep = [node for node in rmorph.root.walk() if node.ident()==12][0]
+    res = repair_branch(cmorph, cut, rmorph, rep)
+    assert res == 1
+    assert [node.ident() for node in cmorph.root.walk()] == list(range(1, 17))
 
