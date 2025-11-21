@@ -86,7 +86,7 @@ def test_repair_branch_short():
     rmorph=Morph('pass_zjump.swc')
     cut = [node for node in cmorph.root.walk() if node.ident()==13][0]
     rep = [node for node in rmorph.root.walk() if node.ident()==10][0]
-    res = repair_branch(cmorph, cut, rmorph, rep)
+    res = repair_branch(cmorph, cut, rmorph, rep, keep_radii=True)
     assert res == 1
     assert [node.ident() for node in cmorph.root.walk()] == list(range(1, 17))
 
