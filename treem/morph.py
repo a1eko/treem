@@ -386,7 +386,6 @@ def get_segdata(morph):
         i, t, x, y, z, r, p = int(i), int(t), float(x), float(y), float(z), float(r), int(p)
         d[i] = {'t': t, 'x': x, 'y': y, 'z': z, 'r': r, 'p': p}
     center = m.root.coord()
-
     soma_idents = [node.ident() for node in m.root.walk() if node.type() == SWC.SOMA]
     for ident in soma_idents:
         d[ident]['length'] = 0.0
@@ -398,53 +397,8 @@ def get_segdata(morph):
         d[ident]['order'] = 0
         d[ident]['breadth'] = 0
         d[ident]['totlen'] = 0.0
-
-    """
-    # forward traversal
-    for stem in m.stems():
-        for sec in stem.sections():
-            order = 1
-            xsec = 0.0
-            seclen = m.length(sec)
-            for node in sec:
-                ident = node.ident()
-                length = node.length()
-                xsec += length
-                if node.parent.is_fork() and node.parent != m.root:
-                    order = d[node.parent.ident()]['order'] + 1
-                dist = np.linalg.norm(center - node.coord())
-                path = d[node.parent.ident()]['path']
-                path += length
-                d[ident]['length'] = length
-                d[ident]['path'] = path
-                d[ident]['xsec'] = xsec
-                d[ident]['xsec_rel'] = xsec / seclen
-                d[ident]['dist'] = dist
-                d[ident]['degree'] = node.degree()
-                d[ident]['order'] = order
-                d[ident]['breadth'] = 1
-                d[ident]['totlen'] = 0.0
-    """
     _measure_forward(m, d, center)
-
-
-    """
-    # backward traversal
-    for term in m.root.leaves():
-        for node in term.walk(reverse=True):
-            if not node.is_leaf():
-                ident = node.ident()
-                descent_ident = [x.ident() for x in node.siblings]
-                descent_length = [x.length() for x in node.siblings]
-                descent_breadth = [d[i]['breadth'] for i in descent_ident]
-                descent_totlen = [d[i]['totlen'] for i in descent_ident]
-                breadth = sum(descent_breadth)
-                totlen = sum(descent_totlen) + sum(descent_length)
-                d[ident]['breadth'] = breadth
-                d[ident]['totlen'] = totlen
-    """
     _measure_backward(m, d)
-
     return np.array([[i, d[i]['t'], d[i]['x'], d[i]['y'], d[i]['z'],
                       d[i]['r'], d[i]['p'],
                       d[i]['length'], d[i]['path'], d[i]['xsec'], d[i]['xsec_rel'],

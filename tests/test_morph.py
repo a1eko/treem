@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from treem import Morph, Node
+from treem import Morph, Node, get_segdata
 
 
 def test_node_str():
@@ -27,8 +27,7 @@ def test_node_order():
     morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
                                  [2, 3, 1, 0, 0, 1, 1],
                                  [3, 3, 2, 0, 0, 1, 2],
-                                 [4, 3, 1, 2, 0, 1, 2],
-                                 ]))
+                                 [4, 3, 1, 2, 0, 1, 2]]))
     orders = [0, 1, 2, 2]
     assert [node.order() for node in morph.root.walk()] == orders
 
@@ -152,3 +151,14 @@ def test_save(tmp_path):
                                  [2, 3, 1, 0, 0, 1, 1],
                                  [3, 3, 2, 0, 0, 1, 2]]))
     morph.save(tmp_path / 'test_treem.json')
+
+
+def test_segdata():
+    """Tests for extended segment morphometric data."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2]]))
+    data = [[1, 1, 0, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 2],
+            [2, 3, 1, 0, 0, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 1, 1],
+            [3, 3, 2, 0, 0, 1, 2, 1, 2, 2, 1, 2, 0, 1, 1, 0]]
+    assert np.allclose(get_segdata(morph), data)
