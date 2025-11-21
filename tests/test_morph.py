@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from treem import Morph, Node, get_segdata
+from treem import DGram, Morph, Node, get_segdata
 
 
 def test_node_str():
@@ -175,3 +175,17 @@ def test_segdata_branching():
             [3, 3, 2, 0, 0, 1, 2, 1, 2, 1, 1, 2, 0, 2, 1, 0],
             [4, 3, 1, 2, 0, 1, 2, 2, 3, 2, 1, 2.23606798, 0, 2, 1, 0]]
     assert np.allclose(get_segdata(morph), data)
+
+
+def test_dgram():
+    """Tests for segment data in branching morphology."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2],
+                                 [4, 3, 1, 2, 0, 1, 2]]))
+    dgram = DGram(morph)
+    data =  [[1, 1, 0, 2, 0, 1, -1],
+             [2, 3, 0, 2, 0, 1, 1],
+             [3, 3, 0, 1, 0, 1, 2],
+             [4, 3, 0, 3, 0, 1, 2]]
+    assert np.allclose(dgram.data.tolist(), data)
