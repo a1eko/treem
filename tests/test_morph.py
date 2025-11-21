@@ -119,3 +119,11 @@ def test_sec_volume():
     node = list(morph.root.leaves())[0]
     sec = list(node.sections())[0]
     assert np.isclose(morph.volume(sec), node.volume())
+
+
+def test_save(tmp_path):
+    """Tests saving morphology to SWC file."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2]]))
+    morph.save(tmp_path / 'test_treem.json')
