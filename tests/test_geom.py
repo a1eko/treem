@@ -78,3 +78,15 @@ def test_repair_branch():
     assert res == 1
     assert [node.ident() for node in cmorph.root.walk()] == list(range(1, 17))
 
+
+def test_repair_branch_short():
+    """Tests repair_branch, short section."""
+    os.chdir(os.path.dirname(__file__) + '/data')
+    cmorph=Morph('pass_simple_branch.swc')
+    rmorph=Morph('pass_zjump.swc')
+    cut = [node for node in cmorph.root.walk() if node.ident()==13][0]
+    rep = [node for node in rmorph.root.walk() if node.ident()==10][0]
+    res = repair_branch(cmorph, cut, rmorph, rep)
+    assert res == 1
+    assert [node.ident() for node in cmorph.root.walk()] == list(range(1, 17))
+
