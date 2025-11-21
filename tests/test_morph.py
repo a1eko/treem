@@ -22,10 +22,27 @@ def test_node_stem_leaf():
     assert leaf.is_leaf()
 
 
+def test_node_order():
+    """Tests for Node order attribute."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2],
+                                 [4, 3, 1, 2, 0, 1, 2],
+                                 ]))
+    orders = [0, 1, 2, 2]
+    assert [node.order() for node in morph.root.walk()] == orders
+
+
 def test_node_point():
     """Tests for Node data point."""
     node = Node(value=np.array([1, 1, 0, 0, 0, 1, -1]))
     assert all(node.point() == np.array([0, 0, 0, 1]))
+
+
+def test_node_dist():
+    """Tests for Node distance to origin."""
+    node = Node(value=np.array([1, 1, 1, 0, 0, 1, -1]))
+    assert np.isclose(node.dist(), 1.0)
 
 
 def test_morph_node():
