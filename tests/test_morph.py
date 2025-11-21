@@ -164,8 +164,8 @@ def test_segdata():
     assert np.allclose(get_segdata(morph), data)
 
 
-def test_segdata2():
-    """Tests for extended segment morphometric data."""
+def test_segdata_branching():
+    """Tests for segment data in branching morphology."""
     morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
                                  [2, 3, 1, 0, 0, 1, 1],
                                  [3, 3, 2, 0, 0, 1, 2],
