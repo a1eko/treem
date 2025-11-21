@@ -177,8 +177,26 @@ def test_segdata_branching():
     assert np.allclose(get_segdata(morph), data)
 
 
+def test_dgram_init():
+    """Tests for dendrogram initialization."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2],
+                                 [4, 3, 1, 2, 0, 1, 2]]))
+    dgram = DGram()
+    assert dgram.data is None
+    dgram = DGram(morph)
+    data =  [[1, 1, 0, 2, 0, 1, -1],
+             [2, 3, 0, 2, 0, 1, 1],
+             [3, 3, 0, 1, 0, 1, 2],
+             [4, 3, 0, 3, 0, 1, 2]]
+    assert np.allclose(dgram.data.tolist(), data)
+    dgram = DGram(data=morph.data)
+    assert np.allclose(dgram.data.tolist(), data)
+
+
 def test_dgram():
-    """Tests for segment data in branching morphology."""
+    """Tests for dendrogram representation of morphology."""
     morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
                                  [2, 3, 1, 0, 0, 1, 1],
                                  [3, 3, 2, 0, 0, 1, 2],
@@ -189,3 +207,5 @@ def test_dgram():
              [3, 3, 0, 1, 0, 1, 2],
              [4, 3, 0, 3, 0, 1, 2]]
     assert np.allclose(dgram.data.tolist(), data)
+
+
