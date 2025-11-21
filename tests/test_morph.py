@@ -63,6 +63,14 @@ def test_morph_insert():
     assert morph.root.size() == 3
 
 
+def test_move_node():
+    """Tests moving a node in morphology."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1], [2, 3, 1, 0, 0, 1, 1]]))
+    node = list(morph.root.leaves())[0]
+    morph.move([1, 1, 1], node)
+    assert morph.data.tolist() == [[1, 1, 0, 0, 0, 1, -1], [2, 3, 2, 1, 1, 1, 1]]
+
+
 def test_node_area():
     """Tests node area."""
     morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1], [2, 3, 1, 0, 0, 1, 1]]))
