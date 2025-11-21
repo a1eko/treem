@@ -33,3 +33,41 @@ def test_morph_insert():
     assert morph.node(2).ident() == 2
     assert morph.node(3).ident() == 3
     assert morph.root.size() == 3
+
+
+def test_node_area():
+    """Tests node's area."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1], [2, 3, 1, 0, 0, 1, 1]]))
+    node = list(morph.root.leaves())[0]
+    area = np.pi * node.diam() * node.length()
+    assert node.area() == area
+
+
+def test_node_volume():
+    """Tests node's volume."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1], [2, 3, 1, 0, 0, 1, 1]]))
+    node = list(morph.root.leaves())[0]
+    volume = np.pi * node.radius()**2 * node.length()
+    assert node.volume() == volume
+
+
+def test_sec_radii():
+    """Tests section radii."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 2, 2]]))
+    stem = list(morph.stems())[0]
+    sec = list(stem.sections())[0]
+    radii = [[1], [2]]
+    assert morph.radii(sec).tolist() == radii
+
+
+def test_sec_points():
+    """Tests section points data."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 2, 2]]))
+    stem = list(morph.stems())[0]
+    sec = list(stem.sections())[0]
+    points = [[1, 0, 0, 1], [2, 0, 0, 2]]
+    assert morph.points(sec).tolist() == points
