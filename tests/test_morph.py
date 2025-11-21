@@ -11,6 +11,17 @@ def test_node_str():
     assert str(node) == '1'
 
 
+def test_node_stem_leaf():
+    """Tests for Node stem and leaf attributes."""
+    morph = Morph(data=np.array([[1, 1, 0, 0, 0, 1, -1],
+                                 [2, 3, 1, 0, 0, 1, 1],
+                                 [3, 3, 2, 0, 0, 1, 2]]))
+    stem = [node for node in morph.root.walk() if not node.is_root()][0]
+    leaf = [node for node in morph.root.walk() if not node.is_root()][-1]
+    assert stem.is_stem()
+    assert leaf.is_leaf()
+
+
 def test_node_point():
     """Tests for Node data point."""
     node = Node(value=np.array([1, 1, 0, 0, 0, 1, -1]))
