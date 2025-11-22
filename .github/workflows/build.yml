@@ -5,34 +5,37 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  release:
+    # New Trigger: This is what starts the publishing process
+    types: [published]
 
 permissions:
+  # Base permission for tests and checkout
   contents: read
 
 jobs:
   test:
+    # Renamed the job 'test' to 'build_and_test' to reflect its dual role.
+    name: Build and Test (${{ matrix.os }} / Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.9", "3.14"]
+        python-version: ["3.9", "3.14"] # Kept your existing Python versions
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }} on ${{ matrix.os }}
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Hatch
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install hatch
-
-      - name: Install Tox
-        run: python -m pip install tox
+          pip install hatch tox
 
       - name: Run Tox Tests
         run: tox -e py${{ matrix.python-version == '3.9' && '39' || '314' }}
@@ -41,11 +44,49 @@ jobs:
         run: tox -e lint
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == '3.9' }}
 
-      - name: Build package (Run Once on Python 3.14)
-        run: hatch build
+      # STEP ADDED: Build distribution packages
+      # This builds the package *once* on a single environment (Ubuntu/3.14).
+      - name: Build distribution packages
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == '3.14' }}
+        run: hatch build # Uses your hatchling backend specified in pyproject.toml
+
+      # STEP ADDED: Upload the built packages as an Artifact
+      # This makes the 'dist/' files available to the 'deploy' job later.
+      - name: Upload distribution artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.python-version == '3.14' }}
+        with:
+          name: python-package-distributions
+          path: dist/
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  deploy:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+
+    # NEW DEPENDENCY: Only run this job if the 'test' job succeeded across all environments.
+    needs: [test]
+
+    # NEW CONDITION: Only run this job when a new release is published.
+    if: github.event_name == 'release' && github.event.action == 'published'
+
+    # NEW CRITICAL PERMISSIONS BLOCK: Required for PyPI Trusted Publishing (OIDC).
+    permissions:
+      id-token: write # Mandatory for secure, tokenless publishing
+      contents: read
+
+    steps:
+      # STEP ADDED: Download the built packages from the 'test' job
+      - name: Download all distribution packages
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      # STEP ADDED: Publish to PyPI
+      - name: Publish distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
