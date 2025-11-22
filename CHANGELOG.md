@@ -15,10 +15,11 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Changed
 
-- Node radius interpretation has been updated, see `render`, `measure`, `repair`, and
-  `morph`. If the parent of a node is the root, then the parent's radius is ignored
-  and the node's radius is used instead. This affects calculation of
-  area and volume, as well as radius interpolation of the stem segments.
+- The interpretation of node radii has been corrected for consistent behavior across
+  `render`, `measure`, `repair`, and `morph`. When a node’s parent is the root,
+  the parent’s radius is now ignored and the node’s own radius is used. This change affects
+  area and volume calculations, as well as radius interpolation along stem segments,
+  and is **not backward compatible**.
 - Major code refactoring in `check`, `find`, `measure`, `modify`, `repair`, `view`, and `morph`.
 - Switched from Flake8 to Ruff for lint testing.
 - Minor code adjustments for SonarQube compliance.
