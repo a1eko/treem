@@ -20,7 +20,7 @@
     "dateModified": "2025-10-21",
     "datePublished": "2021-06-01",
     "description": "Module treem provides data structure and command-line tools for accessing and manipulating the digital reconstructions of the neuron morphology in the Stockley-Wheal-Cannon format (SWC).",
-    "downloadUrl": "https://github.com/a1eko/treem/archive/refs/tags/v1.1.2.tar.gz",
+    "downloadUrl": "https://github.com/a1eko/treem/archive/refs/tags/v1.2.0.tar.gz",
     "funder": {
         "type": "Organization",
         "name": "KTH Royal Institute of Technology"
@@ -34,7 +34,7 @@
         "MacOS"
     ],
     "programmingLanguage": "Python 3",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "issueTracker": "https://github.com/a1eko/treem/issues",
     "referencePublication": "https://doi.org/10.1007/s12021-021-09531-w"
 }
