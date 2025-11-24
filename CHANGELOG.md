@@ -11,20 +11,11 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Added
 
-- Start v1.2.0.dev line.
+- None
 
 ### Changed
 
-- The interpretation of node radii has been corrected for consistent behavior across
-  `render`, `measure`, `repair`, and `morph`. When a node’s parent is the root,
-  the parent’s radius is now ignored and the node’s own radius is used. This change affects
-  area and volume calculations, as well as radius interpolation along stem segments,
-  and is **not backward compatible**.
-- Major code refactoring in `check`, `find`, `measure`, `modify`, `repair`, `view`, and `morph`.
-- Switched from Flake8 to Ruff for lint testing.
-- Minor code adjustments for SonarQube compliance.
-- Minor documentation formatting improvements.
-- Improved code coverage.
+- None
 
 ### Deprecated
 
@@ -32,7 +23,7 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Removed
 
-- TODO file replaced with CHANGELOG.md.
+- None
 
 ### Fixed
 
@@ -47,6 +38,40 @@ The following items are marked as pending tasks and will be part of the next maj
 
   - **Issue:** Matplotlib backend is not available in `swc view` after fresh installation.
   - **Workaround:** Run `gdk-pixbuf-register` to enable backends.
+
+### Security
+
+- None
+
+## 1.2.0 - 2025-11-24
+
+### Added
+
+- Code coverage has been improved.
+
+### Changed
+
+- The interpretation of node radii has been corrected for consistent behavior across
+  `render`, `measure`, `repair`, and `morph`. When a node’s parent is the root,
+  the parent’s radius is now ignored and the node’s own radius is used. This change affects
+  area and volume calculations, as well as radius interpolation along stem segments,
+  and is **not backward compatible**.
+- Major code refactoring in `check`, `find`, `measure`, `modify`, `repair`, `view`, and `morph`.
+- Switched from Flake8 to Ruff for lint testing.
+- Minor code adjustments for SonarQube compliance.
+- Minor documentation formatting improvements.
+
+### Deprecated
+
+- None
+
+### Removed
+
+- TODO file replaced with CHANGELOG.md.
+
+### Fixed
+
+- None
 
 ### Security
 
