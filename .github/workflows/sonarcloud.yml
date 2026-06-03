@@ -25,5 +25,5 @@ jobs:
             -Dsonar.projectKey=a1eko_treem
             -Dsonar.python.version=3.10
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_ROOT_TOKEN: ${{ secrets.SONAR_ROOT_TOKEN }}
           
