@@ -111,25 +111,6 @@ Install a development version:
 See also ``pip`` documentation for installation alternatives.
 
 
-Documentation
--------------
-
-Documentation is available online at [Read the
-Docs](https://treem.readthedocs.io/en/latest/).
-
-
-Citation
---------
-
-* Hjorth JJJ, Hellgren Kotaleski J, Kozlov A (2021) Predicting
-Synaptic Connectivity for Large-Scale Microcircuit Simulations
-Using Snudda. *Neuroinformatics*, **19**(4):685-701. DOI:
-[10.1007/s12021-021-09531-w](https://doi.org/10.1007/s12021-021-09531-w).
-
-* Kozlov AK (2021) Treem - neuron morphology processing tool. *Zenodo*.
-DOI: [10.5281/zenodo.4890844](https://doi.org/10.5281/zenodo.4890844).
-
-
 Quick Start
 -----------
 
@@ -179,13 +160,14 @@ apical dendrites in a Y-Z projection:
    swc view inp.swc rep.swc -p 3 4 -j yz -c cells
    ```
 
-8. Specific parts of the reconstruction can be modified using `swc modify`
-command. For example, scale the basal dendrites of the repaired reconstruction up
-by 10% (by a factor of 1.1) in X, Y and Z directions:
+8. Specific parts of the reconstruction can be modified using the `swc modify` command. 
+
+- For example, scale the basal dendrites of the repaired reconstruction up
+by 10% (by a factor of 1.1) in the X, Y and Z directions:
    ```bash
    swc modify rep.swc -p 3 -s 1.1 1.1 1.1 -o mod.swc
    ```
-Compare the dendrites of the repaired and modified reconstructions:
+- Compare the dendrites of the repaired and modified reconstructions:
    ```bash
    swc view rep.swc mod.swc -p 3 4 -c shadow
    ```
@@ -199,6 +181,26 @@ Compare the dendrites of the repaired and modified reconstructions:
    ```bash
    swc view inp.swc mod.swc -p 2 3 4 -c cells -j xy --scale 100 --no-axes -o plot.pdf
    ```
+
+
+Documentation
+-------------
+
+Documentation is available online at [Read the
+Docs](https://treem.readthedocs.io/en/latest/).
+
+
+Citation
+--------
+
+* Hjorth JJJ, Hellgren Kotaleski J, Kozlov A (2021) Predicting
+Synaptic Connectivity for Large-Scale Microcircuit Simulations
+Using Snudda. *Neuroinformatics*, **19**(4):685-701. DOI:
+[10.1007/s12021-021-09531-w](https://doi.org/10.1007/s12021-021-09531-w).
+
+* Kozlov AK (2021) Treem - neuron morphology processing tool. *Zenodo*.
+DOI: [10.5281/zenodo.4890844](https://doi.org/10.5281/zenodo.4890844).
+
 
 
 Funding
