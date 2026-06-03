@@ -9,15 +9,15 @@ on:
     # New Trigger: This is what starts the publishing process
     types: [published]
 
-permissions:
-  # Base permission for tests and checkout
-  contents: read
-
 jobs:
   test:
     # Renamed the job 'test' to 'build_and_test' to reflect its dual role.
     name: Build and Test (${{ matrix.os }} / Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
+
+  permissions:
+    # Base permission for tests and checkout
+    contents: read
 
     strategy:
       matrix:

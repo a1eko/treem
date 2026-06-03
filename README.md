@@ -111,7 +111,6 @@ Install a development version:
 See also ``pip`` documentation for installation alternatives.
 
 
-
 Documentation
 -------------
 
