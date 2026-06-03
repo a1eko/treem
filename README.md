@@ -32,13 +32,13 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
             <a href="https://treem.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/treem/badge/?version=latest" alt="Documentation status"></a>
         </td>
     </tr>
-    <tr>
+    <!-- tr>
         <td>Reference</td>
         <td>
             <img src="https://api.juleskreuer.eu/citation-badge.php?doi=10.1007/s12021-021-09531-w" alt="Citation DOI link">
             <a href="https://doi.org/10.5281/zenodo.4890844"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4890844.svg" alt="Zenodo DOI"></a>
         </td>
-    </tr>
+    </tr -->
 </table>
 
 
@@ -78,20 +78,6 @@ List of ``swc`` commands:
 * ``view``     shows morphology structure
 
 
-Installation
-------------
-
-Install the latest stable release:
-
-    pip install treem
-
-Install a development version:
-
-    pip install git+https://github.com/a1eko/treem
-
-See also ``pip`` documentation for installation alternatives.
-
-
 Dependencies
 ------------
 
@@ -109,6 +95,21 @@ third-party support:
 * ``sphinx-rtd-theme``
 * ``pytest`` with optional ``pytest-cov`` plugin
 * ``coverage``
+
+
+Installation
+------------
+
+Install the latest stable release:
+
+    pip install treem
+
+Install a development version:
+
+    pip install git+https://github.com/a1eko/treem
+
+See also ``pip`` documentation for installation alternatives.
+
 
 
 Documentation
