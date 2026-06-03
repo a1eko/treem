@@ -135,14 +135,10 @@ Quick Start
 
 A typical workflow is illustrated below using Bash script instructions.
 
-1. Download neuron morphology in SWC file format, for example, 
-[tests/data/pass_nmo_1.swc](https://raw.githubusercontent.com/a1eko/treem/refs/heads/master/tests/data/pass_nmo_1.swc).
-
-<!--
-2. Assign file name to environment variable `f` for convenience:
-
-   f=pass_nmo_1.swc
--->
+1. Download a sample neuron morphology in SWC file format:
+   ```bash
+   curl -O https://raw.githubusercontent.com/a1eko/treem/refs/heads/master/tests/data/pass_nmo_1.swc
+   ```
 
 2. Check the reconstruction for structural consistency:
    ```bash
@@ -150,21 +146,21 @@ A typical workflow is illustrated below using Bash script instructions.
    ```
 
 3. Make a working copy `inp.swc` of the input file if `swc check` returns
-no errors. Otherwise, convert the file to compliant SWC format:
+no errors. Otherwise, convert the file to a compliant SWC format:
    ```bash
    swc convert pass_nmo_1.swc -o inp.swc
    ```
 
-4. Inspect reconstruction visually:
+4. Inspect the reconstruction visually:
    ```bash
    swc view inp.swc
    ```
 
 5. Find nodes with singularities within the reconstruction and visualize
-them. Using `swc find` command, one can search for nodes with small
-diameters, discontinuities, incorrect branching etc. For example, find
+them. Using the `swc find` command, you can search for nodes with small
+diameters, discontinuities, incorrect branching, etc. For example, find
 the cut points of the basal dendrites at the upper and lower borders of
-the slice (within 30 micrometers along z-axis):
+the slice (within 30 micrometers of the extremes along z-axis):
    ```bash
    upper_cuts=$(swc find inp.swc -p 3 -c 30)
    lower_cuts=$(swc find inp.swc -p 3 -c 30 --bottom-up)
@@ -172,35 +168,34 @@ the slice (within 30 micrometers along z-axis):
    ```
 
 
-6. Repair cut neurites:
+6. Repair the cut neurites:
    ```bash
    swc repair inp.swc -c $upper_cuts $lower_cuts -o rep.swc
    ```
 
 7. To compare the original and repaired reconstructions, plot their basal and
-apical dendrites in Y-Z projection:
+apical dendrites in a Y-Z projection:
    ```bash
    swc view inp.swc rep.swc -p 3 4 -j yz -c cells
    ```
 
 8. Specific parts of the reconstruction can be modified using `swc modify`
-command. For example, scale basal dendrites of the repaired reconstruction
-by 110% in X, Y and Z directions:
+command. For example, scale the basal dendrites of the repaired reconstruction up
+by 10% (by a factor of 1.1) in X, Y and Z directions:
    ```bash
    swc modify rep.swc -p 3 -s 1.1 1.1 1.1 -o mod.swc
    ```
-
 Compare the dendrites of the repaired and modified reconstructions:
    ```bash
    swc view rep.swc mod.swc -p 3 4 -c shadow
    ```
 
-9. Compare morphometry of all reconstructions:
+9. Compare the morphometry of all reconstructions:
    ```bash
    swc measure *.swc
    ```
 
-10. Plot original and modified reconstructions to PDF file, add 100 micrometers scale bars:
+10. Plot the original and modified reconstructions to a PDF file, adding 100-micrometer scale bars:
    ```bash
    swc view inp.swc mod.swc -p 2 3 4 -c cells -j xy --scale 100 --no-axes -o plot.pdf
    ```
