@@ -186,8 +186,7 @@ by 10% (by a factor of 1.1) in the X, Y and Z directions:
 Documentation
 -------------
 
-Documentation is available online at [Read the
-Docs](https://treem.readthedocs.io/en/latest/).
+Documentation is available online at *Read the Docs* (https://treem.readthedocs.io/en/latest/).
 
 
 Citation

@@ -38,7 +38,7 @@ The ``Node ID`` is a unique identifier for each reconstructed point.
 The ``Point type`` is a user-defined flag that denotes a specific part of
 the neuron’s structure. The original format specification does not
 define standard point-type values, but most developers follow these
-common conventions:
+common conventions (`Mehta et al., 2023 <https://doi.org/10.1038/s41467-023-42931-x>`_):
 
 ========== ==================================
 Point type Corresponding cell part
