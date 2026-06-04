@@ -11,11 +11,19 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Added
 
-- None
+- Quick Start section to the front page README.md file.
+
+- TODO CLI (and optionally API) Tutorials as Jupyter notebooks.
+
+- TODO Updated documentation with reference to Tutorials.
 
 ### Changed
 
-- None
+- TODO Consider switching from single-point soma representation
+to three-point soma cylinder or adding it as an option to `swc
+convert`. Make sure no single-node assumption is used throughout
+the code. Rationale: new standard at Neuro Morpho Org v5.3
+(https://neuromorpho.org/SomaFormat.html).
 
 ### Deprecated
 
@@ -61,21 +69,9 @@ The following items are marked as pending tasks and will be part of the next maj
 - Minor code adjustments for SonarQube compliance.
 - Minor documentation formatting improvements.
 
-### Deprecated
-
-- None
-
 ### Removed
 
 - TODO file replaced with CHANGELOG.md.
-
-### Fixed
-
-- None
-
-### Security
-
-- None
 
 
 ## 1.1.2 - 2025-11-06
