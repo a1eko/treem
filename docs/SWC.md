@@ -6,7 +6,7 @@
 - Structure: `<I> <T> <X> <Y> <Z> <R> <P>`
 
 | Field | Column | Description       | Values                     |
-|-------|--------|-------------------|----------------------------|
+|:------|:-------|:------------------|:---------------------------|
 | I     | 0      | Node ID           | int: 1 (root), 2, 3, ...   |
 | T     | 1      | Point type        | int: 1 (soma), 2 (axon), 3 (dend), 4 (apic) |
 | X/Y/Z | 2/3/4  | Coordinates       | float (um)                 |
@@ -43,7 +43,7 @@
 
 ## Terminology
 | Term         | Definition                                                                                     |
-|--------------|------------------------------------------------------------------------------------------------|
+|:-------------|:-----------------------------------------------------------------------------------------------|
 | Tree         | Hierarchical structure with no loops. Each node has <=1 parent.                                |
 | Node         | Single SWC line (point in 3D).                                                                 |
 | Root         | Node with no parent (`I=1`, `T=1`, `P=-1`).                                                  |
