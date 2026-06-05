@@ -37,7 +37,7 @@ Specification of SWC data format adopted for the `treem` package.
 5. Non-Somatic Nodes (Types 2/3/4):
    - Each non-soma branch originates in root.
    - Non-soma branches (neurites) must maintain consistent type `P` within a branch.
-     First node of a neurite has parent root.
+     First node of a neurite (stem) has parent root.
 
 6. Validity:
    - File must have >=1 data rows.
