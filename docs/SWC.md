@@ -1,6 +1,6 @@
 # SWC File Specification
 
-Specification of SWC data format adopted for the `treem` package.
+Follow the specification of SWC data format adopted for the `treem` package.
 
 ## Format
 - Plain-text file with 7-column tabular data (one node per line).
@@ -35,8 +35,8 @@ Specification of SWC data format adopted for the `treem` package.
      - Two sections from root (e.g., 3-point soma).
 
 5. Non-Somatic Nodes (Types 2/3/4):
-   - Each non-soma branch originates in root.
-   - Non-soma branches (neurites) must maintain consistent type `P` within a branch.
+   - Each non-soma branch (neurite) originates in root.
+   - Non-soma branches must maintain consistent type `P` within a branch.
      First node of a neurite (stem) has parent root.
 
 6. Validity:
