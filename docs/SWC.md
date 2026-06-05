@@ -1,5 +1,7 @@
 # SWC File Specification
 
+Specification of SWC data format adopted for the `treem` package.
+
 ## Format
 - Plain-text file with 7-column tabular data (one node per line).
 - Lines starting with `#` are comments (ignored).
