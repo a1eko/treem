@@ -9,9 +9,9 @@
 |:------|:-------|:------------------|:---------------------------|
 | I     | 0      | Node ID           | int: 1 (root), 2, 3, ...   |
 | T     | 1      | Point type        | int: 1 (soma), 2 (axon), 3 (dend), 4 (apic) |
-| X/Y/Z | 2/3/4  | Coordinates       | float (um)                 |
-| R     | 5      | Radius            | float (um)                 |
-| P     | 6      | Parent node ID    | int: -1 (parent of root), 1, 2, ...  |
+| X/Y/Z | 2/3/4  | Coordinates       | float (micrometers)        |
+| R     | 5      | Radius            | float (micrometers)        |
+| P     | 6      | Parent node ID    | int: -1 (parent of root), 1, 2, ... |
 
 
 ## Rules
@@ -42,20 +42,20 @@
 
 
 ## Terminology
-| Term         | Definition                                                                                     |
-|:-------------|:-----------------------------------------------------------------------------------------------|
-| Tree         | Hierarchical structure with no loops. Each node has <=1 parent.                                |
-| Node         | Single SWC line (point in 3D).                                                                 |
-| Root         | Node with no parent (`I=1`, `T=1`, `P=-1`).                                                  |
-| Child        | Node with a parent.                                                                           |
-| Parent       | Node with >=1 child.                                                                            |
-| Leaf         | Node with no children (degree=0).                                                             |
-| Fork         | Non-root node with >1 child (degree>1). Bifurcation if degree=2.                              |
-| Depth        | Ancestor count from root (root depth=0).                                                      |
-| Height       | Max edges from node to any leaf in its sub-tree.                                              |
-| Size         | Total nodes in (sub-)tree.                                                                    |
-| Breadth      | Total leaves in (sub-)tree.                                                                    |
-| Width        | Nodes at same depth as current node.                                                          |
-| Segment      | Geometric frustum between parent/child nodes.                                                 |
-| Section      | Tree portion between structural points (root/fork/leaf).                                     |
-| Stem         | First non-somatic node (Type 2/3/4) directly descending from root.                            |
+| Term         | Definition                                                         |
+|:-------------|:-------------------------------------------------------------------|
+| Tree         | Hierarchical structure with no loops. Each node has <=1 parent.    |
+| Node         | Single SWC line (point in 3D).                                     |
+| Root         | Node with no parent (`I=1`, `T=1`, `P=-1`).                        |
+| Child        | Node with a parent.                                                |
+| Parent       | Node with >=1 child.                                               |
+| Leaf         | Node with no children (degree=0).                                  |
+| Fork         | Non-root node with >1 child (degree>1). Bifurcation if degree=2.   |
+| Depth        | Ancestor count from root (root depth=0).                           |
+| Height       | Max edges from node to any leaf in its sub-tree.                   |
+| Size         | Total nodes in (sub-)tree.                                         |
+| Breadth      | Total leaves in (sub-)tree.                                        |
+| Width        | Nodes at same depth as current node.                               |
+| Segment      | Geometric frustum between parent/child nodes.                      |
+| Section      | Tree portion between structural points (root/fork/leaf).           |
+| Stem         | First non-somatic node (Type 2/3/4) directly descending from root. |
