@@ -7,11 +7,11 @@
 
 | Field | Column | Description       | Values                     |
 |-------|--------|-------------------|----------------------------|
-| I     | 0      | Node ID           | int: 1, 2, ...             |
+| I     | 0      | Node ID           | int: 1 (root), 2, 3, ...   |
 | T     | 1      | Point type        | int: 1 (soma), 2 (axon), 3 (dend), 4 (apic) |
 | X/Y/Z | 2/3/4  | Coordinates       | float (µm)                 |
 | R     | 5      | Radius            | float (µm)                 |
-| P     | 6      | Parent node ID    | int: -1 (root), 1, 2, ...  |
+| P     | 6      | Parent node ID    | int: -1 (parent of root), 1, 2, ...  |
 
 ---
 
