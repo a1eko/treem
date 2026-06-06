@@ -2,6 +2,7 @@
 
 import argparse
 import sys
+from importlib.metadata import version, PackageNotFoundError
 
 from treem.commands.check import check
 from treem.commands.convert import convert
@@ -18,6 +19,11 @@ try:
     from treem.commands.render import _HELP, render
 except ImportError:
     pass
+
+try:
+    __version__ = version("treem")
+except PackageNotFoundError:
+    __version__ = "(unknown)"
 
 
 FILE = 'input morphology file (swc)'
