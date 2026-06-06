@@ -1,4 +1,3 @@
-
 Introduction
 ============
 
@@ -26,7 +25,7 @@ The fields have the following meanings:
 Field Column Description    Values
 ===== ====== ============== =========================
  I    0      Node ID        ``int``: 1, 2, ...
- T    1      Point type     ``int``: 1, 2, 3, 4 [...]
+ T    1      Point type     ``int``: 1, 2, 3, 4
  X    2      `X` coordinate ``float`` (micrometers)
  Y    3      `Y` coordinate ``float`` (micrometers)
  Z    4      `Z` coordinate ``float`` (micrometers)
@@ -37,8 +36,8 @@ Field Column Description    Values
 The ``Node ID`` is a unique identifier for each reconstructed point.
 The ``Point type`` is a user-defined flag that denotes a specific part of
 the neuron’s structure. The original format specification does not
-define standard point-type values, but most developers follow these
-common conventions (`Mehta et al., 2023 <https://doi.org/10.1038/s41467-023-42931-x>`_):
+define standard point-type values, but the ``treem`` module restricts
+them to the set ``{1, 2, 3, 4}`` (`Mehta et al., 2023 <https://doi.org/10.1038/s41467-023-42931-x>`_):
 
 ========== ==================================
 Point type Corresponding cell part
@@ -66,8 +65,9 @@ Node
     A single element of the tree. In ``treem``, each node contains the
     reconstruction data corresponding to one row in an SWC file.
 
-Sub-tree, branch
-    A part of the tree that descends from a specific node.
+Branch
+    A maximal sub-tree of the same point type ``T``, representing a single
+    neurite (axon, basal dendrite, or apical dendrite).
 
 Parent
     A node that has one or more child nodes.
@@ -77,6 +77,8 @@ Child
 
 Root
     A node which has no parent. Each tree has always one unique root node.
+    In ``treem``, the root node must have an ID of ``1``, a point type of ``1``,
+    and a parent ID of ``-1``.
 
 Siblings
     All child nodes of the same parent.
@@ -133,7 +135,6 @@ Tree traversal
     referred to as ``level-order``. For recursive implementations of these
     traversal algorithms, see the ``treem.Tree`` source code.
 
-
 .. rubric:: Data Format Restrictions
 
 The original SWC format is fairly flexible in its definition. The only
@@ -147,15 +148,13 @@ data organization and improve processing efficiency.
 
 * Each data row must contain seven fields.
 
-* The first node must have an ID of ``1`` and a parent ID of ``-1``;
-  in other words, it represents the root of the tree.
-
-* The root node corresponds to the soma.
+* The first node must have an ID of ``1``, a point type of ``1``, and a parent ID of ``-1``;
+  in other words, it represents the root of the tree, which corresponds to the soma.
 
 * The point type must belong to the set ``{1, 2, 3, 4}``.
 
 * Node IDs (of type ``int``) must be unique and positive. An ID of ``0``
-  is not defined.
+  is not allowed.
 
 * Parent IDs must form a subset of the node IDs, except for the parent
   ID of the root, which is ``-1``.
@@ -167,3 +166,9 @@ data organization and improve processing efficiency.
 * The point type of a node must match the point type of its parent,
   unless the parent is the root. Neurites of different types emerge
   from the soma and retain their type along their branches.
+
+* The soma can be represented as one of the following:
+
+  - A single node (root only).
+  - A single section starting from the root.
+  - Two sections from root (e.g., 3-point soma).

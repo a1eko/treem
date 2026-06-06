@@ -1,7 +1,5 @@
-
 treem - Neuron Morphology Processing Tool
 =========================================
-
 
 .. rubric:: Module ``treem``
 
@@ -25,7 +23,6 @@ the classes ``Tree``, ``Node``, ``Morph``, and ``SWC``:
 For the complete list of available functions, see :ref:`api:API
 reference`.
 
-
 .. rubric:: Commands
 
 Common operations with SWC files can be performed using the ``swc``
@@ -35,7 +32,7 @@ command-line tool::
 
 Alternatively::
 
-    swc <command> file [file ...] [options] 
+    swc <command> file [file ...] [options]
 
 List of ``swc`` commands:
 
@@ -59,5 +56,6 @@ For detailed description of all commands and their options, see the
    introduction
    installation
    examples
+   swc
    cli
    api
