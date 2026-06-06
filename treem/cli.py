@@ -25,7 +25,6 @@ try:
 except PackageNotFoundError:
     __version__ = "(unknown)"
 
-
 FILE = 'input morphology file (swc)'
 STR = '<str>'
 INT = '<int>'
@@ -36,13 +35,24 @@ TYPE_ANY = 'point type {1,2,3,4} [any]'
 def cli():
     """Command-line interface definition."""
     parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers()
+    parser.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
+
+    subparsers = parser.add_subparsers(dest='command')
 
     cmd_check = subparsers.add_parser(
         'check',
         epilog='prints out error codes and IDs of error nodes; '
                'returns the number of errors',
         help='test morphology reconstruction for structural consistency')  # noqa
+    cmd_check.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
     cmd_check.add_argument('file', type=str,
                            help=FILE)
     cmd_check.add_argument('-q', dest='quiet', action='store_true',
@@ -52,6 +62,11 @@ def cli():
     cmd_check.set_defaults(func=check)
 
     cmd_view = subparsers.add_parser('view', help='view morphology')
+    cmd_view.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
     cmd_view.add_argument('file', type=str, nargs='+', help=FILE)
     cmd_view.add_argument('-p', dest='type', metavar=INT, type=int,
                           nargs='+', choices=SWC.TYPES, help=TYPE_ALL)
@@ -116,6 +131,11 @@ def cli():
 
     cmd_find = subparsers.add_parser('find', epilog='prints out point ids',
                                      help='locate single points')
+    cmd_find.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
     cmd_find.add_argument('file', type=str, help=FILE)
     cmd_find.add_argument('-p', dest='type', metavar=INT, type=int,
                           nargs='+', choices=SWC.TYPES, help=TYPE_ANY)
@@ -158,6 +178,11 @@ def cli():
     cmd_find.set_defaults(func=find)
 
     cmd_modify = subparsers.add_parser('modify', help='modify morphology')
+    cmd_modify.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
     cmd_modify.add_argument('file', type=str, help=FILE)
     cmd_modify.add_argument('-p', dest='type', metavar=INT, type=int,
                             nargs='+',
@@ -195,6 +220,11 @@ def cli():
     cmd_modify.set_defaults(func=modify)
 
     cmd_repair = subparsers.add_parser('repair', help='repair morphology')
+    cmd_repair.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
     cmd_repair.add_argument('file', type=str, help=FILE)
     cmd_repair.add_argument('-n', dest='center', action='store_true',
                             help='center root')
@@ -264,6 +294,11 @@ def cli():
     cmd_repair.set_defaults(func=repair)
 
     cmd_measure = subparsers.add_parser('measure', help='measure morphology')
+    cmd_measure.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
     cmd_measure.add_argument('file', type=str, nargs='+', help=FILE)
     cmd_measure.add_argument('-p', dest='type', metavar=INT, type=int,
                              nargs='+', choices=SWC.TYPES, help=TYPE_ALL)
@@ -281,6 +316,11 @@ def cli():
     cmd_measure.set_defaults(func=measure)
 
     cmd_convert = subparsers.add_parser('convert', help='convert input file')
+    cmd_convert.add_argument(
+        '--version', action='version',
+        version=f'swc {__version__}',
+        help="Show the version number and exit"
+    )
     cmd_convert.add_argument('file', type=str, help=FILE)
     cmd_convert.add_argument('-p', dest='type', metavar=INT, type=int,
                              nargs='+', choices=SWC.TYPES, help=TYPE_ALL)
@@ -295,8 +335,16 @@ def cli():
         cmd_render = subparsers.add_parser(
             'render', help='show 3D model', epilog=_HELP,
             formatter_class=argparse.RawDescriptionHelpFormatter)
+        cmd_render.add_argument(
+            '--version', action='version',
+            version=f'swc {__version__}',
+            help="Show the version number and exit"
+        )
         cmd_render.add_argument('file', type=str, help=FILE)
         cmd_render.set_defaults(func=render)
 
     args = parser.parse_args()
+    if not hasattr(args, 'func'):  # Handle `swc --help` or no subcommand
+        parser.print_help()
+        sys.exit(0)
     sys.exit(args.func(args))
