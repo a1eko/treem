@@ -328,5 +328,6 @@ and terminals) while slightly reducing the total length.
    Resampling morphology reconstruction with fixed spatial
    resolution. Structure points-preserving operation.
 
+Short reference of the morphology file format is in :ref:`swc:SWC specification`.
 For a complete list of the available options provided by the ``treem`` module,
 see :ref:`cli:Command-line interface` and :ref:`api:API reference`.
