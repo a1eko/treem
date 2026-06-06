@@ -151,7 +151,7 @@ the slice (within 30 micrometers of the extremes along z-axis):
 
 6. Repair the cut neurites:
    ```bash
-   swc repair inp.swc -c $upper_cuts $lower_cuts -o rep.swc
+   swc repair inp.swc -c $upper_cuts $lower_cuts --seed 1 -o rep.swc
    ```
 
 7. To compare the original and repaired reconstructions, plot their basal and
@@ -159,6 +159,7 @@ apical dendrites in a Y-Z projection:
    ```bash
    swc view inp.swc rep.swc -p 3 4 -j yz -c cells
    ```
+   Repeat repair with different seeds, if needed.
 
 8. Specific parts of the reconstruction can be modified using the `swc modify` command. 
 
