@@ -2,7 +2,7 @@
 
 import argparse
 import sys
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
 
 from treem.commands.check import check
 from treem.commands.convert import convert
