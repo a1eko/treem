@@ -11,20 +11,19 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Added
 
-- Quick Start section to the front page README.md file.
-
-- TODO Enable version query by `swc --version`.
-
 - TODO CLI (and optionally API) Tutorials as Jupyter notebooks.
 
 - TODO Updated documentation with reference to Tutorials.
 
+- Quick Start section to the front page README.md file.
+
+- Version query by `swc [command] --version`.
+
 ### Changed
 
-- TODO Consider switching from single-point soma representation
-to three-point soma cylinder or adding it as an option to `swc
-convert`. Make sure no single-node assumption is used throughout
-the code. Rationale: convention of NeuroMorphoOrg v5.3
+- TODO Consider supporting multiple soma representations: single-point
+soma, three-point soma, etc. Make sure no single-node assumption is
+used throughout the code. *Rationale*: convention of NeuroMorphoOrg v5.3
 (https://neuromorpho.org/SomaFormat.html).
 
 ### Deprecated
