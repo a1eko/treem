@@ -40,9 +40,9 @@ Rules
 3. Parent-child:
 
    - All non-root nodes have only one parent and ``P < I`` (no loops).
-   - Parent IDs must exist in the file (except ``P=-1`` for root).
+   - Parent IDs must exist in the file, except ``P=-1`` for root.
 
-4. Soma (type 1):
+4. Soma (type 1, ``T=1``):
 
    - Must be represented as one of the following:
 
@@ -50,7 +50,7 @@ Rules
      - Single section starting from the root.
      - Two sections from root (e.g., 3-point soma).
 
-5. Non-somatic nodes (types 2/3/4):
+5. Non-somatic nodes (``T in {2,3,4}``):
 
    - Each non-soma branch (neurite) originates in root.
    - Non-soma branches must maintain consistent type ``P`` within a
@@ -58,8 +58,8 @@ Rules
 
 6. Validity:
 
-   - File must have >=1 data rows.
-   - ``T in {1, 2, 3, 4}`` (other types invalidate the file).
+   - File must have ``>=1`` data rows.
+   - ``T in {1, 2, 3, 4}``, other types invalidate the file.
 
 Terminology
 -----------
@@ -67,8 +67,8 @@ Terminology
 +-----------+----------------------------------------------------------+
 | Term      | Definition                                               |
 +===========+==========================================================+
-| Tree      | Hierarchical structure with no loops. Each node has <=1  |
-|           | parent.                                                  |
+| Tree      | Hierarchical structure with no loops. Each node has      |
+|           | ``<=1``  parent.                                         |
 +-----------+----------------------------------------------------------+
 | Branch    | A maximal sub-tree of the same type ``P`` (a neurite).   |
 +-----------+----------------------------------------------------------+
@@ -78,14 +78,14 @@ Terminology
 +-----------+----------------------------------------------------------+
 | Child     | Node with a parent.                                      |
 +-----------+----------------------------------------------------------+
-| Parent    | Node with >=1 child.                                     |
+| Parent    | Node with ``>=1`` child.                                 |
 +-----------+----------------------------------------------------------+
-| Leaf      | Node with no children (degree=0).                        |
+| Leaf      | Node with no children (``degree=0``).                    |
 +-----------+----------------------------------------------------------+
-| Fork      | Non-root node with >1 child (degree>1). Bifurcation if   |
-|           | degree=2.                                                |
+| Fork      | Non-root node with ``>1`` child (``degree>1``).          |
+|           | Bifurcation if ``degree=2``.                             |
 +-----------+----------------------------------------------------------+
-| Depth     | Ancestor count from root (root depth=0).                 |
+| Depth     | Ancestor count from root (root ``depth=0``).             |
 +-----------+----------------------------------------------------------+
 | Height    | Max edges from node to any leaf in its sub-tree.         |
 +-----------+----------------------------------------------------------+
