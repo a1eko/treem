@@ -13,7 +13,6 @@ Python version 3.7 or higher is assumed. Ensure that the files from
 ``tests/data/`` within the module’s source tree are copied into the
 current working directory.
 
-
 API use cases
 -------------
 
@@ -34,8 +33,7 @@ array([[ 1. ,  1. ,  0. ,  0. ,  0. ,  1. , -1. ],
        [10. ,  3. ,  3. ,  5. ,  0. ,  0.2,  9. ],
        [11. ,  3. ,  2. ,  6. ,  0. ,  0.2, 10. ],
        [12. ,  3. ,  5. ,  5. ,  0. ,  0.2,  9. ],
-       [13. ,  3. ,  6. ,  6. ,  0. ,  0.2, 12. ]])
-
+       [13. ,  3. ,  6. ,  6. ,  0. ,  0.2,  12. ]])
 
 .. rubric:: Traversing the tree
 
@@ -83,10 +81,8 @@ The total length of the branch calculated in this way will be identical:
 >>> sum(m.length(sec) for sec in start_node.sections())
 8.485281374238571
 
-
 CLI use cases
 -------------
-
 
 .. rubric:: Checking the input file
 
@@ -98,7 +94,6 @@ so the `check` command reports errors::
     swc check fail_unordered.swc
 
 .. program-output:: bash -c "swc check ../../tests/data/fail_unordered.swc || true"
-
 
 .. rubric:: Converting the input file
 
@@ -113,7 +108,6 @@ successfully::
 Verify that the output file is valid::
 
     swc check out.swc
-
 
 .. rubric:: Displaying the morphology
 
@@ -132,7 +126,6 @@ cells::
 
     swc view -c cells pass_mouselight_1.swc pass_mouselight_2.swc
 
-
 .. rubric:: Measuring morphometry of the reconstruction
 
 The ``measure`` command prints the basic morphometric features of the
@@ -141,7 +134,6 @@ reconstruction::
     swc measure pass_nmo_1.swc
 
 .. program-output:: bash -c "swc measure ../../tests/data/pass_nmo_1.swc | head; echo [...]; swc measure ../../tests/data/pass_nmo_1.swc | tail"
-
 
 .. rubric:: Locating single nodes
 
@@ -161,7 +153,6 @@ The following command searches for nodes with a topological order of ``1``
 The following command displays the terminal sections of the dendrites::
 
     swc view pass_simple_branch.swc -b `swc find pass_simple_branch.swc -p 3 -b 1 --sec`
-
 
 .. rubric:: Repairing damaged reconstructions
 
@@ -184,7 +175,6 @@ To locate z-jumps greater than 10 µm, run the ``find`` command::
 Potential z-jumps can be corrected using the ``repair`` command with one
 of four methods: ``align``, ``split``, ``tilt``, or ``join`` (default: ``align``),
 as illustrated in the figure. To repair z-jumps, run::
-
 
     swc repair pass_zjump.swc --zjump join -z `swc find pass_zjump.swc -z 10`
 
@@ -220,7 +210,6 @@ Refer to the following options for correction and adjustment:
 
    Smoothing the dendrites with the rolling average spatial
    filter. Length-preserving operation.
-
 
 Morphological reconstructions of neurons located near the surface of a
 slice are often incomplete, missing neurites that were cut during tissue
@@ -267,7 +256,6 @@ and the line width is ``3.0``. To produce a plot like the one shown
 in the figure above, run the following command::
 
     swc view pass_nmo_2_cut.swc rep.swc -p 3 -c shadow --shadow-color red --shadow-width 0.5
-
 
 .. rubric:: Modifying morphologies
 
@@ -328,12 +316,9 @@ and terminals) while slightly reducing the total length.
    Resampling morphology reconstruction with fixed spatial
    resolution. Structure points-preserving operation.
 
-
 Further reading
 ---------------
 
-Short reference guide of the morphology file format is in :ref:`swc:SWC
-specification`.  For a complete list of the available options provided
-by the ``treem`` module, see :ref:`cli:Command-line interface` and
-:ref:`api:API reference`.  Practical examples (Jupyter notebooks) can
-be found in ``tutorials/`` in the package repository.
+- A short reference guide for the morphology file format is available in :ref:`swc:SWC specification`.
+- For a complete list of available options, see :ref:`cli:Command-line interface` and :ref:`api:API reference`.
+- Practical examples (Jupyter notebooks) are provided in the ``tutorials/`` directory of the package repository.
