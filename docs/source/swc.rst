@@ -59,7 +59,7 @@ Rules
 6. Validity:
 
    - File must have ``>=1`` data rows.
-   - ``T in {1, 2, 3, 4}``, other types invalidate the file.
+   - ``T in {1,2,3,4}``, other types invalidate the file.
 
 Terminology
 -----------
