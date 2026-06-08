@@ -304,7 +304,7 @@ by a factor of ``0.8``. The final structure is saved as ``clone1.swc``::
 Similarly, the dendrites of the reconstruction (``rep.swc``) are twisted
 and scaled by a factor of ``1.2``, producing the morphology ``clone2.swc``::
 
-    swc modify rep.swc -p 3 -w 360
+    swc modify rep.swc -p 3 -w 180
     swc modify mod.swc -s 1.2 1.2 1.2 -o clone2.swc
 
 .. figure:: ../images/mod_clone.png
@@ -328,6 +328,12 @@ and terminals) while slightly reducing the total length.
    Resampling morphology reconstruction with fixed spatial
    resolution. Structure points-preserving operation.
 
-Short reference guide of the morphology file format is in :ref:`swc:SWC specification`.
-For a complete list of the available options provided by the ``treem`` module,
-see :ref:`cli:Command-line interface` and :ref:`api:API reference`.
+
+Further reading
+---------------
+
+Short reference guide of the morphology file format is in :ref:`swc:SWC
+specification`.  For a complete list of the available options provided
+by the ``treem`` module, see :ref:`cli:Command-line interface` and
+:ref:`api:API reference`.  Practical examples (Jupyter notebooks) can
+be found in ``tutorials/`` in the package repository.
