@@ -1,4 +1,0 @@
-treem
-pyopengl
-sphinx_rtd_theme
-sphinxcontrib-programoutput
