@@ -72,6 +72,10 @@ class Node(Tree):
         """Returns Euclidean distance of the node to origin (float)."""
         return np.linalg.norm(self.v[SWC.XYZ] - origin)
 
+    def path(self):
+        """Returns path distance of the node to root (float)."""
+        return sum(node.length() for node in self.walk(reverse=True))
+
     def radius(self):
         """Returns radius of the node (float)."""
         return self.v[SWC.R]
