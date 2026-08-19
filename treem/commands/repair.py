@@ -336,8 +336,8 @@ def _repair_neurites(morph, cuts, pool, vprint, rng, args):
     return err, morph
 
 
-def _delete_branches(morph, idents):
-    """Prunes branches and returns new morphology."""
+def _delete_nodes(morph, idents):
+    """Deletes nodes and returns new morphology."""
     nodes = [x for x in morph.root.walk() if x.ident() in idents]
     for node in nodes:
         morph.delete(node)
@@ -438,7 +438,7 @@ def repair(args):
         morph = Morph(data=morph.data)
 
     if args.delete and not args.cut:
-        morph = _delete_branches(morph, args.delete)
+        morph = _delete_nodes(morph, args.delete)
 
     if args.res:
         morph = _resample(morph, args.res)
