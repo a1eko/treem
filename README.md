@@ -42,7 +42,6 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
 
 
 ## Table of Contents
--------------------
 - [Main classes](#main-classes)
 - [Commands](#commands)
 - [Dependencies](#dependencies)
