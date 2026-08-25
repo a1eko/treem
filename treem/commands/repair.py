@@ -28,10 +28,13 @@ def _correct_shrink_z(morph, args):
         bottom = max(x.coord()[2] for x in morph.root.walk())
     else:
         bottom = min(x.coord()[2] for x in morph.root.walk())
+    origin = morph.root.coord().copy()
     for node in morph.root.walk():
         z = node.coord()[2]
         z = bottom + args.shrink * (z - bottom)
         node.v[SWC.Z] = z
+    shift = origin - morph.root.coord()
+    morph.translate(shift)
 
 
 def _fix_by_tilt(morph, node, jump):
