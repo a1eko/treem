@@ -1,4 +1,6 @@
 /.ipynb_checkpoints/
 *.ipynb_checkpoints/
-data/
-output/
+data/*
+!data/README.md
+output/*
+!output/README.md
