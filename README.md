@@ -1,4 +1,3 @@
-
 treem &ndash; Neuron Morphology Processing Tool
 ===============================================
 
@@ -40,6 +39,17 @@ of neuronal morphology in the Stockley-Wheal-Cannon (SWC) format.
         </td>
     </tr -->
 </table>
+
+
+## Table of Contents
+- [Main classes](#main-classes)
+- [Commands](#commands)
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Documentation](#documentation)
+- [Citation](#citation)
+- [Funding](#funding)
 
 
 Main classes
