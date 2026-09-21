@@ -32,7 +32,7 @@ used throughout the code. *Rationale*: convention of NeuroMorphoOrg v5.3
 
 ### Removed
 
-- None
+- Script `scripts/swc2pts.py`.
 
 ### Fixed
 
@@ -89,7 +89,7 @@ used throughout the code. *Rationale*: convention of NeuroMorphoOrg v5.3
 
 ### Changed
 
-- Replace legacy `setup.py` bdist_wheel mechanism with `pyproject.toml`.
+- Replace legacy `setup.py` `bdist_wheel` mechanism with `pyproject.toml`.
 
 
 ## 1.1.1 - 2025-10-21

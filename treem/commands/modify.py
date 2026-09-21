@@ -50,10 +50,10 @@ def _jitter_coords(morph, nodes, jitter, rng, args):
             else:
                 xlen = 0
                 rnd = rng.uniform(-1, 1, 3)
-                for node in sec:
-                    xlen += node.length()
+                for sec_node in sec:
+                    xlen += sec_node.length()
                     vec = jitter * rnd * xlen / length
-                    morph.move(vec, node)
+                    morph.move(vec, sec_node)
             scale = length / morph.length(sec[1:])
             coords *= scale
             shift = head - sec[0].coord()
