@@ -11,9 +11,9 @@ The following items are marked as pending tasks and will be part of the next maj
 
 ### Added
 
-- TODO CLI (and optionally API) Tutorials as Jupyter notebooks.
+- CLI Tutorials as Jupyter notebooks.
 
-- TODO Updated documentation with reference to Tutorials.
+- Updated documentation with reference to Tutorials.
 
 - Quick Start section to the front page README.md file.
 
