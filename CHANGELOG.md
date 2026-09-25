@@ -36,6 +36,8 @@ used throughout the code. *Rationale*: convention of NeuroMorphoOrg v5.3
 
 ### Fixed
 
+- Keep root coordinates when correcting for shrinkage in z-axis.
+
 #### Persistent Issues
 
 1. OpenGL Context Error on Wayland/X11
